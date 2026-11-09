@@ -1,0 +1,42 @@
+{{- define "title" -}}
+  {{- if eq .Data.Plural "categories" -}}
+    分类
+  {{- else -}}
+  {{- .Params.Title | default (T .Data.Plural) | default .Data.Plural | dict "Some" | T "allSome" -}}
+  {{- end -}}
+  {{- if .Site.Params.with_site_title }} {{ .Site.Params.title_delimiter }} {{ .Site.Title }}{{- end -}}
+{{- end -}}
+
+{{- define "content" -}}
+  {{- $taxonomies := .Data.Plural -}}
+  {{- $icon := .Params.titleIcon | default (dict "Taxonomy" .Data.Singular "Slot" "title" | partial "function/get-taxonomy-icon.html") -}}
+  {{- $count := len .Data.Terms.ByCount -}}
+  {{- if eq $taxonomies "authors" -}}
+    {{- $count = len (partial "function/author-terms.html" .) -}}
+  {{- end -}}
+  {{- $title := .Params.Title | default (T $taxonomies) | default $taxonomies | dict "Some" | T "allSome" -}}
+  {{- if eq $taxonomies "categories" -}}
+    {{- $title = "分类" -}}
+  {{- end -}}
+  <div class="page archive taxonomy-page taxonomy-page--{{ $taxonomies }}">
+    <header class="editorial-hero">
+      <p class="editorial-eyebrow">内容索引 <span>／</span> {{ upper $taxonomies }}</p>
+      <div class="editorial-heading">
+        <h1 class="archive-title">{{ $title }}</h1>
+        <span class="editorial-count">{{ $count }} 项</span>
+      </div>
+      <p class="editorial-intro">
+        {{- if eq $taxonomies "categories" -}}
+          按主题整理文章，从感兴趣的方向开始阅读。
+        {{- else -}}
+          按 {{ $taxonomies }} 浏览站点内容。
+        {{- end -}}
+      </p>
+    </header>
+    {{- $template := $taxonomies -}}
+    {{- if not (templates.Exists (printf "%s.html" $template)) -}}
+      {{- $template = "taxonomies" -}}
+    {{- end -}}
+    {{- .Render $template -}}
+  </div>
+{{- end -}}

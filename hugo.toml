@@ -2,6 +2,8 @@ baseURL = 'https://yuqu419.github.io/'
 locale = 'zh-CN'
 title = 'yu419'
 theme = 'FixIt'
+summaryLength = 32
+summaryPlainify = true
 
 [taxonomies]
 _merge = "shallow"
@@ -11,28 +13,21 @@ home = ["html", "rss", "archives", "search", "offline", "manifest", "link"]
 
 [[menus.main]]
 identifier = "archives"
-name = "归档"
+name = "Blogs"
 url = "archives/"
 weight = 1
 params = { icon = "" }
 
 [[menus.main]]
 identifier = "categories"
-name = "分类"
+name = "Categories"
 url = "categories/"
 weight = 2
 params = { icon = "" }
 
 [[menus.main]]
-identifier = "tags"
-name = "标签"
-url = "tags/"
-weight = 3
-params = { icon = "" }
-
-[[menus.main]]
 identifier = "about"
-name = "关于我"
+name = "About"
 url = "about/"
 weight = 4
 params = { icon = "" }
@@ -42,7 +37,10 @@ identifier = "github"
 name = "GitHub"
 url = "https://github.com/yuqu419"
 weight = 5
-params = { icon = "" }
+params = { icon = "fa-brands fa-github", class = "github-link" }
+
+[params.search]
+placeholder = "搜索文章标题或内容"
 
 [params.header]
 blur = true
@@ -74,3 +72,12 @@ featuredImagePreview = true
 
 [params.footer]
 since = 2024
+[markup.goldmark.renderer]
+unsafe = true
+
+[markup.goldmark.extensions.passthrough]
+enable = true
+
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)'], ['$', '$']]

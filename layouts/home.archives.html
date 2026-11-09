@@ -1,0 +1,25 @@
+{{- define "title" -}}
+  {{- .Params.Title | default (T "archives") -}}
+  {{- if .Site.Params.with_site_title }} {{ .Site.Params.title_delimiter }} {{ .Site.Title }}{{- end -}}
+{{- end -}}
+
+{{- define "content" -}}
+  {{- $pages := .Site.Store.Get "mainSectionPages" -}}
+  <div class="page archive editorial-archive">
+    <header class="editorial-hero">
+      <p class="editorial-eyebrow">文章索引 <span>／</span> JOURNAL</p>
+      <div class="editorial-heading">
+        <h1 class="archive-title">文章</h1>
+        <span class="editorial-count">{{ len $pages }} 篇</span>
+      </div>
+      <p class="editorial-intro">记录技术学习、问题与阶段性的理解。</p>
+    </header>
+    {{- partial "section/archive-meta.html" (dict "Page" . "Pages" $pages) -}}
+    {{- partial "section/archive-list.html" (dict
+      "Page" .
+      "Pages" $pages
+      "Paginate" (.Site.Params.archives.paginate | default .Site.Params.paginate)
+      "DateFormat" (.Site.Params.archives.date_format | default "01-02")
+    ) -}}
+  </div>
+{{- end -}}
