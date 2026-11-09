@@ -1,6 +1,6 @@
 baseURL = 'https://yuqu419.github.io/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+locale = 'zh-cn'
+title = 'yu419的个人博客'
 theme = 'FixIt'
 [taxonomies]
 _merge = "shallow"
