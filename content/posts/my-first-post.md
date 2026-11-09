@@ -3,7 +3,7 @@ title: My First Post
 subtitle:
 date: 2026-11-09T08:35:13+08:00
 slug: 583bc6c
-draft: true
+draft: false
 description:
 keywords:
 weight: 0

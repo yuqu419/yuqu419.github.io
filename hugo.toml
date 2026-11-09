@@ -1,6 +1,34 @@
 baseURL = 'https://yuqu419.github.io/'
-locale = 'zh-cn'
-title = 'yu419的个人博客'
+locale = 'zh-CN'
+title = 'yu419'
 theme = 'FixIt'
+
 [taxonomies]
 _merge = "shallow"
+
+[params.header]
+blur = true
+
+[params.home.profile]
+enable = true
+# 头像 / 主视觉图（高级感的关键）
+avatar = '/images/avatar.jpg'
+# 标题：短句 + 留白，比长句高级
+title = 'Less, but better.'
+subtitle = '记录技术、生活与思考'
+typeit = true
+social = false
+contribution = false
+
+[params.home.posts]
+columns = 1
+
+# ===== 图片相关 =====
+[params.page]
+# 文章默认封面（没写 front matter 时兜底）
+defaultFeaturedImage = '/images/default-cover.jpg'
+# 封面图悬停/预览
+featuredImagePreview = true
+
+[params.footer]
+since = 2024

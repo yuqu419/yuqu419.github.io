@@ -1,0 +1,368 @@
+body {
+  background-color: light-dark(#f8f9fb, #101318);
+  background-image:
+    radial-gradient(800px circle at 50% -18rem, light-dark(rgba(196, 211, 232, 0.3), rgba(58, 76, 104, 0.18)), transparent 75%);
+}
+
+.wrapper {
+  background: transparent;
+}
+
+header {
+  background-color: light-dark(rgba(248, 249, 251, 0.94), rgba(16, 19, 24, 0.94));
+  border-bottom: 1px solid light-dark(rgba(32, 42, 56, 0.08), rgba(226, 232, 240, 0.09));
+  box-shadow: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+#header-desktop .header-wrapper {
+  box-sizing: border-box;
+  width: min(100%, 848px);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  gap: 1.5rem;
+}
+
+#header-desktop .header-title {
+  flex: 0 0 auto;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+#header-desktop .header-title-link {
+  color: light-dark(#303946, #e1e6ed);
+}
+
+#header-desktop nav.nav-main {
+  flex: 1 1 auto;
+  overflow: visible;
+}
+
+#header-desktop nav.nav-main > .menu {
+  justify-content: flex-end;
+  gap: 0.3rem;
+}
+
+#header-desktop nav.nav-main .menu-item {
+  padding-inline: 0;
+}
+
+#header-desktop nav.nav-main .menu-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0 0.7rem;
+  color: light-dark(#707986, #a4adba);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  border-radius: 0.55rem;
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+#header-desktop nav.nav-main .menu-link i {
+  display: none;
+}
+
+#header-desktop nav.nav-main .menu-item.active > .menu-link {
+  color: light-dark(#303946, #e1e6ed);
+  font-weight: 600;
+  background-color: light-dark(rgba(32, 42, 56, 0.055), rgba(226, 232, 240, 0.08));
+}
+
+#header-desktop nav.nav-main .menu-link:hover,
+#header-desktop nav.nav-main .menu-link:focus-visible {
+  color: light-dark(#252d38, #f1f4f8);
+  background-color: light-dark(rgba(32, 42, 56, 0.06), rgba(226, 232, 240, 0.09));
+}
+
+#header-desktop nav.nav-system {
+  margin-inline-start: 0;
+}
+
+#header-desktop nav.nav-system .menu-item.delimiter {
+  display: none;
+}
+
+#header-desktop .search-trigger,
+#header-desktop .theme-switch {
+  min-height: 2.25rem;
+  padding: 0 0.65rem;
+  color: light-dark(#7a8491, #a4adba);
+  border: 0;
+  border-radius: 0.55rem;
+  background: transparent;
+  box-shadow: none;
+}
+
+#header-desktop .search-trigger:hover,
+#header-desktop .theme-switch:hover {
+  color: light-dark(#252d38, #f1f4f8);
+  background-color: light-dark(rgba(32, 42, 56, 0.06), rgba(226, 232, 240, 0.09));
+}
+
+#header-desktop .search-trigger kbd {
+  display: none;
+}
+
+#header-mobile .header-container > .header-wrapper {
+  box-sizing: border-box;
+  width: min(100%, 848px);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+#header-mobile .header-title {
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+#header-mobile nav > .menu {
+  border-top: 1px solid light-dark(rgba(32, 42, 56, 0.08), rgba(226, 232, 240, 0.09));
+  background-color: light-dark(rgba(248, 249, 251, 0.98), rgba(16, 19, 24, 0.98));
+  box-shadow: 0 12px 24px light-dark(rgba(36, 48, 64, 0.07), rgba(0, 0, 0, 0.22));
+}
+
+#header-mobile nav > .menu .menu-item:not(.menu-system):hover {
+  background-color: light-dark(rgba(32, 42, 56, 0.045), rgba(226, 232, 240, 0.06));
+}
+
+#header-mobile nav > .menu .menu-link {
+  color: light-dark(#4e5968, #c0c8d3);
+}
+
+.page.home {
+  box-sizing: border-box;
+  width: min(100%, 800px);
+  padding-inline: 1.5rem;
+}
+
+.home .home-profile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: clamp(4.5rem, 11vw, 8rem) 0 clamp(4rem, 9vw, 6.5rem);
+  padding: 0 0 clamp(2.5rem, 6vw, 4rem);
+  text-align: left;
+  border: 0;
+  border-bottom: 1px solid light-dark(rgba(32, 42, 56, 0.12), rgba(226, 232, 240, 0.12));
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.home .home-profile::before {
+  margin-bottom: 1.5rem;
+  color: light-dark(#7d8795, #9ba5b3);
+  content: "个人博客  /  技术 · 生活 · 思考";
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.home .home-profile::after {
+  content: none;
+}
+
+.home .home-profile .home-avatar {
+  margin-bottom: 1.25rem;
+  padding: 0;
+}
+
+.home .home-profile .home-avatar img {
+  width: 3.5rem;
+  height: 3.5rem;
+  box-shadow: none;
+}
+
+.home .home-profile .home-title {
+  max-width: 700px;
+  margin: 0;
+  padding: 0;
+  font-size: clamp(2.75rem, 7vw, 5rem);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.065em;
+  text-wrap: balance;
+}
+
+.home .home-profile .home-title span {
+  color: inherit;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+.home .home-profile .home-subtitle {
+  max-width: 560px;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  color: light-dark(#727c89, #a1aab6);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+.home.posts .home-posts {
+  gap: 0;
+}
+
+.home.posts .home-posts::before {
+  flex-basis: 100%;
+  margin-bottom: 1.25rem;
+  color: light-dark(#7d8795, #9ba5b3);
+  content: "文章";
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.home.posts .summary {
+  padding: 1.5rem 0;
+  border: 0;
+  border-bottom: 1px solid light-dark(rgba(32, 42, 56, 0.1), rgba(226, 232, 240, 0.1));
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: border-color 0.2s ease;
+}
+
+.home.posts .summary:first-of-type {
+  padding-top: 0.5rem;
+}
+
+.home.posts .summary:hover {
+  transform: none;
+  border-color: light-dark(rgba(32, 42, 56, 0.28), rgba(226, 232, 240, 0.28));
+  box-shadow: none;
+}
+
+.home.posts .summary .single-title {
+  margin: 0.35rem 0 0.5rem;
+  padding: 0;
+  font-size: clamp(1.25rem, 3vw, 1.55rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+
+.home.posts .summary .post-meta {
+  color: light-dark(#858e9a, #919ba8);
+  font-size: 0.8rem;
+}
+
+.home.posts .summary .content {
+  max-width: 680px;
+  margin-top: 0.4rem;
+  color: light-dark(#687381, #a1aab6);
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.home.posts .summary .post-footer {
+  margin-top: 0.8rem;
+  font-size: 0.85rem;
+}
+
+.home.posts .summary .post-footer > a {
+  font-weight: 550;
+}
+
+.home.posts .summary .summary-media {
+  margin: 0 0 1.25rem;
+}
+
+.home.posts .summary .featured-image-preview {
+  aspect-ratio: 2.2;
+  border-radius: 0.65rem;
+  mask-image: none;
+}
+
+.home.posts .summary .featured-image-preview img {
+  border-radius: 0.65rem;
+}
+
+main > .page:not(.home) {
+  box-sizing: border-box;
+  width: min(100% - 3rem, 800px);
+  margin-block: clamp(3rem, 8vw, 6rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.08), rgba(226, 232, 240, 0.08));
+  border-radius: 0.9rem;
+  background-color: light-dark(rgba(255, 255, 255, 0.62), rgba(23, 27, 34, 0.62));
+  box-shadow: 0 12px 40px light-dark(rgba(36, 48, 64, 0.035), rgba(0, 0, 0, 0.12));
+}
+
+.footer-container {
+  width: min(100% - 3rem, 800px);
+  margin-top: 2rem;
+  padding-block: 1.5rem 2rem;
+  border-top: 1px solid light-dark(rgba(32, 42, 56, 0.1), rgba(226, 232, 240, 0.1));
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home.posts .summary {
+    transition: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .page.home {
+    padding-inline: 1.25rem;
+  }
+
+  #header-desktop .header-wrapper {
+    padding-inline: 1.25rem;
+  }
+
+  #header-mobile .header-container > .header-wrapper {
+    padding-inline: 1.25rem;
+  }
+
+  .home .home-profile {
+    margin-block: 3.5rem 3.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .home .home-profile::before {
+    margin-bottom: 1.2rem;
+    font-size: 0.68rem;
+  }
+
+  .home .home-profile .home-title {
+    font-size: clamp(2.5rem, 12vw, 3.75rem);
+  }
+
+  .home .home-profile .home-subtitle {
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  .home.posts .summary {
+    padding-block: 1.25rem;
+  }
+
+  main > .page:not(.home),
+  .footer-container {
+    width: calc(100% - 2.5rem);
+  }
+
+  main > .page:not(.home) {
+    margin-block: 2.5rem;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+  }
+}
