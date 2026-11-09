@@ -72,12 +72,9 @@ featuredImagePreview = true
 
 [params.footer]
 since = 2024
+
+[params.share]
+enable = false
+
 [markup.goldmark.renderer]
 unsafe = true
-
-[markup.goldmark.extensions.passthrough]
-enable = true
-
-[markup.goldmark.extensions.passthrough.delimiters]
-block = [['\[', '\]'], ['$$', '$$']]
-inline = [['\(', '\)'], ['$', '$']]

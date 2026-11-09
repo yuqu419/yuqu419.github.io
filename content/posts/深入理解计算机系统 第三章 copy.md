@@ -2,7 +2,7 @@
 title: 深入理解计算机系统 第六章
 subtitle: 进程与信号
 date: 2026-11-09T08:35:13+08:00
-slug: 583bc6c
+slug: csapp-chapter-6
 draft: false
 description:
 keywords:
