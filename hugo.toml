@@ -1,0 +1,6 @@
+baseURL = 'https://yu419.github.io/'
+locale = 'en-us'
+title = 'My New Hugo Project'
+theme = 'FixIt'
+[taxonomies]
+_merge = "shallow"
