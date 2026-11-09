@@ -1,4 +1,4 @@
-baseURL = 'https://yu419.github.io/'
+baseURL = 'https://yuqu419.github.io/'
 locale = 'en-us'
 title = 'My New Hugo Project'
 theme = 'FixIt'
