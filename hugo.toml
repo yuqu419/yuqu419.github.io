@@ -6,13 +6,55 @@ theme = 'FixIt'
 [taxonomies]
 _merge = "shallow"
 
+[outputs]
+home = ["html", "rss", "archives", "search", "offline", "manifest", "link"]
+
+[[menus.main]]
+identifier = "archives"
+name = "归档"
+url = "archives/"
+weight = 1
+params = { icon = "" }
+
+[[menus.main]]
+identifier = "categories"
+name = "分类"
+url = "categories/"
+weight = 2
+params = { icon = "" }
+
+[[menus.main]]
+identifier = "tags"
+name = "标签"
+url = "tags/"
+weight = 3
+params = { icon = "" }
+
+[[menus.main]]
+identifier = "about"
+name = "关于我"
+url = "about/"
+weight = 4
+params = { icon = "" }
+
+[[menus.main]]
+identifier = "github"
+name = "GitHub"
+url = "https://github.com/yuqu419"
+weight = 5
+params = { icon = "" }
+
 [params.header]
 blur = true
 
+[params.header.title]
+logo = 'images/avatar.jpg'
+
+[params.app]
+svg_favicon = '/favicon.png'
+
 [params.home.profile]
 enable = true
-# 头像 / 主视觉图（高级感的关键）
-avatar = '/images/avatar.jpg'
 # 标题：短句 + 留白，比长句高级
 title = 'Less, but better.'
 subtitle = '记录技术、生活与思考'
