@@ -1,507 +1,71 @@
-<!DOCTYPE html>
-<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN" dir="ltr">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <title>深入理解计算机系统 第六章 - yu419</title><meta name="author" content="Anonymous">
-<meta name="description" content=" Preface
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><title>深入理解计算机系统 第六章 - yu419</title><meta name=author content="Anonymous"><meta name=description content=" Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
 — 2026/11/9
-"><meta name="robots" content="index, follow"><meta name="keywords" content='CSAPP'>
-	<meta itemprop="name" content="深入理解计算机系统 第六章">
-	<meta itemprop="description" content="Preface
+"><meta name=robots content="index, follow"><meta name=keywords content='CSAPP'><meta itemprop=name content="深入理解计算机系统 第六章"><meta itemprop=description content="Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
-— 2026/11/9">
-	<meta itemprop="datePublished" content="2026-11-09T08:35:13+08:00">
-	<meta itemprop="dateModified" content="2026-11-09T08:35:13+08:00">
-	<meta itemprop="wordCount" content="429">
-	<meta itemprop="keywords" content="CSAPP"><meta property="og:url" content="http://localhost:1313/posts/csapp-chapter-6/">
-	<meta property="og:site_name" content="yu419">
-	<meta property="og:title" content="深入理解计算机系统 第六章">
-	<meta property="og:description" content="Preface
+— 2026/11/9"><meta itemprop=datePublished content="2026-11-09T08:35:13+08:00"><meta itemprop=dateModified content="2026-11-09T08:35:13+08:00"><meta itemprop=wordCount content="429"><meta itemprop=keywords content="CSAPP"><meta property="og:url" content="https://yuqu419.github.io/posts/csapp-chapter-6/"><meta property="og:site_name" content="yu419"><meta property="og:title" content="深入理解计算机系统 第六章"><meta property="og:description" content="Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
-— 2026/11/9">
-	<meta property="og:locale" content="zh_CN">
-	<meta property="og:type" content="article">
-		<meta property="article:section" content="posts">
-		<meta property="article:published_time" content="2026-11-09T08:35:13+08:00">
-		<meta property="article:modified_time" content="2026-11-09T08:35:13+08:00">
-		<meta property="article:tag" content="CSAPP">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="深入理解计算机系统 第六章">
-  <meta name="twitter:description" content="Preface
+— 2026/11/9"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-11-09T08:35:13+08:00"><meta property="article:modified_time" content="2026-11-09T08:35:13+08:00"><meta property="article:tag" content="CSAPP"><meta name=twitter:card content="summary"><meta name=twitter:title content="深入理解计算机系统 第六章"><meta name=twitter:description content="Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
-— 2026/11/9"><meta name="application-name" content="yu419">
-<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/csapp-chapter-6/" title="深入理解计算机系统 第六章 - yu419" /><link rel="prev" type="text/html" href="http://localhost:1313/about/" title="关于我" /><link rel="next" type="text/html" href="http://localhost:1313/posts/583bc6c/" title="深入理解计算机系统 第三章" /><link rel="stylesheet" href="/css/unocss.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/css/pages/posts.css"><link rel="stylesheet" href="/css/custom.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.js" as="script"><script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "深入理解计算机系统 第六章",
-    "inLanguage": "zh-CN",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "http:\/\/localhost:1313\/posts\/csapp-chapter-6\/"
-    },"genre": "posts","keywords": "CSAPP","wordcount":  429 ,
-    "url": "http:\/\/localhost:1313\/posts\/csapp-chapter-6\/","datePublished": "2026-11-09T08:35:13+08:00","dateModified": "2026-11-09T08:35:13+08:00","publisher": {
-      "@type": "Organization",
-      "name": ""},"author": {
-        "@type": "Person",
-        "name": "作者"
-      },"description": ""
-  }
-  </script><script src="/js/head.js"></script></head>
-  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster is-blur" id="header-desktop">
-  <div class="header-wrapper">
-    <div class="header-title">
-      <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="32" width="32"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
-    <nav class="nav-main" aria-label="主菜单">
-      <ul class="menu"><li class="menu-item">
-            <a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item">
-            <a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item">
-            <a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link">
-            <a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li></ul>
-    </nav><nav class="nav-system" aria-label="站点功能">
-      <ul class="menu"><li class="menu-item delimiter"></li><li class="menu-item search">
-            <button type="button" class="search-trigger desktop" aria-label="搜索" title="搜索">
-              <i class="fa-solid fa-search" aria-hidden="true"></i>
-              搜索
-              <kbd></kbd>
-            </button>
-          </li>
-          <li class="menu-item delimiter"></li><li class="menu-item theme-switch-item">
-          <button type="button" class="theme-switch" aria-label="切换主题" title="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
-        </li></ul>
-    </nav>
-  </div>
-</header><header class="mobile animate__faster is-blur" id="header-mobile">
-  <div class="header-container">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="26" width="26"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
-      <button type="button" class="menu-toggle" id="menu-toggle-mobile" aria-controls="menu-mobile" aria-expanded="false" aria-labelledby="menu-mobile">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <nav>
-      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item"><a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link"><a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li><li class="menu-item menu-system"></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
-    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>深入理解计算机系统 第六章</span>
-      </h1><p class="single-subtitle animate__animated animate__fadeIn">进程与信号</p></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><a href="/authors/anonymous/" title="作者" rel="author" class="author"><i class="fa-solid fa-user-circle me-1" aria-hidden="true"></i>Anonymous</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category" title="分类 - CSAPP学习笔记"><i class="fa-regular fa-folder" aria-hidden="true"></i> CSAPP学习笔记</a> 和 <a href="/collections/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-collection" title="合集 - CSAPP学习笔记"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> CSAPP学习笔记</a></span></div>
-      <div class="post-meta-line"><span title="发布于 2026-11-09 08:35:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-09">2026-11-09</time></span>&nbsp;<span title="429 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>约 500 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 3 分钟</span>&nbsp;</div>
-    </div><div class="details toc" id="toc-static" data-kept="false">
-        <div class="details-summary toc-title">
-          <span>目录</span>
-          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
-        </div>
-        <div class="details-content toc-content" id="toc-content-static"></div>
-      </div><template data-toc><nav id="TableOfContents">
-  <ul>
-    <li><a href="#创建进程">创建进程</a></li>
-    <li><a href="#覆盖进程">覆盖进程</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#前台进程组">前台进程组</a>
-      <ul>
-        <li><a href="#特性">特性</a></li>
-      </ul>
-    </li>
-    <li><a href="#shell-进程组">shell 进程组</a>
-      <ul>
-        <li><a href="#特殊之处">特殊之处</a></li>
-      </ul>
-    </li>
-    <li><a href="#前后台进程组切换">前后台进程组切换</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#创建"><u><strong><code>创建</code></strong></u></a></li>
-    <li><a href="#阻塞"><u><strong><code>阻塞</code></strong></u></a></li>
-    <li><a href="#暂停"><u><strong><code>暂停</code></strong></u></a></li>
-    <li><a href="#终止"><u><strong><code>终止</code></strong></u></a></li>
-    <li><a href="#回收"><u><strong><code>回收</code></strong></u></a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#信号的生命周期">信号的生命周期</a>
-      <ul>
-        <li><a href="#产生">产生</a></li>
-        <li><a href="#阻塞-1">阻塞</a></li>
-        <li><a href="#处理">处理</a></li>
-      </ul>
-    </li>
-    <li><a href="#常见信号">常见信号</a></li>
-  </ul>
-</nav></template><div class="content" id="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
-<p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
-<div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>
-<p style="font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;">这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光</p>
-<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/9</p>
-</div>
-<h1 class="heading-element" id="进程"><span>进程</span>
-  <a href="#%e8%bf%9b%e7%a8%8b" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h1><p>进程是程序的一次执行实例</p>
-<p>每个进程都有独属于自己的内存区域（相互独立的堆栈等）</p>
-<p>每个进程都有独属于自己的自己的<u><strong>进程 ID（PID）</strong></u></p>
-<h2 class="heading-element" id="创建进程"><span>创建进程</span>
-  <a href="#%e5%88%9b%e5%bb%ba%e8%bf%9b%e7%a8%8b" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>使用 <code>fork()</code> 函数可以创建子进程，物理页先共享并设为只读，任一进程写入时触发缺页异常，内核再复制该页。这就是 写时复制 COW</p>
-<h2 class="heading-element" id="覆盖进程"><span>覆盖进程</span>
-  <a href="#%e8%a6%86%e7%9b%96%e8%bf%9b%e7%a8%8b" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>使用 <code>exec</code> 类函数能够将硬盘中指定的可执行文件加载到当前进程中，覆盖掉几乎全部内容。当以下内容不变</p>
-<ul>
-<li>PID，进程所在进程组和会话</li>
-<li>打开的文件描述符</li>
-<li>信号掩码</li>
-</ul>
-<blockquote>
-<p>特别注意：信号处理函数会被重置
-系统调用：<code>execve</code></p>
-</blockquote>
-<pre tabindex="0"><code>int execve(const char *pathname, char *const argv[], char *const envp[]);</code></pre><ul>
-<li><u><strong><code>pathname</code></strong></u>：为程序的绝对路径或相对路径，不回去找 PATH</li>
-<li><u><strong><code>argv</code></strong></u>：表示命名行参数数组，以 <code>NULL</code> 结尾</li>
-<li><u><strong><code>envp</code></strong></u>：是环境变量数组，以 <code>NULL</code> 结尾</li>
-</ul>
-<p><u><strong>返回值</strong></u>：失败时返回-1，并设置<code>errno</code></p>
-<p>剩余 5 个 <code>exec</code> 的类函数都是由 <code>execve</code> 函数包装而成</p>
-<p>可以通过后缀字母窥见其含义：</p>
-<ul>
-<li><code>l(list)</code>：参数以列表（可变参数）的形式传递</li>
-<li><code>v(vector)</code>：参数以字符串数组的形式传递</li>
-<li><code>e(environment)</code>：自定义环境变量</li>
-<li><code>p(path)</code>：当 <code>path</code> 参数为以 <code>/</code> 起始时，运行指定路径程序，当 <code>path</code> 参数不以 <code>/</code> 起始的，从 <code>PATH</code> 中搜索</li>
-</ul>
-<p>规则如下：</p>
-<ol>
-<li>
-<p>当指定环境变量时，使用自定义的环境变量，否则使用当前进程中的 <code>environ</code></p>
-<blockquote>
-<p>每个进程中都有一个全局变量 <code>char** environ</code>，当 <code>fork</code> 时，创建的子进程会复制父进程的 <code>environ</code></p>
-</blockquote>
-</li>
-<li>
-<p><code>PATH</code> 是一个环境变量，其一般格式：</p>
-<pre tabindex="0"><code>PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</code></pre><p>当使用含 <code>p</code> 后缀的函数时，且 <code>path</code> 参数不以 <code>/</code> 起始时(如 <code>ls</code>)，会依次尝试</p>
-<pre tabindex="0"><code>/usr/local/bin/ls
+— 2026/11/9"><meta name=application-name content="yu419"><meta name=apple-mobile-web-app-title content="yu419"><meta name=theme-color data-light=#f6f8fa data-dark=#151b23 content="#f6f8fa"><meta name=msapplication-TileColor content="#2d89ef"><link rel=icon href=/favicon.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#FF7359><link rel=canonical type=text/html href=https://yuqu419.github.io/posts/csapp-chapter-6/ title="深入理解计算机系统 第六章 - yu419"><link rel=prev type=text/html href=https://yuqu419.github.io/about/ title=关于我><link rel=next type=text/html href=https://yuqu419.github.io/posts/583bc6c/ title="深入理解计算机系统 第三章"><link rel=stylesheet href=/css/unocss.min.css><link rel=stylesheet href=/css/main.min.css><link rel=stylesheet href=/css/pages/posts.min.css><link rel=stylesheet href=/css/custom.min.css><link rel=preload href=/lib/fontawesome-free/all.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/lib/animate/animate.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><link rel=preload href=/js/main.min.js as=script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"深入理解计算机系统 第六章","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/yuqu419.github.io\/posts\/csapp-chapter-6\/"},"genre":"posts","keywords":"CSAPP","wordcount":429,"url":"https:\/\/yuqu419.github.io\/posts\/csapp-chapter-6\/","datePublished":"2026-11-09T08:35:13+08:00","dateModified":"2026-11-09T08:35:13+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"作者"},"description":""}</script><script src=/js/head.min.js></script></head><body data-instant-intensity=viewport data-header-desktop=sticky data-header-mobile=auto><div class=wrapper data-page-style=normal><header class="desktop animate__faster is-blur" id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=yu419 class=header-title-link><img class=logo src=/images/avatar.jpg alt=yu419 height=32 width=32><span class=header-title-text>yu419</span></a><span class=header-subtitle></span></div><nav class=nav-main aria-label=主菜单><ul class=menu><li class=menu-item><a class=menu-link href=/archives/>Blogs</a></li><li class=menu-item><a class=menu-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-link href=/about/>About</a></li><li class="menu-item github-link"><a class=menu-link href=https://github.com/yuqu419 rel="noopener noreferrer" target=_blank><i class="fa-brands fa-github fa-sm" aria-hidden=true></i> GitHub</a></li></ul></nav><nav class=nav-system aria-label=站点功能><ul class=menu><li class="menu-item delimiter"></li><li class="menu-item search"><button type=button class="search-trigger desktop" aria-label=搜索 title=搜索>
+<i class="fa-solid fa-search" aria-hidden=true></i>
+搜索
+<kbd></kbd></button></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch-item"><button type=button class=theme-switch aria-label=切换主题 title=切换主题><i class="fa-solid fa-adjust" aria-hidden=true></i></button></li></ul></nav></div></header><header class="mobile animate__faster is-blur" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=yu419 class=header-title-link><img class=logo src=/images/avatar.jpg alt=yu419 height=26 width=26><span class=header-title-text>yu419</span></a><span class=header-subtitle></span></div><button type=button class="search-trigger mobile" aria-label=搜索><i class="fa-solid fa-search" aria-hidden=true></i></button><button type=button class=theme-switch aria-label=切换主题><i class="fa-solid fa-adjust" aria-hidden=true></i></button>
+<button type=button class=menu-toggle id=menu-toggle-mobile aria-controls=menu-mobile aria-expanded=false aria-labelledby=menu-mobile>
+<span></span><span></span><span></span></button></div><nav><ul class=menu id=menu-mobile><li class=menu-item><a class=menu-link href=/archives/>Blogs</a></li><li class=menu-item><a class=menu-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-link href=/about/>About</a></li><li class="menu-item github-link"><a class=menu-link href=https://github.com/yuqu419 rel="noopener noreferrer" target=_blank><i class="fa-brands fa-github fa-sm" aria-hidden=true></i> GitHub</a></li><li class="menu-item menu-system"></li></ul></nav></div></header><main class=fi-container><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label=合集></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>深入理解计算机系统 第六章</span></h1><p class="single-subtitle animate__animated animate__fadeIn">进程与信号</p></div><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/authors/anonymous/ title=作者 rel=author class=author><i class="fa-solid fa-user-circle me-1" aria-hidden=true></i>Anonymous</a></span><span class=post-included-in>&nbsp;收录于 <a href=/categories/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ class=post-category title="分类 - CSAPP学习笔记"><i class="fa-regular fa-folder" aria-hidden=true></i> CSAPP学习笔记</a> 和 <a href=/collections/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ class=post-collection title="合集 - CSAPP学习笔记"><i class="fa-solid fa-layer-group" aria-hidden=true></i> CSAPP学习笔记</a></span></div><div class=post-meta-line><span title="发布于 2026-11-09 08:35:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden=true></i><time datetime=2026-11-09>2026-11-09</time></span>&nbsp;<span title="429 字"><i class="fa-solid fa-pencil me-1" aria-hidden=true></i>约 500 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden=true></i>预计阅读 3 分钟</span>&nbsp;</div></div><div class="details toc" id=toc-static data-kept=false><div class="details-summary toc-title"><span>目录</span>
+<span><i class="details-icon fa-solid fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static></div></div><template data-toc><nav id=TableOfContents><ul><li><a href=#创建进程>创建进程</a></li><li><a href=#覆盖进程>覆盖进程</a></li></ul><ul><li><a href=#前台进程组>前台进程组</a><ul><li><a href=#特性>特性</a></li></ul></li><li><a href=#shell-进程组>shell 进程组</a><ul><li><a href=#特殊之处>特殊之处</a></li></ul></li><li><a href=#前后台进程组切换>前后台进程组切换</a></li></ul><ul><li><a href=#创建><u><strong><code>创建</code></strong></u></a></li><li><a href=#阻塞><u><strong><code>阻塞</code></strong></u></a></li><li><a href=#暂停><u><strong><code>暂停</code></strong></u></a></li><li><a href=#终止><u><strong><code>终止</code></strong></u></a></li><li><a href=#回收><u><strong><code>回收</code></strong></u></a></li></ul><ul><li><a href=#信号的生命周期>信号的生命周期</a><ul><li><a href=#产生>产生</a></li><li><a href=#阻塞-1>阻塞</a></li><li><a href=#处理>处理</a></li></ul></li><li><a href=#常见信号>常见信号</a></li></ul></nav></template><div class=content id=content><div style="max-width:620px;margin:56px auto;font-family:noto serif sc,songti sc,Georgia,serif;color:light-dark(#2b2b2b,#d1d5db);line-height:2"><p style="font-size:11px;letter-spacing:.5em;text-transform:uppercase;color:light-dark(#888,#9aa3b2);margin:0 0 24px">Preface</p><div style=width:36px;height:1px;background:light-dark(#111,#e1e6ed);margin-bottom:34px></div><p style="font-size:15px;text-align:justify;text-justify:inter-ideograph;margin:0 0 18px">这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光</p><p style="font-size:13px;color:light-dark(#888,#9aa3b2);letter-spacing:.1em;text-align:right;margin:40px 0 0">— 2026/11/9</p></div><h1 class=heading-element id=进程><span>进程</span>
+<a href=#%e8%bf%9b%e7%a8%8b class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h1><p>进程是程序的一次执行实例</p><p>每个进程都有独属于自己的内存区域（相互独立的堆栈等）</p><p>每个进程都有独属于自己的自己的<u><strong>进程 ID（PID）</strong></u></p><h2 class=heading-element id=创建进程><span>创建进程</span>
+<a href=#%e5%88%9b%e5%bb%ba%e8%bf%9b%e7%a8%8b class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>使用 <code>fork()</code> 函数可以创建子进程，物理页先共享并设为只读，任一进程写入时触发缺页异常，内核再复制该页。这就是 写时复制 COW</p><h2 class=heading-element id=覆盖进程><span>覆盖进程</span>
+<a href=#%e8%a6%86%e7%9b%96%e8%bf%9b%e7%a8%8b class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>使用 <code>exec</code> 类函数能够将硬盘中指定的可执行文件加载到当前进程中，覆盖掉几乎全部内容。当以下内容不变</p><ul><li>PID，进程所在进程组和会话</li><li>打开的文件描述符</li><li>信号掩码</li></ul><blockquote><p>特别注意：信号处理函数会被重置
+系统调用：<code>execve</code></p></blockquote><pre tabindex=0><code>int execve(const char *pathname, char *const argv[], char *const envp[]);</code></pre><ul><li><u><strong><code>pathname</code></strong></u>：为程序的绝对路径或相对路径，不回去找 PATH</li><li><u><strong><code>argv</code></strong></u>：表示命名行参数数组，以 <code>NULL</code> 结尾</li><li><u><strong><code>envp</code></strong></u>：是环境变量数组，以 <code>NULL</code> 结尾</li></ul><p><u><strong>返回值</strong></u>：失败时返回-1，并设置<code>errno</code></p><p>剩余 5 个 <code>exec</code> 的类函数都是由 <code>execve</code> 函数包装而成</p><p>可以通过后缀字母窥见其含义：</p><ul><li><code>l(list)</code>：参数以列表（可变参数）的形式传递</li><li><code>v(vector)</code>：参数以字符串数组的形式传递</li><li><code>e(environment)</code>：自定义环境变量</li><li><code>p(path)</code>：当 <code>path</code> 参数为以 <code>/</code> 起始时，运行指定路径程序，当 <code>path</code> 参数不以 <code>/</code> 起始的，从 <code>PATH</code> 中搜索</li></ul><p>规则如下：</p><ol><li><p>当指定环境变量时，使用自定义的环境变量，否则使用当前进程中的 <code>environ</code></p><blockquote><p>每个进程中都有一个全局变量 <code>char** environ</code>，当 <code>fork</code> 时，创建的子进程会复制父进程的 <code>environ</code></p></blockquote></li><li><p><code>PATH</code> 是一个环境变量，其一般格式：</p><pre tabindex=0><code>PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</code></pre><p>当使用含 <code>p</code> 后缀的函数时，且 <code>path</code> 参数不以 <code>/</code> 起始时(如 <code>ls</code>)，会依次尝试</p><pre tabindex=0><code>/usr/local/bin/ls
 /usr/bin/ls
-...</code></pre></li>
-</ol>
-<p>其余 5 个函数分别为 <code>execl</code>，<code>execvp</code>，<code>execlp</code>，<code>execv</code>，<code>execle</code></p>
-<h1 class="heading-element" id="进程组"><span>进程组</span>
-  <a href="#%e8%bf%9b%e7%a8%8b%e7%bb%84" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h1><p>进程组是一个进程的集合，通常表示一个<strong>作业（job）</strong></p>
-<p>每个进程只属于一个进程组，在使用 <code>fork</code> 创建子进程时，默认子进程属于父进程所在进程组</p>
-<p>多个进程组组成一个<strong>Session（会话）</strong></p>
-<h2 class="heading-element" id="前台进程组"><span>前台进程组</span>
-  <a href="#%e5%89%8d%e5%8f%b0%e8%bf%9b%e7%a8%8b%e7%bb%84" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>前台进程组是一个重要的概念，它是当前 Session 中唯一被赋予控制终端并独占访问权的进程组</p>
-<p>在同一时刻，只有一个进程组能被设为前台进程组，如果不是前台进程组，那就是后台进程组</p>
-<h3 class="heading-element" id="特性"><span>特性</span>
-  <a href="#%e7%89%b9%e6%80%a7" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h3><ul>
-<li><u><strong><code>接收键盘产生的信号</code></strong></u> 当在当前 Session 按下对应的键时，会把信号发送给<strong>前台进程组中的全体成员</strong></li>
-<li><u><strong><code>读取终端</code></strong></u> 前台进程组可以不受限制地从终端读取输入，而后台进程组一旦尝试读取终端，终端会向该进程组发送 <code>SIGTTIN</code>，暂停该进程组</li>
-</ul>
-<blockquote>
-<p>向终端写入时，终端驱动有一个 <code>TOSTOP</code> 标志，默认关闭，当该标志关闭时，后台进程组可以向控制终端写入而不被阻止</p>
-</blockquote>
-<h2 class="heading-element" id="shell-进程组"><span>shell 进程组</span>
-  <a href="#shell-%e8%bf%9b%e7%a8%8b%e7%bb%84" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>交互式 shell 本身就是一个进程，所在进程组默认时其就为前台进程组</p>
-<h3 class="heading-element" id="特殊之处"><span>特殊之处</span>
-  <a href="#%e7%89%b9%e6%ae%8a%e4%b9%8b%e5%a4%84" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h3><ul>
-<li><u><strong><code>信号处理特殊</code></strong></u></li>
-</ul>
-<p>会忽略信号：<code>SIGINT</code>，<code>SIGQUIT</code>，<code>SIGTSTP</code>，<code>SIGTTIN</code>，<code>SIGTTOU</code></p>
-<ul>
-<li><u><strong><code>作业控制特殊</code></strong></u></li>
-</ul>
-<ol>
-<li>不在 <code>jobs</code> 输出中</li>
-<li>不能被 <code>fg/bg</code> 管理</li>
-<li>不能被 <code>Ctrl-Z</code> 观其</li>
-</ol>
-<h2 class="heading-element" id="前后台进程组切换"><span>前后台进程组切换</span>
-  <a href="#%e5%89%8d%e5%90%8e%e5%8f%b0%e8%bf%9b%e7%a8%8b%e7%bb%84%e5%88%87%e6%8d%a2" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><ol>
-<li>
-<p><u><strong><code>挂起前台作业</code></strong></u> 在前台进程组使用 <code>Ctrl-Z</code> 向其发送 <code>SIGTSTP</code> 信号，使其挂起，该作业变为后台作业</p>
-</li>
-<li>
-<p><u><strong><code>后台/挂起作业变为前台作业</code></strong></u> 使用 <code>fg</code> 会将指定作业设为前台作业，并向其发送 <code>SIGCONT</code> 信号</p>
-<blockquote>
-<p>fg 背后调用的是 <code>tcsetpgrp</code>（terminal control set process group），其能够设置前台进程组，与之对应的函数还有 <code>tcgetpgrp</code>（terminal control get process group），获取前台进程组</p>
-</blockquote>
-</li>
-<li>
-<p><u><strong><code>继续后台运行挂起作业</code></strong></u> 使用 <code>bg</code> 向指定挂起作业发送 <code>SIGCONT</code>，并让其在后台运行</p>
-</li>
-</ol>
-<h1 class="heading-element" id="进程生命周期"><span>进程生命周期</span>
-  <a href="#%e8%bf%9b%e7%a8%8b%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h1><p>每个进程都有一个（Process Control Block），其记录着进程的状态，标识信息等，可以说，PCB 是进程的档案袋</p>
-<p>在 Linux 中，PCB 的具体实现是 <code>task_struct</code>，这是一个复杂且庞大的结构体，后面在深入再学习</p>
-<h2 class="heading-element" id="创建"><span><u><strong><code>创建</code></strong></u></span>
-  <a href="#%e5%88%9b%e5%bb%ba" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>使用 <code>fork</code> 函数创建，一般呢，会调用 <code>execv</code> 类函数</p>
-<h2 class="heading-element" id="阻塞"><span><u><strong><code>阻塞</code></strong></u></span>
-  <a href="#%e9%98%bb%e5%a1%9e" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>当进程内调用 <code>wait</code>，<code>sleep</code>，<code>read</code> 等函数时，会进入阻塞状态，待到指定事件完成后，会自动恢复为运行状态</p>
-<p>阻塞分为两种：</p>
-<ul>
-<li><em>Interruptible Sleep（S）</em> 能被信号唤醒，大多数阻塞属于这一类型</li>
-<li><em>Disk Sleep（D）</em> 不能被信号唤醒，一般是 I/O 操作</li>
-</ul>
-<h2 class="heading-element" id="暂停"><span><u><strong><code>暂停</code></strong></u></span>
-  <a href="#%e6%9a%82%e5%81%9c" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>当进程收到 <code>SIGTSTP</code> 或 <code>SIGSTOP</code> 信号时，进程暂停，当接收到 <code>SIGCONT</code> 信号时，进程恢复到 R 态</p>
-<h2 class="heading-element" id="终止"><span><u><strong><code>终止</code></strong></u></span>
-  <a href="#%e7%bb%88%e6%ad%a2" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>终止分为两类</p>
-<ul>
-<li><em>正常终止</em> 通过 <code>main</code> 函数正常返回或通过 <code>exit/_exit</code> 终止，退出状态码通过 <code>wait</code> 交给父进程</li>
-<li><em>异常终止</em> 接收到触发异常终止的信号：<code>SIGINT</code>，<code>SIGQUIT</code>，<code>SIGSEGV</code>，<code>SIGTERM</code>，<code>SIGKILL</code> 等，可以通过 <code>wait</code> 获取 <code>status</code> 查看终止信号</li>
-</ul>
-<p>当进程终止后，会进入僵尸状态（Z），等待父进程收尸</p>
-<h2 class="heading-element" id="回收"><span><u><strong><code>回收</code></strong></u></span>
-  <a href="#%e5%9b%9e%e6%94%b6" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><p>当子进程变为僵尸进程后，需要父进程使用 <code>wait/waitpid</code> 为子进程收尸</p>
-<pre tabindex="0"><code>pid_t wait(int *_Nullable wstatus);
+...</code></pre></li></ol><p>其余 5 个函数分别为 <code>execl</code>，<code>execvp</code>，<code>execlp</code>，<code>execv</code>，<code>execle</code></p><h1 class=heading-element id=进程组><span>进程组</span>
+<a href=#%e8%bf%9b%e7%a8%8b%e7%bb%84 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h1><p>进程组是一个进程的集合，通常表示一个<strong>作业（job）</strong></p><p>每个进程只属于一个进程组，在使用 <code>fork</code> 创建子进程时，默认子进程属于父进程所在进程组</p><p>多个进程组组成一个<strong>Session（会话）</strong></p><h2 class=heading-element id=前台进程组><span>前台进程组</span>
+<a href=#%e5%89%8d%e5%8f%b0%e8%bf%9b%e7%a8%8b%e7%bb%84 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>前台进程组是一个重要的概念，它是当前 Session 中唯一被赋予控制终端并独占访问权的进程组</p><p>在同一时刻，只有一个进程组能被设为前台进程组，如果不是前台进程组，那就是后台进程组</p><h3 class=heading-element id=特性><span>特性</span>
+<a href=#%e7%89%b9%e6%80%a7 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><ul><li><u><strong><code>接收键盘产生的信号</code></strong></u> 当在当前 Session 按下对应的键时，会把信号发送给<strong>前台进程组中的全体成员</strong></li><li><u><strong><code>读取终端</code></strong></u> 前台进程组可以不受限制地从终端读取输入，而后台进程组一旦尝试读取终端，终端会向该进程组发送 <code>SIGTTIN</code>，暂停该进程组</li></ul><blockquote><p>向终端写入时，终端驱动有一个 <code>TOSTOP</code> 标志，默认关闭，当该标志关闭时，后台进程组可以向控制终端写入而不被阻止</p></blockquote><h2 class=heading-element id=shell-进程组><span>shell 进程组</span>
+<a href=#shell-%e8%bf%9b%e7%a8%8b%e7%bb%84 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>交互式 shell 本身就是一个进程，所在进程组默认时其就为前台进程组</p><h3 class=heading-element id=特殊之处><span>特殊之处</span>
+<a href=#%e7%89%b9%e6%ae%8a%e4%b9%8b%e5%a4%84 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><ul><li><u><strong><code>信号处理特殊</code></strong></u></li></ul><p>会忽略信号：<code>SIGINT</code>，<code>SIGQUIT</code>，<code>SIGTSTP</code>，<code>SIGTTIN</code>，<code>SIGTTOU</code></p><ul><li><u><strong><code>作业控制特殊</code></strong></u></li></ul><ol><li>不在 <code>jobs</code> 输出中</li><li>不能被 <code>fg/bg</code> 管理</li><li>不能被 <code>Ctrl-Z</code> 观其</li></ol><h2 class=heading-element id=前后台进程组切换><span>前后台进程组切换</span>
+<a href=#%e5%89%8d%e5%90%8e%e5%8f%b0%e8%bf%9b%e7%a8%8b%e7%bb%84%e5%88%87%e6%8d%a2 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><ol><li><p><u><strong><code>挂起前台作业</code></strong></u> 在前台进程组使用 <code>Ctrl-Z</code> 向其发送 <code>SIGTSTP</code> 信号，使其挂起，该作业变为后台作业</p></li><li><p><u><strong><code>后台/挂起作业变为前台作业</code></strong></u> 使用 <code>fg</code> 会将指定作业设为前台作业，并向其发送 <code>SIGCONT</code> 信号</p><blockquote><p>fg 背后调用的是 <code>tcsetpgrp</code>（terminal control set process group），其能够设置前台进程组，与之对应的函数还有 <code>tcgetpgrp</code>（terminal control get process group），获取前台进程组</p></blockquote></li><li><p><u><strong><code>继续后台运行挂起作业</code></strong></u> 使用 <code>bg</code> 向指定挂起作业发送 <code>SIGCONT</code>，并让其在后台运行</p></li></ol><h1 class=heading-element id=进程生命周期><span>进程生命周期</span>
+<a href=#%e8%bf%9b%e7%a8%8b%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h1><p>每个进程都有一个（Process Control Block），其记录着进程的状态，标识信息等，可以说，PCB 是进程的档案袋</p><p>在 Linux 中，PCB 的具体实现是 <code>task_struct</code>，这是一个复杂且庞大的结构体，后面在深入再学习</p><h2 class=heading-element id=创建><span><u><strong><code>创建</code></strong></u></span>
+<a href=#%e5%88%9b%e5%bb%ba class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>使用 <code>fork</code> 函数创建，一般呢，会调用 <code>execv</code> 类函数</p><h2 class=heading-element id=阻塞><span><u><strong><code>阻塞</code></strong></u></span>
+<a href=#%e9%98%bb%e5%a1%9e class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>当进程内调用 <code>wait</code>，<code>sleep</code>，<code>read</code> 等函数时，会进入阻塞状态，待到指定事件完成后，会自动恢复为运行状态</p><p>阻塞分为两种：</p><ul><li><em>Interruptible Sleep（S）</em> 能被信号唤醒，大多数阻塞属于这一类型</li><li><em>Disk Sleep（D）</em> 不能被信号唤醒，一般是 I/O 操作</li></ul><h2 class=heading-element id=暂停><span><u><strong><code>暂停</code></strong></u></span>
+<a href=#%e6%9a%82%e5%81%9c class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>当进程收到 <code>SIGTSTP</code> 或 <code>SIGSTOP</code> 信号时，进程暂停，当接收到 <code>SIGCONT</code> 信号时，进程恢复到 R 态</p><h2 class=heading-element id=终止><span><u><strong><code>终止</code></strong></u></span>
+<a href=#%e7%bb%88%e6%ad%a2 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>终止分为两类</p><ul><li><em>正常终止</em> 通过 <code>main</code> 函数正常返回或通过 <code>exit/_exit</code> 终止，退出状态码通过 <code>wait</code> 交给父进程</li><li><em>异常终止</em> 接收到触发异常终止的信号：<code>SIGINT</code>，<code>SIGQUIT</code>，<code>SIGSEGV</code>，<code>SIGTERM</code>，<code>SIGKILL</code> 等，可以通过 <code>wait</code> 获取 <code>status</code> 查看终止信号</li></ul><p>当进程终止后，会进入僵尸状态（Z），等待父进程收尸</p><h2 class=heading-element id=回收><span><u><strong><code>回收</code></strong></u></span>
+<a href=#%e5%9b%9e%e6%94%b6 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>当子进程变为僵尸进程后，需要父进程使用 <code>wait/waitpid</code> 为子进程收尸</p><pre tabindex=0><code>pid_t wait(int *_Nullable wstatus);
 pid_t waitpid(pid_t pid, int *_Nullable wstatus, int options);</code></pre><p><code>waitpid</code> 函数是 <code>wait</code> 的上位替代，所以这里重点讲解 <code>waitpid</code>
-参数：</p>
-<ul>
-<li>
-<p><u><code>pid</code></u>：详细规则如下表</p>
-<div class="table-wrapper">
-  <table data-sortable><thead>
-        <tr>
-            <th style="text-align: center">&lt;-1</th>
-            <th style="text-align: center">-1</th>
-            <th style="text-align: center">0</th>
-            <th style="text-align: center">&gt;0</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: center">等待与 <code>pid</code> 绝对值相等的进程组内所有子进程</td>
-            <td style="text-align: center">等待所有子进程</td>
-            <td style="text-align: center">等待同进程组内所有子进程</td>
-            <td style="text-align: center">等待 <code>pid</code> 所对应的子进程</td>
-        </tr>
-    </tbody>
-  </table>
-</div></li>
-<li>
-<p><u><code>options</code></u></p>
-<p>使用掩码进行传参
-有三种选择</p>
-<div class="table-wrapper">
-  <table data-sortable><thead>
-        <tr>
-            <th style="text-align: center">WNOHANG</th>
-            <th style="text-align: center">WUNTRACED</th>
-            <th style="text-align: center">WCONTINUED</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: center">如果没有子进程为僵尸进程则立即返回</td>
-            <td style="text-align: center">如果一个子进程在暂停状态也会返回，且会记录在 <code>status</code> 中</td>
-            <td style="text-align: center">如果子进程被 <code>SIGCONT</code> 信号恢复了也会返回</td>
-        </tr>
-    </tbody>
-  </table>
-</div><p>当不使用 <code>WNOHANG</code> 时，<code>waitpid</code> 会一直等待指定子进程终止并收尸才返回，使用后如果就把等待变成询问，问一下子进程是否终止，终止就收尸，否则立即返回</p>
-<p>当不使用 <code>WUNTRACED</code> 时，<code>waitpid</code> 会对不关心进程是否暂停，使用后，如果暂停，waitpid 也会立即返回，而且可以通过 <code>status</code> 得到是因为暂停返回还是终止返回</p>
-<p><code>WCONTINUED</code> 与 <code>WUNTRACED</code> 类似</p>
-</li>
-<li>
-<p><u><code>wstatus</code></u> <code>wstatus</code> 需要传一个 int 指针，<code>wait</code> 函数会把僵尸进程的信息写入 <code>wstatus</code> 中，并通过指定宏读取 <code>wstatus</code> 以获取信息，下面是常见宏</p>
-<div class="table-wrapper">
-  <table data-sortable><thead>
-        <tr>
-            <th style="text-align: center">WIFEXITED</th>
-            <th style="text-align: center">WEXITSTATUS</th>
-            <th style="text-align: center">WIFSIGNALED</th>
-            <th style="text-align: center">WTERMSIG</th>
-            <th style="text-align: center">WIFSTOPPED</th>
-            <th style="text-align: center">WSTOPSIG</th>
-            <th style="text-align: center">WIFCONTINUED</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: center">判断进程是否正常终止</td>
-            <td style="text-align: center">获取正常终止时的退出状态码</td>
-            <td style="text-align: center">判断进程是否是由于信号终止</td>
-            <td style="text-align: center">获取使进程终止的信号</td>
-            <td style="text-align: center">判断进程是否是在暂停（<code>options</code> 必须使用 <code>WUNTRACED</code>）</td>
-            <td style="text-align: center">获取让进程暂停的信号</td>
-            <td style="text-align: center">判断进程是否被 <code>SIGCONT</code> 恢复了</td>
-        </tr>
-    </tbody>
-  </table>
-</div></li>
-</ul>
-<p><code>wait(wstatus)</code> == <code>waitpid(-1,wstatus,0)</code></p>
-<p><code>waitpid</code> 函数每次返回只会处理一个子进程</p>
-<p>返回值：</p>
-<div class="table-wrapper">
-  <table data-sortable><thead>
-        <tr>
-            <th style="text-align: center">-1</th>
-            <th style="text-align: center">0</th>
-            <th style="text-align: center">&gt;0</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: center">无法找到对应子进程或被信号中断</td>
-            <td style="text-align: center">只有在 <code>WNOHANG</code> 的条件下才可能返回 0，代表没有找到了子进程，但其不为可报告的进程</td>
-            <td style="text-align: center">成功，返回对应处理的子进程的 <code>pid</code></td>
-        </tr>
-    </tbody>
-  </table>
-</div><p><code>waitpid</code> 能够回收僵尸进程，但必须要父进程调用才行了，那么问题来了，如果一个进程没有父进程，该怎么回收呢？这种没有父进程（或者说父进程已经终止）的进程称为孤儿进程</p>
-<p>孤儿进程不需要我们操心了，内核会给孤儿找养父，让养父来为孤儿收尸，所以孤儿一般不会长期僵尸</p>
-<h1 class="heading-element" id="信号"><span>信号</span>
-  <a href="#%e4%bf%a1%e5%8f%b7" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h1><p>在上面我们已经知道信号与进程紧密相连的，能够实现进程间的简单通信</p>
-<h2 class="heading-element" id="信号的生命周期"><span>信号的生命周期</span>
-  <a href="#%e4%bf%a1%e5%8f%b7%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><h3 class="heading-element" id="产生"><span>产生</span>
-  <a href="#%e4%ba%a7%e7%94%9f" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h3><p>可由硬件，终端和内核产生，也可通过 <code>kill</code>，<code>raise</code> 方法手动发送信号</p>
-<h3 class="heading-element" id="阻塞-1"><span>阻塞</span>
-  <a href="#%e9%98%bb%e5%a1%9e-1" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h3><p>进程设置信号掩码，表示该进程暂不接收某些信号</p>
-<pre tabindex="0"><code>sigset_t new_mask, old_mask;
+参数：</p><ul><li><p><u><code>pid</code></u>：详细规则如下表</p><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>&lt;-1</th><th style=text-align:center>-1</th><th style=text-align:center>0</th><th style=text-align:center>>0</th></tr></thead><tbody><tr><td style=text-align:center>等待与 <code>pid</code> 绝对值相等的进程组内所有子进程</td><td style=text-align:center>等待所有子进程</td><td style=text-align:center>等待同进程组内所有子进程</td><td style=text-align:center>等待 <code>pid</code> 所对应的子进程</td></tr></tbody></table></div></li><li><p><u><code>options</code></u></p><p>使用掩码进行传参
+有三种选择</p><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>WNOHANG</th><th style=text-align:center>WUNTRACED</th><th style=text-align:center>WCONTINUED</th></tr></thead><tbody><tr><td style=text-align:center>如果没有子进程为僵尸进程则立即返回</td><td style=text-align:center>如果一个子进程在暂停状态也会返回，且会记录在 <code>status</code> 中</td><td style=text-align:center>如果子进程被 <code>SIGCONT</code> 信号恢复了也会返回</td></tr></tbody></table></div><p>当不使用 <code>WNOHANG</code> 时，<code>waitpid</code> 会一直等待指定子进程终止并收尸才返回，使用后如果就把等待变成询问，问一下子进程是否终止，终止就收尸，否则立即返回</p><p>当不使用 <code>WUNTRACED</code> 时，<code>waitpid</code> 会对不关心进程是否暂停，使用后，如果暂停，waitpid 也会立即返回，而且可以通过 <code>status</code> 得到是因为暂停返回还是终止返回</p><p><code>WCONTINUED</code> 与 <code>WUNTRACED</code> 类似</p></li><li><p><u><code>wstatus</code></u> <code>wstatus</code> 需要传一个 int 指针，<code>wait</code> 函数会把僵尸进程的信息写入 <code>wstatus</code> 中，并通过指定宏读取 <code>wstatus</code> 以获取信息，下面是常见宏</p><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>WIFEXITED</th><th style=text-align:center>WEXITSTATUS</th><th style=text-align:center>WIFSIGNALED</th><th style=text-align:center>WTERMSIG</th><th style=text-align:center>WIFSTOPPED</th><th style=text-align:center>WSTOPSIG</th><th style=text-align:center>WIFCONTINUED</th></tr></thead><tbody><tr><td style=text-align:center>判断进程是否正常终止</td><td style=text-align:center>获取正常终止时的退出状态码</td><td style=text-align:center>判断进程是否是由于信号终止</td><td style=text-align:center>获取使进程终止的信号</td><td style=text-align:center>判断进程是否是在暂停（<code>options</code> 必须使用 <code>WUNTRACED</code>）</td><td style=text-align:center>获取让进程暂停的信号</td><td style=text-align:center>判断进程是否被 <code>SIGCONT</code> 恢复了</td></tr></tbody></table></div></li></ul><p><code>wait(wstatus)</code> == <code>waitpid(-1,wstatus,0)</code></p><p><code>waitpid</code> 函数每次返回只会处理一个子进程</p><p>返回值：</p><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>-1</th><th style=text-align:center>0</th><th style=text-align:center>>0</th></tr></thead><tbody><tr><td style=text-align:center>无法找到对应子进程或被信号中断</td><td style=text-align:center>只有在 <code>WNOHANG</code> 的条件下才可能返回 0，代表没有找到了子进程，但其不为可报告的进程</td><td style=text-align:center>成功，返回对应处理的子进程的 <code>pid</code></td></tr></tbody></table></div><p><code>waitpid</code> 能够回收僵尸进程，但必须要父进程调用才行了，那么问题来了，如果一个进程没有父进程，该怎么回收呢？这种没有父进程（或者说父进程已经终止）的进程称为孤儿进程</p><p>孤儿进程不需要我们操心了，内核会给孤儿找养父，让养父来为孤儿收尸，所以孤儿一般不会长期僵尸</p><h1 class=heading-element id=信号><span>信号</span>
+<a href=#%e4%bf%a1%e5%8f%b7 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h1><p>在上面我们已经知道信号与进程紧密相连的，能够实现进程间的简单通信</p><h2 class=heading-element id=信号的生命周期><span>信号的生命周期</span>
+<a href=#%e4%bf%a1%e5%8f%b7%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><h3 class=heading-element id=产生><span>产生</span>
+<a href=#%e4%ba%a7%e7%94%9f class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>可由硬件，终端和内核产生，也可通过 <code>kill</code>，<code>raise</code> 方法手动发送信号</p><h3 class=heading-element id=阻塞-1><span>阻塞</span>
+<a href=#%e9%98%bb%e5%a1%9e-1 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>进程设置信号掩码，表示该进程暂不接收某些信号</p><pre tabindex=0><code>sigset_t new_mask, old_mask;
    
 // 初始化新信号集，只包含 SIGINT
 sigemptyset(&amp;new_mask);
 sigaddset(&amp;new_mask, SIGINT);
 
 // 设置新的信号屏蔽字，阻塞 SIGINT 信号
-sigprocmask(SIG_BLOCK, &amp;new_mask, &amp;old_mask);</code></pre><p>解除信号屏蔽</p>
-<pre tabindex="0"><code>sigprocmask(SIG_UNBLOCK, &amp;new_mask, &amp;old_mask);</code></pre><h3 class="heading-element" id="处理"><span>处理</span>
-  <a href="#%e5%a4%84%e7%90%86" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h3><p>进程接收到信号后，调用对应的信号处理函数进行处理，如果没有注册则会调用默认的处理函数，否则调用用户注册的函数</p>
-<p>注册信号处理函数一般使用 <code>sigaction</code> 函数
-函数原型</p>
-<pre tabindex="0"><code> int sigaction(int signum,
+sigprocmask(SIG_BLOCK, &amp;new_mask, &amp;old_mask);</code></pre><p>解除信号屏蔽</p><pre tabindex=0><code>sigprocmask(SIG_UNBLOCK, &amp;new_mask, &amp;old_mask);</code></pre><h3 class=heading-element id=处理><span>处理</span>
+<a href=#%e5%a4%84%e7%90%86 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>进程接收到信号后，调用对应的信号处理函数进行处理，如果没有注册则会调用默认的处理函数，否则调用用户注册的函数</p><p>注册信号处理函数一般使用 <code>sigaction</code> 函数
+函数原型</p><pre tabindex=0><code> int sigaction(int signum,
  const struct sigaction *_Nullable restrict act,
- struct sigaction *_Nullable restrict oldact);</code></pre><p>其中：</p>
-<ul>
-<li><u><code>signum</code></u>：表示需要注册函数的信号码（不可以是 <code>SIGKILL</code> 或 <code>SIGSTOP</code>，不能为这两个信号注册函数）</li>
-<li><u><code>act</code></u>：新的信号处理指针，可为 <code>NULL</code>，表示不修改</li>
-<li><u><code>oldact</code></u>：保存旧的信号处理指针，可为 <code>NULL</code>，表示不保存</li>
-</ul>
-<p>两个信号处理指针都是 sigaction 结构体指针</p>
-<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> sigaction {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span>     (<span style="color:#f92672">*</span>sa_handler)(<span style="color:#66d9ef">int</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span>     (<span style="color:#f92672">*</span>sa_sigaction)(<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">siginfo_t</span> <span style="color:#f92672">*</span>, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">sigset_t</span>   sa_mask;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span>        sa_flags;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span>     (<span style="color:#f92672">*</span>sa_restorer)(<span style="color:#66d9ef">void</span>);
-</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><p>其中 <code>sa_handler</code> 和 <code>sa_sigaction</code> 是二选一</p>
-<h2 class="heading-element" id="常见信号"><span>常见信号</span>
-  <a href="#%e5%b8%b8%e8%a7%81%e4%bf%a1%e5%8f%b7" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
-</h2><div class="table-wrapper">
-  <table data-sortable><thead>
-        <tr>
-            <th style="text-align: center"><code>SIGINT</code></th>
-            <th style="text-align: center"><code>SIGKILL</code></th>
-            <th style="text-align: center"><code>SIGSTOP</code></th>
-            <th style="text-align: center"><code>SIGTSTP</code></th>
-            <th style="text-align: center"><code>SIGCHLD</code></th>
-            <th style="text-align: center"><code>SIGCONT</code></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td style="text-align: center">Terminated</td>
-            <td style="text-align: center">Terminated</td>
-            <td style="text-align: center">Stopped</td>
-            <td style="text-align: center">Stopped</td>
-            <td style="text-align: center">Ignore</td>
-            <td style="text-align: center">Continue</td>
-        </tr>
-    </tbody>
-  </table>
-</div><p>重点在<code>SIGCHLD</code>信号，在子进程终止，暂停和继续时，父进程都会收到<code>SIGCHLD</code>信号，一般我们通过<code>waitpid</code>方法获得子进程相关信息进行收尸处理</p>
-<p>信号的一大特点是：<strong>信号不排队，也没有引用计数</strong></p>
-<p>这也就意味着，当多个子进程终止时，父进程只会收到一个<code>SIGCHLD</code>信号，因此，在为子进程收尸时，我们会使用循环保证处理所有需要的子进程</p>
-</div><div class="post-footer" id="post-footer">
-  <div class="post-info">
-    <div class="post-info-line">
-      <div class="post-info-mod"><span title="更新于 2026-11-09 08:35:13">更新于 2026-11-09&nbsp;</span>
-      </div><div class="post-info-license">
-            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
-          </div></div>
-    <div class="post-info-line">
-      <div class="post-info-md"><span><a href="vscode://file//home/yu419/blog/my-blog/content/posts/深入理解计算机系统 第六章.md" title="在编辑器中打开" class="link-to-editor">在编辑器中打开</a></span></div><div class="post-info-share">
-          <span></span>
-        </div></div>
-  </div>
-
-  <div class="post-info-more">
-    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/csapp/" class="post-tag" title="标签 - CSAPP">CSAPP</a></section>
-    <section class="post-actions"><span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>
-      <span class="separator" aria-hidden="true"></span>
-      <span><a href="/">主页</a></span>
-    </section>
-  </div><div class="post-nav"><a href="/posts/583bc6c/" class="post-nav-item" rel="prev" title="深入理解计算机系统 第三章"><i class="fa-solid fa-angle-left" aria-hidden="true"></i>深入理解计算机系统 第三章</a><a href="/posts/xv6-chapter-1/" class="post-nav-item" rel="next" title="Xv6 Chapter1">Xv6 Chapter1<i class="fa-solid fa-angle-right" aria-hidden="true"></i></a></div>
-</div>
-</article><aside class="toc animate__animated animate__fadeIn animate__faster" id="toc-auto" aria-label="目录"><h2 class="toc-title">
-      <span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden="true"></i></span>
-      <button type="button" class="toc-print-btn" onclick="event.stopPropagation(); window.print()" aria-label="打印"><i class="fa-solid fa-print" aria-hidden="true"></i></button>
-    </h2>
-    <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
-  <div class="footer-container"><div class="footer-bottom"><div class="footer-legal"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
-                  <span itemprop="copyrightYear">2024 - 2026</span><span class="author" itemprop="copyrightHolder">
-                    <a href="/authors/anonymous/"></a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
-              </div></div></div></div>
-</footer>
-</div><div class="widgets"><div id="mask"></div><dialog id="nav-dialog" aria-labelledby="nav-dialog-title" closedby="any">
-    <button type="button" class="nav-close-btn" aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden="true"></i></button>
-    <div class="toc">
-      <h2 class="toc-title" id="nav-dialog-title">导航</h2><div class="toc-content" id="toc-content-drawer"></div></div>
-  </dialog><dialog id="search-dialog" class="search-dialog" aria-label="搜索" closedby="any">
-      <div class="search-modal">
-        <div class="search-modal-header">
-          <span class="search-delimiter"></span>
-          <button type="button" class="search-close-btn" aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
-        </div>
-        <div class="search-source-footer">
-          <div class="search-shortcuts">
-            <span class="search-shortcut">
-              <kbd><i class="lucide-arrow-up" aria-hidden="true"></i></kbd>
-              <kbd><i class="lucide-arrow-down" aria-hidden="true"></i></kbd>
-              切换
-            </span>
-            <span class="search-shortcut">
-              <kbd><i class="lucide-corner-down-left" aria-hidden="true"></i></kbd>
-              选择
-            </span>
-            <span class="search-shortcut">
-              <kbd>ESC</kbd>
-              关闭
-            </span>
-          </div><span class="search-engine">搜索引擎 <a href="https://fusejs.io/" target="_blank" rel="external nofollow noopener noreferrer">Fuse.js</a></span></div>
-      </div>
-    </dialog><div class="fixed-buttons"><button type="button" class="fixed-button back-to-top animate__faster hidden" aria-label="回到顶部"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button><button type="button" id="nav-drawer-button" class="fixed-button nav-drawer-button hidden" aria-label="导航" aria-controls="nav-dialog" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div><noscript>
-    <div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div>
-  </noscript>
-</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/lib/table-sort.js" defer></script><script src="/js/config/6150ac9ad9ae461827b8e60e00b36b30.js" defer></script><script src="/js/lib/file-tree.js" defer></script><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script></body>
-</html>
+ struct sigaction *_Nullable restrict oldact);</code></pre><p>其中：</p><ul><li><u><code>signum</code></u>：表示需要注册函数的信号码（不可以是 <code>SIGKILL</code> 或 <code>SIGSTOP</code>，不能为这两个信号注册函数）</li><li><u><code>act</code></u>：新的信号处理指针，可为 <code>NULL</code>，表示不修改</li><li><u><code>oldact</code></u>：保存旧的信号处理指针，可为 <code>NULL</code>，表示不保存</li></ul><p>两个信号处理指针都是 sigaction 结构体指针</p><div class="code-block highlight line-nos-hidden" data-mode=classic data-copyable=true><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#66d9ef>struct</span> sigaction {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span>     (<span style=color:#f92672>*</span>sa_handler)(<span style=color:#66d9ef>int</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span>     (<span style=color:#f92672>*</span>sa_sigaction)(<span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>siginfo_t</span> <span style=color:#f92672>*</span>, <span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>sigset_t</span>   sa_mask;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span>        sa_flags;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>void</span>     (<span style=color:#f92672>*</span>sa_restorer)(<span style=color:#66d9ef>void</span>);
+</span></span><span style=display:flex><span>};</span></span></code></pre></div><p>其中 <code>sa_handler</code> 和 <code>sa_sigaction</code> 是二选一</p><h2 class=heading-element id=常见信号><span>常见信号</span>
+<a href=#%e5%b8%b8%e8%a7%81%e4%bf%a1%e5%8f%b7 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center><code>SIGINT</code></th><th style=text-align:center><code>SIGKILL</code></th><th style=text-align:center><code>SIGSTOP</code></th><th style=text-align:center><code>SIGTSTP</code></th><th style=text-align:center><code>SIGCHLD</code></th><th style=text-align:center><code>SIGCONT</code></th></tr></thead><tbody><tr><td style=text-align:center>Terminated</td><td style=text-align:center>Terminated</td><td style=text-align:center>Stopped</td><td style=text-align:center>Stopped</td><td style=text-align:center>Ignore</td><td style=text-align:center>Continue</td></tr></tbody></table></div><p>重点在<code>SIGCHLD</code>信号，在子进程终止，暂停和继续时，父进程都会收到<code>SIGCHLD</code>信号，一般我们通过<code>waitpid</code>方法获得子进程相关信息进行收尸处理</p><p>信号的一大特点是：<strong>信号不排队，也没有引用计数</strong></p><p>这也就意味着，当多个子进程终止时，父进程只会收到一个<code>SIGCHLD</code>信号，因此，在为子进程收尸时，我们会使用循环保证处理所有需要的子进程</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="更新于 2026-11-09 08:35:13">更新于 2026-11-09&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc-sa/4.0/ target=_blank>CC BY-NC-SA 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags me-1" aria-hidden=true></i><a href=/tags/csapp/ class=post-tag title="标签 - CSAPP">CSAPP</a></section><section class=post-actions><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>
+<span class=separator aria-hidden=true></span>
+<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/posts/583bc6c/ class=post-nav-item rel=prev title="深入理解计算机系统 第三章"><i class="fa-solid fa-angle-left" aria-hidden=true></i>深入理解计算机系统 第三章</a><a href=/posts/xv6-chapter-1/ class=post-nav-item rel=next title="Xv6 Chapter1">Xv6 Chapter1<i class="fa-solid fa-angle-right" aria-hidden=true></i></a></div></div></article><aside class="toc animate__animated animate__fadeIn animate__faster" id=toc-auto aria-label=目录><h2 class=toc-title><span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden=true></i></span>
+<button type=button class=toc-print-btn onclick=event.stopPropagation(),window.print() aria-label=打印><i class="fa-solid fa-print" aria-hidden=true></i></button></h2><div class=toc-content id=toc-content-auto></div></aside></main><footer class=footer><div class=footer-container><div class=footer-bottom><div class=footer-legal><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright" aria-hidden=true></i>
+<span itemprop=copyrightYear>2024 - 2026</span><span class=author itemprop=copyrightHolder>
+<a href=/authors/anonymous/></a></span></div></div><div class=footer-tech><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target=_blank rel=external title="FixIt v1.0.0-rc.1">FixIt</a> 驱动</div></div></div></div></footer></div><div class=widgets><div id=mask></div><dialog id=nav-dialog aria-labelledby=nav-dialog-title closedby=any><button type=button class=nav-close-btn aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden=true></i></button><div class=toc><h2 class=toc-title id=nav-dialog-title>导航</h2><div class=toc-content id=toc-content-drawer></div></div></dialog><dialog id=search-dialog class=search-dialog aria-label=搜索 closedby=any><div class=search-modal><div class=search-modal-header><span class=search-delimiter></span>
+<button type=button class=search-close-btn aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden=true></i></button></div><div class=search-source-footer><div class=search-shortcuts><span class=search-shortcut><kbd><i class=lucide-arrow-up aria-hidden=true></i></kbd>
+<kbd><i class=lucide-arrow-down aria-hidden=true></i></kbd>
+切换
+</span><span class=search-shortcut><kbd><i class=lucide-corner-down-left aria-hidden=true></i></kbd>
+选择
+</span><span class=search-shortcut><kbd>ESC</kbd>
+关闭</span></div><span class=search-engine>搜索引擎 <a href=https://fusejs.io/ target=_blank rel="external nofollow noopener noreferrer">Fuse.js</a></span></div></div></dialog><div class=fixed-buttons><button type=button class="fixed-button back-to-top animate__faster hidden" aria-label=回到顶部><i class="fa-solid fa-arrow-up" aria-hidden=true></i></button><button type=button id=nav-drawer-button class="fixed-button nav-drawer-button hidden" aria-label=导航 aria-controls=nav-dialog aria-expanded=false><i class="fa-solid fa-bars" aria-hidden=true></i></button></div><noscript><div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script src=/lib/autocomplete-js/index.production.js defer></script><script src=/js/lib/fuse.min.js defer></script><script src=/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/js/lib/cookieconsent.min.js defer></script><script src=/lib/cell-tooltip/cell-tooltip.umd.js defer></script><script src=/js/lib/table-sort.min.js defer></script><script src=/js/config/6150ac9ad9ae461827b8e60e00b36b30.min.js defer></script><script src=/js/lib/file-tree.min.js defer></script><script src=/js/main.min.js defer></script><script src=/js/custom.min.js defer></script></body></html>

@@ -599,11 +599,7 @@ dialog.search-dialog .search-shortcut kbd {
 }
 
 .home.posts .summary .content {
-  max-width: 680px;
-  margin-top: 0.4rem;
-  color: light-dark(#687381, #a1aab6);
-  font-size: 0.96rem;
-  line-height: 1.8;
+  display: none;
 }
 
 .home.posts .summary .post-footer {
@@ -1156,13 +1152,6 @@ body {
   margin-top: 0.9rem;
 }
 
-.home.posts .summary .content {
-  display: -webkit-box;
-  overflow: hidden;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-}
-
 .home.posts .summary .single-title a,
 .page.archive .editorial-heading .archive-title,
 .page.single h1.single-title {
@@ -1266,12 +1255,6 @@ body {
   .editorial-hero::after {
     inset-inline-start: 25%;
     opacity: 0.28;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home.posts .summary .content {
-    transition: none;
   }
 }
 
