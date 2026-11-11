@@ -8,9 +8,9 @@ description:
 keywords:
 weight: 0
 categories:
-  - xv6
+  - 学习
 collections:
-  - 
+  - xv6
 tags:
   - xv6
 summary:
