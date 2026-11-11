@@ -1807,4 +1807,382 @@ body {
   -webkit-text-fill-color: currentColor;
 }
 
+.page.single:not(.special) > .header {
+  margin-bottom: 1.4rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid light-dark(rgba(32, 42, 56, 0.1), rgba(226, 232, 240, 0.1));
+}
+
+.page.single:not(.special) > .header .single-title {
+  padding: 0;
+  font-size: clamp(1.9rem, 4vw, 2.45rem);
+  font-weight: 680;
+  line-height: 1.28;
+  letter-spacing: -0.045em;
+  text-wrap: pretty;
+}
+
+.page.single:not(.special) > .header .single-subtitle {
+  margin-top: 0.65rem;
+  color: light-dark(#727c89, #a1aab6);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.page.single:not(.special) > .post-meta {
+  margin-bottom: 1.75rem;
+  color: light-dark(#7d8795, #9ba5b3);
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+
+.page.single:not(.special) #content {
+  max-width: 48rem;
+  margin: 0 auto;
+  color: light-dark(#343d49, #d2d8e1);
+  font-size: clamp(1rem, 0.97rem + 0.18vw, 1.075rem);
+  line-height: 1.95;
+  overflow-wrap: break-word;
+}
+
+.page.single:not(.special) #content > p {
+  margin-block: 0 1.25em;
+  text-wrap: pretty;
+}
+
+.page.single:not(.special) #content > h2.heading-element {
+  margin-block: 2.8em 0.95em;
+  padding: 0 0 0.45em;
+  color: light-dark(#202833, #edf0f4);
+  font-size: 1.48em;
+  line-height: 1.4;
+  letter-spacing: -0.035em;
+  border-bottom: 1px solid light-dark(rgba(32, 42, 56, 0.12), rgba(226, 232, 240, 0.12));
+}
+
+.page.single:not(.special) #content > h2.heading-element::before {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 1.75rem;
+  margin-inline-end: 0.7rem;
+  color: light-dark(#7d8795, #9ba5b3);
+  content: counter(h2, decimal-leading-zero);
+  font-size: 0.58em;
+  font-weight: 550;
+  letter-spacing: 0.04em;
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.1), rgba(226, 232, 240, 0.12));
+  border-radius: 0.45rem;
+}
+
+.page.single:not(.special) #content > h3.heading-element {
+  margin-block: 2em 0.7em;
+  color: light-dark(#303946, #e1e6ed);
+  font-size: 1.2em;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
+.page.single:not(.special) #content > h4.heading-element,
+.page.single:not(.special) #content > h5.heading-element,
+.page.single:not(.special) #content > h6.heading-element {
+  margin-block: 1.7em 0.6em;
+  color: light-dark(#394555, #d6dee8);
+}
+
+.page.single:not(.special) #content > ul,
+.page.single:not(.special) #content > ol {
+  margin-block: 0.8em 1.4em;
+  padding-inline-start: 1.5em;
+}
+
+.page.single:not(.special) #content li {
+  padding-inline-start: 0.2em;
+  margin-block: 0.35em;
+}
+
+.page.single:not(.special) #content li > p {
+  margin-block: 0.4em;
+}
+
+.page.single:not(.special) #content :not(pre) > code {
+  padding: 0.12em 0.38em;
+  color: light-dark(#46566a, #c8d5e5);
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.07), rgba(226, 232, 240, 0.08));
+  border-radius: 0.35rem;
+  background-color: light-dark(rgba(32, 42, 56, 0.055), rgba(226, 232, 240, 0.075));
+  font-size: 0.88em;
+}
+
+.page.single:not(.special) #content .highlight {
+  margin-block: 1.5rem;
+  overflow: hidden;
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.09), rgba(226, 232, 240, 0.1));
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px light-dark(rgba(36, 48, 64, 0.045), rgba(0, 0, 0, 0.14));
+}
+
+.page.single:not(.special) #content pre {
+  font-size: 0.86rem;
+  line-height: 1.75;
+}
+
+.page.single:not(.special) #content blockquote {
+  margin-block: 1.5rem;
+  padding: 0.9rem 1.2rem;
+  color: light-dark(#596575, #bac3cf);
+  border: 0;
+  border-inline-start: 3px solid light-dark(#9eacbd, #66778d);
+  border-radius: 0 0.65rem 0.65rem 0;
+  background-color: light-dark(rgba(32, 42, 56, 0.045), rgba(226, 232, 240, 0.045));
+}
+
+.page.single:not(.special) #content .table-wrapper {
+  margin-block: 1.5rem;
+  border-color: light-dark(rgba(32, 42, 56, 0.1), rgba(226, 232, 240, 0.1));
+}
+
+.page.single:not(.special) #content figure {
+  margin-block: 1.75rem;
+}
+
+.page.single:not(.special) #content figure img {
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.08), rgba(226, 232, 240, 0.09));
+  border-radius: 0.7rem;
+  box-shadow: 0 10px 28px light-dark(rgba(36, 48, 64, 0.07), rgba(0, 0, 0, 0.2));
+}
+
+.page.single:not(.special) #content .image-caption:not(:empty) {
+  max-width: 92%;
+  padding: 0.65rem 0.5rem 0;
+  color: light-dark(#818b98, #98a2af);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.page.single:not(.special) #content .katex-display {
+  margin-block: 1.5rem;
+  padding: 1rem;
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.07), rgba(226, 232, 240, 0.08));
+  border-radius: 0.65rem;
+  background-color: light-dark(rgba(32, 42, 56, 0.025), rgba(226, 232, 240, 0.035));
+}
+
+.page.single:not(.special) #content > hr {
+  height: 0;
+  margin-block: 2.5rem;
+  border: 0;
+  border-top: 1px solid light-dark(rgba(32, 42, 56, 0.12), rgba(226, 232, 240, 0.12));
+  background: none;
+}
+
+.page.single:not(.special) #content .footnotes {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid light-dark(rgba(32, 42, 56, 0.1), rgba(226, 232, 240, 0.1));
+  font-size: 0.84rem;
+  line-height: 1.75;
+}
+
+.page.single:not(.special) #content a:not(.heading-mark) {
+  text-decoration-color: light-dark(rgba(65, 92, 124, 0.38), rgba(168, 190, 218, 0.38));
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.page.single:not(.special) #content a:not(.heading-mark):hover {
+  text-decoration-color: currentColor;
+}
+
+.page.single:not(.special) #content > div:first-child[style*=font-family] {
+  position: relative;
+  max-width: 39rem !important;
+  margin: clamp(2rem, 5vw, 3.25rem) auto !important;
+  padding: clamp(1.25rem, 3vw, 1.9rem);
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.09), rgba(226, 232, 240, 0.1));
+  border-inline-start: 3px solid light-dark(#a3afbd, #68798e);
+  border-radius: 0.75rem;
+  background-color: light-dark(rgba(255, 255, 255, 0.54), rgba(23, 27, 34, 0.52));
+}
+
+.page.single:not(.special) #content > div:first-child[style*=font-family] > p:first-child {
+  margin-bottom: 1rem !important;
+  font-size: 0.68rem !important;
+  font-weight: 650;
+  letter-spacing: 0.32em !important;
+}
+
+.page.single:not(.special) #content > div:first-child[style*=font-family] > p:last-child {
+  margin-top: 1.5rem !important;
+  font-size: 0.78rem !important;
+}
+
+.page.single:not(.special) > .post-meta .post-meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin-block: 0.25rem;
+}
+
+.page.single:not(.special) > .post-meta .post-author,
+.page.single:not(.special) > .post-meta .post-included-in,
+.page.single:not(.special) > .post-meta .post-meta-line > span:not(.post-author):not(.post-included-in) {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 1.7rem;
+  margin: 0;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.07), rgba(226, 232, 240, 0.08));
+  border-radius: 999px;
+  background-color: light-dark(rgba(255, 255, 255, 0.48), rgba(23, 27, 34, 0.42));
+}
+
+.page.single:not(.special) > .post-meta .post-included-in {
+  gap: 0.35rem;
+}
+
+.page.single:not(.special) > .post-meta .post-category,
+.page.single:not(.special) > .post-meta .post-collection,
+.page.single:not(.special) > .post-meta .post-author a {
+  color: inherit;
+}
+
+.page.single:not(.special) > .post-meta a:hover {
+  color: light-dark(#344c69, #d8e8fa);
+}
+
+.page.single:not(.special) > .post-meta .post-included-in > * {
+  margin-inline: 0;
+}
+
+.page.single:not(.special) #content .highlight pre {
+  scrollbar-width: thin;
+  scrollbar-color: light-dark(rgba(91, 105, 122, 0.42), rgba(173, 185, 201, 0.32)) transparent;
+}
+
+.page.single:not(.special) #content .heading-element {
+  scroll-margin-block-start: 6rem;
+}
+
+.page.single:not(.special) #content .heading-element:target {
+  text-decoration-color: light-dark(#8999ac, #93a6bf);
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+}
+
+#toc-auto {
+  padding: 1rem;
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.08), rgba(226, 232, 240, 0.09));
+  border-radius: 0.75rem;
+  background-color: light-dark(rgba(255, 255, 255, 0.58), rgba(23, 27, 34, 0.58));
+}
+
+#toc-auto .toc-title {
+  margin-bottom: 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 767.98px) {
+  .page.single:not(.special) > .header {
+    margin-bottom: 1.1rem;
+    padding-bottom: 1rem;
+  }
+  .page.single:not(.special) > .header .single-title {
+    font-size: clamp(1.7rem, 7vw, 2.1rem);
+    line-height: 1.35;
+  }
+  .page.single:not(.special) > .post-meta {
+    margin-bottom: 1.25rem;
+  }
+  .page.single:not(.special) #content {
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+  .page.single:not(.special) #content > h2.heading-element {
+    margin-top: 2.3em;
+    font-size: 1.36em;
+  }
+  .page.single:not(.special) #content .katex-display {
+    margin-inline: -0.35rem;
+    padding: 0.8rem 0.55rem;
+  }
+  .page.single:not(.special) #content > h2.heading-element::before {
+    width: 1.7rem;
+    height: 1.55rem;
+    margin-inline-end: 0.55rem;
+  }
+  .page.single:not(.special) #content > div:first-child[style*=font-family] {
+    margin-block: 1.75rem !important;
+    padding: 1.15rem;
+  }
+  .page.single:not(.special) > .post-meta .post-meta-line {
+    gap: 0.35rem;
+  }
+  .page.single:not(.special) > .post-meta .post-included-in {
+    flex-wrap: wrap;
+    border-radius: 0.65rem;
+  }
+  .page.single:not(.special) .post-nav {
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+}
+.page.single:not(.special) .post-nav {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid light-dark(rgba(32, 42, 56, 0.1), rgba(226, 232, 240, 0.1));
+}
+
+.page.single:not(.special) .post-nav .post-nav-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 1rem 1.15rem;
+  color: light-dark(#303946, #e1e6ed);
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.08), rgba(226, 232, 240, 0.09));
+  border-radius: 0.7rem;
+  background-color: light-dark(rgba(255, 255, 255, 0.52), rgba(23, 27, 34, 0.5));
+  text-decoration: none;
+  transition: border-color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.page.single:not(.special) .post-nav .post-nav-item::before {
+  color: light-dark(#818b98, #98a2af);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.page.single:not(.special) .post-nav .post-nav-item[rel=prev]::before {
+  content: "上一篇";
+}
+
+.page.single:not(.special) .post-nav .post-nav-item[rel=next]::before {
+  content: "下一篇";
+}
+
+.page.single:not(.special) .post-nav .post-nav-item:hover,
+.page.single:not(.special) .post-nav .post-nav-item:focus-visible {
+  border-color: light-dark(rgba(49, 93, 142, 0.24), rgba(156, 196, 240, 0.25));
+  background-color: light-dark(rgba(255, 255, 255, 0.9), rgba(35, 44, 58, 0.9));
+}
+
+.page.single:not(.special) .post-nav .post-nav-item[rel=next] {
+  align-items: flex-end;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page.single:not(.special) .post-nav .post-nav-item {
+    transition: none;
+  }
+}
+
 /*# sourceMappingURL=custom.css.map */

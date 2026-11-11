@@ -73,6 +73,11 @@ featuredImagePreview = true
 [params.footer]
 since = 2024
 
+[params.reading_progress]
+enable = true
+light = "#687b91"
+dark = "#c8d3e1"
+
 [params.share]
 enable = false
 

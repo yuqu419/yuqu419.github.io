@@ -41,7 +41,6 @@ Let us go to the world of xv6.
 <p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/11</p>
 
 </div>
-> This markdown was established to record my journey of learning risc-v xv6 system.And it is written in English on purpose
 
 ## Operating System
 
