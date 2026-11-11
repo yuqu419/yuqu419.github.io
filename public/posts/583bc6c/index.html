@@ -1,80 +1,617 @@
-<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=zh-CN dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=2"><title>深入理解计算机系统 第三章 - yu419</title><meta name=author content="Anonymous"><meta name=description content=" Preface
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN" dir="ltr">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <title>深入理解计算机系统 第三章 - yu419</title><meta name="author" content="Anonymous">
+<meta name="description" content=" Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
 — 2026/11/9
 栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。
-"><meta name=robots content="index, follow"><meta name=keywords content='汇编,CSAPP'><meta itemprop=name content="深入理解计算机系统 第三章"><meta itemprop=description content="Preface
+"><meta name="robots" content="index, follow"><meta name="keywords" content='汇编, CSAPP'>
+	<meta itemprop="name" content="深入理解计算机系统 第三章">
+	<meta itemprop="description" content="Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
 — 2026/11/9
-栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。"><meta itemprop=datePublished content="2026-11-09T08:35:13+08:00"><meta itemprop=dateModified content="2026-11-09T08:35:13+08:00"><meta itemprop=wordCount content="793"><meta itemprop=keywords content="汇编,CSAPP"><meta property="og:url" content="https://yuqu419.github.io/posts/583bc6c/"><meta property="og:site_name" content="yu419"><meta property="og:title" content="深入理解计算机系统 第三章"><meta property="og:description" content="Preface
+栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。">
+	<meta itemprop="datePublished" content="2026-11-09T08:35:13+08:00">
+	<meta itemprop="dateModified" content="2026-11-09T08:35:13+08:00">
+	<meta itemprop="wordCount" content="793">
+	<meta itemprop="keywords" content="汇编,CSAPP"><meta property="og:url" content="http://localhost:1313/posts/583bc6c/">
+	<meta property="og:site_name" content="yu419">
+	<meta property="og:title" content="深入理解计算机系统 第三章">
+	<meta property="og:description" content="Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
 — 2026/11/9
-栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-11-09T08:35:13+08:00"><meta property="article:modified_time" content="2026-11-09T08:35:13+08:00"><meta property="article:tag" content="汇编"><meta property="article:tag" content="CSAPP"><meta name=twitter:card content="summary"><meta name=twitter:title content="深入理解计算机系统 第三章"><meta name=twitter:description content="Preface
+栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-11-09T08:35:13+08:00">
+		<meta property="article:modified_time" content="2026-11-09T08:35:13+08:00">
+		<meta property="article:tag" content="汇编">
+		<meta property="article:tag" content="CSAPP">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="深入理解计算机系统 第三章">
+  <meta name="twitter:description" content="Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
 — 2026/11/9
-栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。"><meta name=application-name content="yu419"><meta name=apple-mobile-web-app-title content="yu419"><meta name=theme-color data-light=#f6f8fa data-dark=#151b23 content="#f6f8fa"><meta name=msapplication-TileColor content="#2d89ef"><link rel=icon href=/favicon.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#FF7359><link rel=canonical type=text/html href=https://yuqu419.github.io/posts/583bc6c/ title="深入理解计算机系统 第三章 - yu419"><link rel=prev type=text/html href=https://yuqu419.github.io/posts/csapp-chapter-6/ title="深入理解计算机系统 第六章"><link rel=stylesheet href=/css/unocss.min.css><link rel=stylesheet href=/css/main.min.css><link rel=stylesheet href=/css/pages/posts.min.css><link rel=stylesheet href=/css/custom.min.css><link rel=preload href=/lib/fontawesome-free/all.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/fontawesome-free/all.min.css></noscript><link rel=preload href=/lib/animate/animate.min.css as=style onload='this.removeAttribute("onload"),this.rel="stylesheet"'><noscript><link rel=stylesheet href=/lib/animate/animate.min.css></noscript><link rel=preload href=/js/main.min.js as=script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"深入理解计算机系统 第三章","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/yuqu419.github.io\/posts\/583bc6c\/"},"genre":"posts","keywords":"汇编, CSAPP","wordcount":793,"url":"https:\/\/yuqu419.github.io\/posts\/583bc6c\/","datePublished":"2026-11-09T08:35:13+08:00","dateModified":"2026-11-09T08:35:13+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"作者"},"description":""}</script><script src=/js/head.min.js></script></head><body data-instant-intensity=viewport data-header-desktop=sticky data-header-mobile=auto><div class=wrapper data-page-style=normal><header class="desktop animate__faster is-blur" id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title=yu419 class=header-title-link><img class=logo src=/images/avatar.jpg alt=yu419 height=32 width=32><span class=header-title-text>yu419</span></a><span class=header-subtitle></span></div><nav class=nav-main aria-label=主菜单><ul class=menu><li class=menu-item><a class=menu-link href=/archives/>Blogs</a></li><li class=menu-item><a class=menu-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-link href=/about/>About</a></li><li class="menu-item github-link"><a class=menu-link href=https://github.com/yuqu419 rel="noopener noreferrer" target=_blank><i class="fa-brands fa-github fa-sm" aria-hidden=true></i> GitHub</a></li></ul></nav><nav class=nav-system aria-label=站点功能><ul class=menu><li class="menu-item delimiter"></li><li class="menu-item search"><button type=button class="search-trigger desktop" aria-label=搜索 title=搜索>
-<i class="fa-solid fa-search" aria-hidden=true></i>
-搜索
-<kbd></kbd></button></li><li class="menu-item delimiter"></li><li class="menu-item theme-switch-item"><button type=button class=theme-switch aria-label=切换主题 title=切换主题><i class="fa-solid fa-adjust" aria-hidden=true></i></button></li></ul></nav></div></header><header class="mobile animate__faster is-blur" id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title=yu419 class=header-title-link><img class=logo src=/images/avatar.jpg alt=yu419 height=26 width=26><span class=header-title-text>yu419</span></a><span class=header-subtitle></span></div><button type=button class="search-trigger mobile" aria-label=搜索><i class="fa-solid fa-search" aria-hidden=true></i></button><button type=button class=theme-switch aria-label=切换主题><i class="fa-solid fa-adjust" aria-hidden=true></i></button>
-<button type=button class=menu-toggle id=menu-toggle-mobile aria-controls=menu-mobile aria-expanded=false aria-labelledby=menu-mobile>
-<span></span><span></span><span></span></button></div><nav><ul class=menu id=menu-mobile><li class=menu-item><a class=menu-link href=/archives/>Blogs</a></li><li class=menu-item><a class=menu-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-link href=/about/>About</a></li><li class="menu-item github-link"><a class=menu-link href=https://github.com/yuqu419 rel="noopener noreferrer" target=_blank><i class="fa-brands fa-github fa-sm" aria-hidden=true></i> GitHub</a></li><li class="menu-item menu-system"></li></ul></nav></div></header><main class=fi-container><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label=合集></aside><article class="page single"><div class=header><h1 class="single-title animate__animated animate__flipInX"><span>深入理解计算机系统 第三章</span></h1><p class="single-subtitle animate__animated animate__fadeIn">来看好玩的汇编吧</p></div><div class=post-meta><div class=post-meta-line><span class=post-author><a href=/authors/anonymous/ title=作者 rel=author class=author><i class="fa-solid fa-user-circle me-1" aria-hidden=true></i>Anonymous</a></span><span class=post-included-in>&nbsp;收录于 <a href=/categories/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ class=post-category title="分类 - CSAPP学习笔记"><i class="fa-regular fa-folder" aria-hidden=true></i> CSAPP学习笔记</a> 和 <a href=/collections/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/ class=post-collection title="合集 - CSAPP学习笔记"><i class="fa-solid fa-layer-group" aria-hidden=true></i> CSAPP学习笔记</a></span></div><div class=post-meta-line><span title="发布于 2026-11-09 08:35:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden=true></i><time datetime=2026-11-09>2026-11-09</time></span>&nbsp;<span title="793 字"><i class="fa-solid fa-pencil me-1" aria-hidden=true></i>约 800 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden=true></i>预计阅读 4 分钟</span>&nbsp;</div></div><div class="details toc" id=toc-static data-kept=false><div class="details-summary toc-title"><span>目录</span>
-<span><i class="details-icon fa-solid fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static></div></div><template data-toc><nav id=TableOfContents><ul><li><a href=#栈>栈</a><ul><li><a href=#栈基础知识>栈基础知识</a></li><li><a href=#栈安全>栈安全</a><ul><li><a href=#栈保护机制><u><strong>栈保护机制</strong></u></a></li></ul></li></ul></li><li><a href=#函数调用>函数调用</a><ul><li><a href=#函数传参>函数传参</a><ul><li><a href=#可变参数>可变参数</a></li></ul></li><li><a href=#函数返回>函数返回</a></li></ul></li><li><a href=#寄存器>寄存器</a><ul><li><a href=#通用寄存器>通用寄存器</a></li><li><a href=#调用者保存寄存器>调用者保存寄存器</a></li><li><a href=#被调用者保存寄存器>被调用者保存寄存器</a></li><li><a href=#特殊寄存器>特殊寄存器</a></li><li><a href=#寄存器命名>寄存器命名</a></li><li><a href=#rflags-寄存器><code>rflags</code> 寄存器</a></li></ul></li><li><a href=#常用指令>常用指令</a><ul><li><a href=#数据传送指令>数据传送指令</a></li><li><a href=#算术与逻辑指令>算术与逻辑指令</a></li><li><a href=#控制流指令>控制流指令</a></li><li><a href=#函数调用与栈帧指令>函数调用与栈帧指令</a></li></ul></li><li><a href=#数据声明与访问>数据声明与访问</a><ul><li><a href=#内存布局>内存布局</a></li></ul></li><li><a href=#全局变量与静态变量>全局变量与静态变量</a><ul><li><a href=#数组>数组</a><ul><li><a href=#全局静态变量数组>全局（静态）变量数组</a></li><li><a href=#局部变量数组>局部变量数组</a></li></ul></li></ul></li><li><a href=#gdb-使用技巧>GDB 使用技巧</a><ul><li><a href=#基本指令>基本指令</a></li></ul></li></ul></nav></template><div class=content id=content><div style="max-width:620px;margin:56px auto;font-family:noto serif sc,songti sc,Georgia,serif;color:light-dark(#2b2b2b,#d1d5db);line-height:2"><p style="font-size:11px;letter-spacing:.5em;text-transform:uppercase;color:light-dark(#888,#9aa3b2);margin:0 0 24px">Preface</p><div style=width:36px;height:1px;background:light-dark(#111,#e1e6ed);margin-bottom:34px></div><p style="font-size:15px;text-align:justify;text-justify:inter-ideograph;margin:0 0 18px">这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光</p><p style="font-size:13px;color:light-dark(#888,#9aa3b2);letter-spacing:.1em;text-align:right;margin:40px 0 0">— 2026/11/9</p></div><h2 class=heading-element id=栈><span>栈</span>
-<a href=#%e6%a0%88 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><h3 class=heading-element id=栈基础知识><span>栈基础知识</span>
-<a href=#%e6%a0%88%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。</p><p>栈的特点：</p><ul><li><p>向下增长，也就是从高地址到低地址</p></li><li><p>栈的空间有限，一般只有几 MB，所以当声明过大数组或者深递归时可能会导致爆栈</p></li><li><p>栈顶是低地址，栈底是高地址</p></li><li><p><code>rbp</code> 寄存器内存储指向函数栈帧栈底的指针（地址），<code>rsp</code> 寄存器内存储指向栈顶的指针</p></li><li><p>当在栈中读取数据时，是从低地址向高地址读取</p><p>如 <code>movq (%rsp), %rax</code>，读取地址 <code>0(%rsp)</code> 至 <code>7(%rsp)</code> 的八个字节，写入 <code>rax</code> 寄存器</p></li></ul><p>当调用函数时，一般会创建一个函数栈帧</p><pre tabindex=0><code>pushq %rbp
-movq %rsp, %rbp</code></pre><p>增长栈：<code>subq $Imme, %rsp</code></p><p>回收栈：<code>addq $Imme, %rsp</code></p><p>当函数结束，函数栈帧会被回收</p><pre tabindex=0><code>leave
-ret</code></pre><p><code>leave</code> 所做的事情相当于</p><pre tabindex=0><code>movq %rbp, %rsp
-popq %rbp</code></pre><h3 class=heading-element id=栈安全><span>栈安全</span>
-<a href=#%e6%a0%88%e5%ae%89%e5%85%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>我们知道，每次产生一个函数栈帧时，会在这之前，压返回地址入栈，设想这种情况，假设在改动栈时，将返回地址修改了，那么当返回函数时，<code>rip</code> 内会被修改为一个无法确定甚至是被恶意修改的地址。这就是缓冲区溢出所带来的巨大风险，为了避免这种风险，在编写代码时尽量不使用不检查边界的函数，如 <code>strcpy</code></p><h4 class=heading-element id=栈保护机制><span><u><strong>栈保护机制</strong></u></span>
-<a href=#%e6%a0%88%e4%bf%9d%e6%8a%a4%e6%9c%ba%e5%88%b6 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h4><ul><li><strong>栈随机化</strong> 每次运行程序时，栈的起始地址随机变化</li><li><strong>Stack Canary（栈金丝雀）</strong> 栈金丝雀是编译器放在缓冲区和返回地址之间的一个随机值（具体位置有编译器确定），在返回函数前，检查栈金丝雀是否被修改，若被修改，则调用 <code>__stack_chk_fail</code> 函数，立即终止程序</li><li><strong>不可执行栈</strong> 栈被标记为不可执行的，避免攻击者将攻击代码放到栈上执行</li></ul><h2 class=heading-element id=函数调用><span>函数调用</span>
-<a href=#%e5%87%bd%e6%95%b0%e8%b0%83%e7%94%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>函数调用使用 <code>call &lt;func></code></p><p>执行 <code>call</code> 时发生了以下几件事</p><ul><li><strong>压栈</strong> 将 <code>call</code> 的接下来一条指令压入栈中，为函数执行完毕后继续运行做准备</li><li><strong>准备进入函数</strong> 将被调用函数的第一条指令的地址复制到 <code>rip</code> 中</li></ul><blockquote><p>寄存器 <code>rip</code> 是程序计数器，专门存储下一条指令的内存地址，在介绍寄存器时，详细介绍</p></blockquote><p>另外，在使用 <code>call</code> 指令时，需要对齐，即保证 <code>rsp</code> 为 16 的整数倍</p><blockquote><p>一般而言，函数需要创建自己的栈帧，但是<strong>叶子函数</strong>则不需要，叶子函数是不调用其他函数的函数</p></blockquote><h3 class=heading-element id=函数传参><span>函数传参</span>
-<a href=#%e5%87%bd%e6%95%b0%e4%bc%a0%e5%8f%82 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>前六个参数分别存储在六个寄存器中：<code>rdi</code>，<code>rsi</code>，<code>rdx</code>，<code>rcx</code>，<code>r8</code>，<code>r9</code>，当然，这六个寄存器只能存储整数和内存地址。更多参数存储在栈中，规则是按照从右往左的顺序压栈，这样就可以从左往右出栈</p><blockquote><p>除此以外，还有一些其他规则。当传浮点数时，使用 8 个 SSE 寄存器（xmm0~xmm7），这种寄存器可存储 16 字节</p></blockquote><p>所以说，并不是说函数传参超过 6 个就会压栈，而是要更根据参数参数的具体类型决定</p><h4 class=heading-element id=可变参数><span>可变参数</span>
-<a href=#%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h4><p>当使用可变参数时，还需设置 <code>al</code> 寄存器来表明用了多少个浮点数以优化速度</p><p>可变参数在返回地址的上方，callee 函数只负责读取，而 caller 函数需要负责清理</p><h3 class=heading-element id=函数返回><span>函数返回</span>
-<a href=#%e5%87%bd%e6%95%b0%e8%bf%94%e5%9b%9e class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>函数的返回值大多数时候存储在 <code>rax</code> 寄存器中，但并非没有意外</p><ol><li><p><strong>寄存器类型限制</strong> 前面已经知道，<code>rax</code> 这类寄存器只能存储整数和内存地址，那么显然，如果返回浮点数，就需要 SSE 寄存器了，这是会将返回值存储到 <code>xmm0</code> 中</p></li><li><p><strong>寄存器大小限制</strong> 这个需要分为两类，基础类型和复合类型：</p><ul><li><u>基础类型</u> 当存储 128 位整数时没有寄存器能胜任这个任务，所以采取的方案时，拼装两个寄存器 <code>rdx</code> 和 <code>rax</code>，<code>rdx</code> 存储高 64 位，<code>rax</code> 存储低 64 位</li><li><u>复合类型</u> 当存储结构体时，采取的做法是将结构体拆分到 <code>rax</code>，<code>rdx</code>，<code>xmm0</code>，<code>xmm1</code> 中，若结构过大，则会采取，由 caller 分配内存，<code>rax</code> 存储其内存地址的方式</li></ul></li></ol><p>在函数的末尾，使用 <code>ret</code> 指令，其作用是将存放栈中的返回地址弹出，写入 <code>rip</code> 中</p><h2 class=heading-element id=寄存器><span>寄存器</span>
-<a href=#%e5%af%84%e5%ad%98%e5%99%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>寄存器是真实存在的物理实体，它是 CPU 的一种速度极快的存储器</p><h3 class=heading-element id=通用寄存器><span>通用寄存器</span>
-<a href=#%e9%80%9a%e7%94%a8%e5%af%84%e5%ad%98%e5%99%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>在 64 位系统中，前 8 个寄存器有自己的名字，它们分别是 <code>rax</code>，<code>rbx</code>，<code>rcx</code>，<code>rdx</code>，<code>rsp</code>，<code>rbp</code>，<code>rdi</code>，<code>rsi</code>，后 8 个寄存器就是 r8~r15，重点学习前 8 个寄存器</p><p>我们已经 <code>rax</code>，<code>rcx</code>，<code>rdx</code>，<code>rsp</code>，<code>rbp</code>，<code>rdi</code>，<code>rsi</code> 各有 ABI 为他们分配的任务，唯独 <code>rbx</code> 貌似没什么作用——事实上，它确实没有特殊作用。在习惯上，它常被用于数组的基址，但并非强制</p><h3 class=heading-element id=调用者保存寄存器><span>调用者保存寄存器</span>
-<a href=#%e8%b0%83%e7%94%a8%e8%80%85%e4%bf%9d%e5%ad%98%e5%af%84%e5%ad%98%e5%99%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p><u>调用者保存寄存器</u>：即调用者负责保存的寄存器，所以被调用的函数可以随意对其进行修改，调用前后不保证寄存器内数据不变，有：<code>rax</code>,<code>rdx</code>,<code>rcx</code>,<code>rsi</code>,<code>rdi</code>,<code>r8</code>,<code>r9</code>,<code>r10</code>,<code>r11</code>,<code>xmm0~xmm15</code>
-可以发现，调用者保存寄存器包括了参数存放和函数返回的寄存器，这些量是在函数调用前后才有意义的，而r10和r11是专门留作临时工的，特殊记忆即可</p><blockquote><p>一个典型的误区是调用者保存不意味着调用者就会去保存，只是当需要保存时有调用者负责而已，其实大多数时候不会特意保存，故是易失的</p></blockquote><h3 class=heading-element id=被调用者保存寄存器><span>被调用者保存寄存器</span>
-<a href=#%e8%a2%ab%e8%b0%83%e7%94%a8%e8%80%85%e4%bf%9d%e5%ad%98%e5%af%84%e5%ad%98%e5%99%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p><u>被调用者保存</u>：即被调用者负责保存的寄存器，所以在函数调用前后可以保证其内数据不变，可以看作不易失的，包括<code>rbx</code>,<code>rbp</code>,<code>r12</code>,<code>r13</code>,<code>r14</code>,<code>r15</code>。从这里可以看出<code>rbx</code>的特殊之处</p><h3 class=heading-element id=特殊寄存器><span>特殊寄存器</span>
-<a href=#%e7%89%b9%e6%ae%8a%e5%af%84%e5%ad%98%e5%99%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p><strong><code>rsp</code></strong>：由调用者和被调用共同维护，并且作为栈的实际栈顶</p><blockquote><p>虽然我们常常将 <code>rbp</code> 寄存器认为是当前函数栈底，但这不是严格的，只是约定俗称。而 <code>rsp</code> 确实严格为栈顶</p></blockquote><p><strong><code>rip</code></strong>：由 <code>call</code>/<code>ret</code> 隐式管理，无法显式地修改 <code>rip</code></p><h3 class=heading-element id=寄存器命名><span>寄存器命名</span>
-<a href=#%e5%af%84%e5%ad%98%e5%99%a8%e5%91%bd%e5%90%8d class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p>在 64 位操作系统上，寄存器的命令法则有三套</p><ol><li><code>rax</code>, <code>rbx</code>, <code>rdx</code>, <code>rcx</code></li></ol><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>大小</th><th style=text-align:center>64 位</th><th style=text-align:center>32 位</th><th style=text-align:center>16 位</th><th style=text-align:center>高 8 位</th><th style=text-align:center>低 8 位</th></tr></thead><tbody><tr><td style=text-align:center><strong>rax 类</strong></td><td style=text-align:center>rax</td><td style=text-align:center>eax</td><td style=text-align:center>ax</td><td style=text-align:center>ah</td><td style=text-align:center>al</td></tr><tr><td style=text-align:center><strong>rbx 类</strong></td><td style=text-align:center>rbx</td><td style=text-align:center>ebx</td><td style=text-align:center>bx</td><td style=text-align:center>bh</td><td style=text-align:center>bl</td></tr><tr><td style=text-align:center><strong>rcx 类</strong></td><td style=text-align:center>rcx</td><td style=text-align:center>ecx</td><td style=text-align:center>cx</td><td style=text-align:center>ch</td><td style=text-align:center>cl</td></tr><tr><td style=text-align:center><strong>rdx 类</strong></td><td style=text-align:center>rdx</td><td style=text-align:center>edx</td><td style=text-align:center>dx</td><td style=text-align:center>dh</td><td style=text-align:center>dl</td></tr></tbody></table></div><ol start=2><li><code>rdi</code>, <code>rsi</code>, <code>rsp</code>, <code>rbp</code></li></ol><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>大小</th><th style=text-align:center>64 位</th><th style=text-align:center>32 位</th><th style=text-align:center>16 位</th><th style=text-align:center>低 8 位</th></tr></thead><tbody><tr><td style=text-align:center><strong>rdi 类</strong></td><td style=text-align:center>rdi</td><td style=text-align:center>edi</td><td style=text-align:center>di</td><td style=text-align:center>dil</td></tr><tr><td style=text-align:center><strong>rsi 类</strong></td><td style=text-align:center>rsi</td><td style=text-align:center>esi</td><td style=text-align:center>si</td><td style=text-align:center>sil</td></tr><tr><td style=text-align:center><strong>rsp 类</strong></td><td style=text-align:center>rsp</td><td style=text-align:center>esp</td><td style=text-align:center>sp</td><td style=text-align:center>spl</td></tr><tr><td style=text-align:center><strong>rbp 类</strong></td><td style=text-align:center>rbp</td><td style=text-align:center>ebp</td><td style=text-align:center>bp</td><td style=text-align:center>bpl</td></tr></tbody></table></div><ol start=3><li><code>r8</code> ~ <code>r15</code></li></ol><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>大小</th><th style=text-align:center>64 位</th><th style=text-align:center>32 位</th><th style=text-align:center>16 位</th><th style=text-align:center>低 8 位</th></tr></thead><tbody><tr><td style=text-align:center>名称</td><td style=text-align:center>r8~r15</td><td style=text-align:center>r8d~r15d</td><td style=text-align:center>r8w~r15w</td><td style=text-align:center>r8b~r15b</td></tr></tbody></table></div><p><u><strong>关键规则</strong></u>：当写入32位寄存器时，会把高32位清零。但写入16位和8位并不会改变其他的数位</p><h3 class=heading-element id=rflags-寄存器><span><code>rflags</code> 寄存器</span>
-<a href=#rflags-%e5%af%84%e5%ad%98%e5%99%a8 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p><code>rflags</code> 寄存器是一个特殊的寄存器，它的每一位都都是特殊的标志位（高 32 位保留）</p><p>下面看常见的标志位：</p><ol><li><p><strong>ZF</strong>（Zero Flag）：结果为 0 时为 1</p></li><li><p><strong>SF</strong>（Sign Flag）：最高位为 1 就为 1</p></li><li><p><strong>OF</strong>（Overflow Flag）：有符号溢出则为 1</p></li><li><p><strong>CF</strong>（Carry Flag）：无符号进位/借位则为 1</p></li></ol><h2 class=heading-element id=常用指令><span>常用指令</span>
-<a href=#%e5%b8%b8%e7%94%a8%e6%8c%87%e4%bb%a4 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>指令是汇编中的核心操作，主要是通过操作栈和寄存器进行的。在编写时牢记以下几点：</p><ol><li><p>在 AT&amp;T 语法中，一律为 <code>指令 源操作数, 目的操作数</code></p></li><li><p>每条指令最多访问一次内存，但可以多次访问寄存器</p></li><li><p>目的操作数不能是立即数</p></li></ol><p>下面介绍以下常用指令：</p><h3 class=heading-element id=数据传送指令><span>数据传送指令</span>
-<a href=#%e6%95%b0%e6%8d%ae%e4%bc%a0%e9%80%81%e6%8c%87%e4%bb%a4 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><ul><li><p><u><strong>mov</strong></u></p><p><code>mov</code> 是最常用的指令之一，它的作用是把源操作数中的数据复制到目的操作数</p><p>如：<code>movq %rax, %rbx</code></p><p>表示把 <code>rax</code> 中存储的数据移动到 <code>rbx</code> 中，如果给 <code>rax</code> 加一层括号，就类似于 C 中的解引用操作</p><p><code>movq (%rax), %rbx</code></p><p>表示以 <code>rax</code> 中存储的数据为内存地址寻找数据，将找到的数据存储在 <code>rbx</code> 中</p></li><li><p><u><strong>lea</strong></u></p><p><code>lea</code> 非常容易与 <code>mov</code> 搞混，它代表直接读取源操作数的地址到目的操作数中</p><p><code>leaq (%rax), %rbx</code></p><p>表示将 <code>rax</code> 中存储的地址读取到 <code>rbx</code> 中</p><blockquote><p>值得注意的是，这里的 <code>(%rax)</code> 并非代表与上面类似的解引用操作，而是表明 <code>rax</code> 内存储着地址</p></blockquote><p><code>leaq %rax, %rbx</code>是不合法的</p><p>正是以为 <code>leaq</code> 的特性，常常被用作高效乘法，具体后面介绍</p></li><li><p><u><strong>push 与 pop</strong></u></p><p><code>push</code> 的原理等同于 <code>sub</code> + <code>mov</code>，即先存储空间，再将目的操作数的数据复制到栈中</p><p><code>pop</code> 的原理等于同 <code>mov</code> + <code>add</code>，即先将栈中内容复制到目的操作数中</p></li></ul><h3 class=heading-element id=算术与逻辑指令><span>算术与逻辑指令</span>
-<a href=#%e7%ae%97%e6%9c%af%e4%b8%8e%e9%80%bb%e8%be%91%e6%8c%87%e4%bb%a4 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><ul><li><p><u><strong>一元操作算术</strong></u></p><p><code>inc</code>，<code>dec</code>，<code>neg</code> 三者分别对应自增，自减，取负</p></li><li><p><u><strong>二元操作算术</strong></u></p><p><code>add</code>，<code>sub</code> 两者分别对应加，减</p><blockquote><p><code>lea</code> 可以完成同等功能，但并非取代，在不同场景下有不同的最优解，一个比较明显的区别是 <code>lea</code> 并不会修改 <code>rflags</code></p></blockquote></li><li><p><u><strong>逻辑操作算术</strong></u></p><p><code>and</code>，<code>or</code>，<code>xor</code> 分别表示与、或、异或</p></li><li><p><u><strong>移位操作算术</strong></u></p><p><code>sal</code>, <code>shl</code>, <code>sar</code>, <code>shr</code></p><p>分别是<strong>算数左移</strong>（Shift Arithmetic Left），<strong>逻辑左移</strong>（Shift Logical Left），<strong>算数右移</strong>（Shift Arithmetic Right），<strong>逻辑右移</strong>（Shift Logical Right）</p><p>其中<u>逻辑</u>表明直接执行位移操作而不进行额外判断</p><p><u>算数</u>表明执行位移操作时，会尽量使负数维持为负数，正数维持为正数。但左移必定破坏最高位符号位，所以逻辑左移等同算数左移</p><blockquote><p>另外对于源操作数有特殊要求，必须是立即数，或是存储在 <code>cl</code> 寄存器（rcx 的低 8 位）中</p></blockquote></li></ul><p>以上的指令都有显著特征：即会改变 <code>rflags</code> 寄存器，且在算数逻辑单元中执行运算</p><h3 class=heading-element id=控制流指令><span>控制流指令</span>
-<a href=#%e6%8e%a7%e5%88%b6%e6%b5%81%e6%8c%87%e4%bb%a4 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><ul><li><p><u><strong>cmp 与 test</strong></u></p><p><code>cmp</code> 的原理是，进行运算：目的操作数 - 源操作数，类似于 <code>sub</code>，但 <code>cmp</code> 不会保存运算结果，仅设置条件码</p><p><code>test</code> 与 <code>cmp</code> 类似，执行 <code>and</code> 操作，但不保留结果，仅设置条件码</p></li><li><p><u><strong>jmp</strong></u>
-<code>jmp</code> 指令很简单 <code>jmp Label</code> 将 <code>rip</code> 内地址修改为 Label 地址</p><p><code>jmp *%rax</code>：表示跳转到 <code>%rax</code> 中存储的地址</p><p><code>jmp *(%rax)</code>：表示跳转到以 <code>(%rax)</code> 中存储的地址指向的数据为地址的内存地址</p><p>难点在<strong>jmp 类指令</strong>，这类指令根据条件码的情况进行跳转操作，有以下几种</p><ol><li><p><strong>je（jump if equal）</strong> ZF = 1 时跳转</p></li><li><p><strong>jne（jump if not equal）</strong> ZF = 0 时跳转</p></li><li><p><strong>jg（jump if greater）</strong> 用于有符号比较，需要综合考虑 <code>SF</code>，<code>OF</code>，<code>ZF</code>，类似的还有 <code>jge</code>，与 <code>jg/jge</code> 对应的是 <code>jl/jle</code>（jump if less/jump if less or equal）</p></li><li><p><strong>ja（jump if above）</strong> 用于无符号比较，需要综合考虑 <code>CF</code>，<code>ZF</code>，类似的还有 <code>jae</code>，与 <code>ja/jae</code> 对应的是 <code>jb/jbe</code>（jump if less/jump if less or equal）</p></li></ol><p>记忆这几个的方法是记住，<strong>所有的大或者小都是相对于目的操作数而言的</strong></p></li></ul><p>流程控制的主要目的是模拟 C 中的 <code>for</code>，<code>while</code>，<code>do-while</code></p><h3 class=heading-element id=函数调用与栈帧指令><span>函数调用与栈帧指令</span>
-<a href=#%e5%87%bd%e6%95%b0%e8%b0%83%e7%94%a8%e4%b8%8e%e6%a0%88%e5%b8%a7%e6%8c%87%e4%bb%a4 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><p><code>call</code>，<code>ret</code>，<code>leave</code> 这三个指令在上面已经介绍得很清楚了，不加赘述</p><h2 class=heading-element id=数据声明与访问><span>数据声明与访问</span>
-<a href=#%e6%95%b0%e6%8d%ae%e5%a3%b0%e6%98%8e%e4%b8%8e%e8%ae%bf%e9%97%ae class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><h3 class=heading-element id=内存布局><span>内存布局</span>
-<a href=#%e5%86%85%e5%ad%98%e5%b8%83%e5%b1%80 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgODAwIiB3aWR0aD0iMTAwJSIgc3R5bGU9Im1heC13aWR0aDo4MDBweDtmb250LWZhbWlseTpzYW5zLXNlcmlmO2JhY2tncm91bmQtY29sb3I6I2ZmZjtkaXNwbGF5OmJsb2NrO21hcmdpbjowIGF1dG8iPjxyZWN0IHg9IjIyMCIgeT0iNTAiIHdpZHRoPSIzMDAiIGhlaWdodD0iNzAwIiBmaWxsPSIjZTZlNmU2IiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIvPjxyZWN0IHg9IjIyMCIgeT0iNjkwIiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjOWNkMWYwIi8+PHJlY3QgeD0iMjIwIiB5PSI0MjAiIHdpZHRoPSIzMDAiIGhlaWdodD0iODAiIGZpbGw9IiM5Y2QxZjAiLz48cmVjdCB4PSIyMjAiIHk9IjI1MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiM5Y2QxZjAiLz48bGluZSB4MT0iMjIwIiB5MT0iMTgwIiB4Mj0iNTIwIiB5Mj0iMTgwIiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIyMjAiIHkxPSIyNTAiIHgyPSI1MjAiIHkyPSIyNTAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGxpbmUgeDE9IjIyMCIgeTE9IjM1MCIgeDI9IjUyMCIgeTI9IjM1MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMjIwIiB5MT0iNDIwIiB4Mj0iNTIwIiB5Mj0iNDIwIiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIyMjAiIHkxPSI1MDAiIHgyPSI1MjAiIHkyPSI1MDAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGxpbmUgeDE9IjIyMCIgeTE9IjU3MCIgeDI9IjUyMCIgeTI9IjU3MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiLz48bGluZSB4MT0iMjIwIiB5MT0iNjMwIiB4Mj0iNTIwIiB5Mj0iNjMwIiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIvPjxsaW5lIHgxPSIyMjAiIHkxPSI2OTAiIHgyPSI1MjAiIHkyPSI2OTAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PGxpbmUgeDE9IjIyMCIgeTE9IjUwIiB4Mj0iNTIwIiB5Mj0iNTAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSI0Ii8+PGcgZm9udC1zaXplPSIxNSIgZmlsbD0iIzIyMiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+PHRleHQgeD0iMzcwIiB5PSIxMDUiPktlcm5lbCB2aXJ0dWFsIG1lbW9yeTwvdGV4dD48dGV4dCB4PSIzNzAiIHk9IjEzMCI+KGNvZGUsIGRhdGEsIGhlYXAsIHN0YWNrKTwvdGV4dD48dGV4dCB4PSIzNzAiIHk9IjIxMCI+VXNlciBzdGFjazwvdGV4dD48dGV4dCB4PSIzNzAiIHk9IjIzNSI+KGNyZWF0ZWQgYXQgcnVuIHRpbWUpPC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iMzc1Ij5NZW1vcnktbWFwcGVkIHJlZ2lvbiBmb3I8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI0MDAiPnNoYXJlZCBsaWJyYXJpZXM8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI1MjUiPlJ1bi10aW1lIGhlYXA8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI1NTAiPihjcmVhdGVkIGJ5PHRzcGFuIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPm1hbGxvYzwvdHNwYW4+KTwvdGV4dD48dGV4dCB4PSIzNzAiIHk9IjU5MCI+UmVhZC93cml0ZSBzZWdtZW50PC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iNjE1Ij4oPHRzcGFuIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPi5kYXRhPC90c3Bhbj4sPHRzcGFuIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPi5ic3M8L3RzcGFuPik8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI2NTAiPlJlYWQtb25seSBjb2RlIHNlZ21lbnQ8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI2NzUiPig8dHNwYW4gZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+LmluaXQ8L3RzcGFuPiw8dHNwYW4gZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+LnRleHQ8L3RzcGFuPiw8dHNwYW4gZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+LnJvZGF0YTwvdHNwYW4+KTwvdGV4dD48L2c+PHRleHQgeD0iNTM1IiB5PSIyNTUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiPiVlc3AgKHN0YWNrIHBvaW50ZXIpPC90ZXh0PjxsaW5lIHgxPSI1MzIiIHkxPSIyNTAiIHgyPSI1MjIiIHkyPSIyNTAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBvbHlnb24gcG9pbnRzPSI1MjIsMjUwIDUyOCwyNDcgNTI4LDI1MyIgZmlsbD0iIzIyMiIvPjx0ZXh0IHg9IjUzNSIgeT0iNTA1IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMjIyIj5icms8L3RleHQ+PGxpbmUgeDE9IjUzMiIgeTE9IjUwMCIgeDI9IjUyMiIgeTI9IjUwMCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiLz48cG9seWdvbiBwb2ludHM9IjUyMiw1MDAgNTI4LDQ5NyA1MjgsNTAzIiBmaWxsPSIjMjIyIi8+PHBhdGggZD0iTTUzMCA1NzBjMTAgMCAxMCAxMCAxMCAxMFY2ODBzMCAxMC0xMCAxMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1NDUiIHk9IjYyMCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzIyMiI+TG9hZGVkIGZyb20gdGhlPC90ZXh0Pjx0ZXh0IHg9IjU0NSIgeT0iNjQ1IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMjIyIj5leGVjdXRhYmxlIGZpbGU8L3RleHQ+PHRleHQgeD0iNTQ1IiB5PSI4MCIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzIyMiI+TWVtb3J5PC90ZXh0Pjx0ZXh0IHg9IjU0NSIgeT0iMTA1IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMjIyIj5pbnZpc2libGUgdG88L3RleHQ+PHRleHQgeD0iNTQ1IiB5PSIxMzAiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiPnVzZXIgY29kZTwvdGV4dD48bGluZSB4MT0iNTM1IiB5MT0iMTUwIiB4Mj0iNTM1IiB5Mj0iNzAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBvbHlnb24gcG9pbnRzPSI1MzUsNzAgNTMyLDc2IDUzOCw3NiIgZmlsbD0iIzIyMiIvPjx0ZXh0IHg9IjIwNSIgeT0iNTUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiIHRleHQtYW5jaG9yPSJlbmQiPjx0c3Bhbj4yPC90c3Bhbj48dHNwYW4gZm9udC1zaXplPSIxMCIgZHk9Ii02Ij40ODwvdHNwYW4+PHRzcGFuIGR5PSI2Ij4tIDE8L3RzcGFuPjwvdGV4dD48bGluZSB4MT0iMjEyIiB5MT0iNTAiIHgyPSIyMTgiIHkyPSI1MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiLz48cG9seWdvbiBwb2ludHM9IjIxOCw1MCAyMTIsNDcgMjEyLDUzIiBmaWxsPSIjMjIyIi8+PHRleHQgeD0iMjA1IiB5PSI2OTUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiIHRleHQtYW5jaG9yPSJlbmQiPjB4NDAwMDAwPC90ZXh0PjxsaW5lIHgxPSIyMTIiIHkxPSI2OTAiIHgyPSIyMTgiIHkyPSI2OTAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBvbHlnb24gcG9pbnRzPSIyMTgsNjkwIDIxMiw2ODcgMjEyLDY5MyIgZmlsbD0iIzIyMiIvPjx0ZXh0IHg9IjIwNSIgeT0iNzU1IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMjIyIiB0ZXh0LWFuY2hvcj0iZW5kIj4wPC90ZXh0PjxsaW5lIHgxPSIzNzAiIHkxPSIyNzAiIHgyPSIzNzAiIHkyPSIyOTAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBvbHlnb24gcG9pbnRzPSIzNzAsMjkwIDM2NywyODQgMzczLDI4NCIgZmlsbD0iIzIyMiIvPjxsaW5lIHgxPSIzNzAiIHkxPSIzNDAiIHgyPSIzNzAiIHkyPSIzMjAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBvbHlnb24gcG9pbnRzPSIzNzAsMzIwIDM2NywzMjYgMzczLDMyNiIgZmlsbD0iIzIyMiIvPjxsaW5lIHgxPSIzNzAiIHkxPSI0ODAiIHgyPSIzNzAiIHkyPSI0NDAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHBvbHlnb24gcG9pbnRzPSIzNzAsNDQwIDM2Nyw0NDYgMzczLDQ0NiIgZmlsbD0iIzIyMiIvPjwvc3ZnPg==" alt="Linux Virtual Memory Layout"><h2 class=heading-element id=全局变量与静态变量><span>全局变量与静态变量</span>
-<a href=#%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f%e4%b8%8e%e9%9d%99%e6%80%81%e5%8f%98%e9%87%8f class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><p>两者都存储在 <code>.bss</code> 和 <code>.data</code> 段内，不同的是普通全局变量是外部链接，通过伪指令 <code>.global</code> 声明；而静态全局变量是内部链接，通过伪指令 <code>.local</code> 声明</p><p>如</p><pre tabindex=0><code>int a = 10;
-static int b = 10;</code></pre><p>对应的汇编如下</p><pre tabindex=0><code>.section .data
+栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。"><meta name="application-name" content="yu419">
+<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/583bc6c/" title="深入理解计算机系统 第三章 - yu419" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/csapp-chapter-6/" title="深入理解计算机系统 第六章" /><link rel="next" type="text/html" href="http://localhost:1313/posts/xv6-chapter-1/" title="xv6 chapter1" /><link rel="stylesheet" href="/css/unocss.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/css/pages/posts.css"><link rel="stylesheet" href="/css/custom.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.js" as="script"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "深入理解计算机系统 第三章",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/583bc6c\/"
+    },"genre": "posts","keywords": "汇编, CSAPP","wordcount":  793 ,
+    "url": "http:\/\/localhost:1313\/posts\/583bc6c\/","datePublished": "2026-11-09T08:35:13+08:00","dateModified": "2026-11-09T08:35:13+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script><script src="/js/head.js"></script></head>
+  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster is-blur" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="32" width="32"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
+    <nav class="nav-main" aria-label="主菜单">
+      <ul class="menu"><li class="menu-item">
+            <a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item">
+            <a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item">
+            <a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link">
+            <a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li></ul>
+    </nav><nav class="nav-system" aria-label="站点功能">
+      <ul class="menu"><li class="menu-item delimiter"></li><li class="menu-item search">
+            <button type="button" class="search-trigger desktop" aria-label="搜索" title="搜索">
+              <i class="fa-solid fa-search" aria-hidden="true"></i>
+              搜索
+              <kbd></kbd>
+            </button>
+          </li>
+          <li class="menu-item delimiter"></li><li class="menu-item theme-switch-item">
+          <button type="button" class="theme-switch" aria-label="切换主题" title="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster is-blur" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="26" width="26"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+      <button type="button" class="menu-toggle" id="menu-toggle-mobile" aria-controls="menu-mobile" aria-expanded="false" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item"><a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link"><a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li><li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>深入理解计算机系统 第三章</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">来看好玩的汇编吧</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="/authors/anonymous/" title="作者" rel="author" class="author"><i class="fa-solid fa-user-circle me-1" aria-hidden="true"></i>Anonymous</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-category" title="分类 - CSAPP学习笔记"><i class="fa-regular fa-folder" aria-hidden="true"></i> CSAPP学习笔记</a> 和 <a href="/collections/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-collection" title="合集 - CSAPP学习笔记"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> CSAPP学习笔记</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2026-11-09 08:35:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-09">2026-11-09</time></span>&nbsp;<span title="793 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>约 800 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"></div>
+      </div><template data-toc><nav id="TableOfContents">
+  <ul>
+    <li><a href="#栈">栈</a>
+      <ul>
+        <li><a href="#栈基础知识">栈基础知识</a></li>
+        <li><a href="#栈安全">栈安全</a>
+          <ul>
+            <li><a href="#栈保护机制"><u><strong>栈保护机制</strong></u></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#函数调用">函数调用</a>
+      <ul>
+        <li><a href="#函数传参">函数传参</a>
+          <ul>
+            <li><a href="#可变参数">可变参数</a></li>
+          </ul>
+        </li>
+        <li><a href="#函数返回">函数返回</a></li>
+      </ul>
+    </li>
+    <li><a href="#寄存器">寄存器</a>
+      <ul>
+        <li><a href="#通用寄存器">通用寄存器</a></li>
+        <li><a href="#调用者保存寄存器">调用者保存寄存器</a></li>
+        <li><a href="#被调用者保存寄存器">被调用者保存寄存器</a></li>
+        <li><a href="#特殊寄存器">特殊寄存器</a></li>
+        <li><a href="#寄存器命名">寄存器命名</a></li>
+        <li><a href="#rflags-寄存器"><code>rflags</code> 寄存器</a></li>
+      </ul>
+    </li>
+    <li><a href="#常用指令">常用指令</a>
+      <ul>
+        <li><a href="#数据传送指令">数据传送指令</a></li>
+        <li><a href="#算术与逻辑指令">算术与逻辑指令</a></li>
+        <li><a href="#控制流指令">控制流指令</a></li>
+        <li><a href="#函数调用与栈帧指令">函数调用与栈帧指令</a></li>
+      </ul>
+    </li>
+    <li><a href="#数据声明与访问">数据声明与访问</a>
+      <ul>
+        <li><a href="#内存布局">内存布局</a></li>
+      </ul>
+    </li>
+    <li><a href="#全局变量与静态变量">全局变量与静态变量</a>
+      <ul>
+        <li><a href="#数组">数组</a>
+          <ul>
+            <li><a href="#全局静态变量数组">全局（静态）变量数组</a></li>
+            <li><a href="#局部变量数组">局部变量数组</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#gdb-使用技巧">GDB 使用技巧</a>
+      <ul>
+        <li><a href="#基本指令">基本指令</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></template><div class="content" id="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
+<p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
+<div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>
+<p style="font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;">这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光</p>
+<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/9</p>
+</div>
+<h2 class="heading-element" id="栈"><span>栈</span>
+  <a href="#%e6%a0%88" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><h3 class="heading-element" id="栈基础知识"><span>栈基础知识</span>
+  <a href="#%e6%a0%88%e5%9f%ba%e7%a1%80%e7%9f%a5%e8%af%86" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。</p>
+<p>栈的特点：</p>
+<ul>
+<li>
+<p>向下增长，也就是从高地址到低地址</p>
+</li>
+<li>
+<p>栈的空间有限，一般只有几 MB，所以当声明过大数组或者深递归时可能会导致爆栈</p>
+</li>
+<li>
+<p>栈顶是低地址，栈底是高地址</p>
+</li>
+<li>
+<p><code>rbp</code> 寄存器内存储指向函数栈帧栈底的指针（地址），<code>rsp</code> 寄存器内存储指向栈顶的指针</p>
+</li>
+<li>
+<p>当在栈中读取数据时，是从低地址向高地址读取</p>
+<p>如 <code>movq (%rsp), %rax</code>，读取地址 <code>0(%rsp)</code> 至 <code>7(%rsp)</code> 的八个字节，写入 <code>rax</code> 寄存器</p>
+</li>
+</ul>
+<p>当调用函数时，一般会创建一个函数栈帧</p>
+<pre tabindex="0"><code>pushq %rbp
+movq %rsp, %rbp</code></pre><p>增长栈：<code>subq $Imme, %rsp</code></p>
+<p>回收栈：<code>addq $Imme, %rsp</code></p>
+<p>当函数结束，函数栈帧会被回收</p>
+<pre tabindex="0"><code>leave
+ret</code></pre><p><code>leave</code> 所做的事情相当于</p>
+<pre tabindex="0"><code>movq %rbp, %rsp
+popq %rbp</code></pre><h3 class="heading-element" id="栈安全"><span>栈安全</span>
+  <a href="#%e6%a0%88%e5%ae%89%e5%85%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>我们知道，每次产生一个函数栈帧时，会在这之前，压返回地址入栈，设想这种情况，假设在改动栈时，将返回地址修改了，那么当返回函数时，<code>rip</code> 内会被修改为一个无法确定甚至是被恶意修改的地址。这就是缓冲区溢出所带来的巨大风险，为了避免这种风险，在编写代码时尽量不使用不检查边界的函数，如 <code>strcpy</code></p>
+<h4 class="heading-element" id="栈保护机制"><span><u><strong>栈保护机制</strong></u></span>
+  <a href="#%e6%a0%88%e4%bf%9d%e6%8a%a4%e6%9c%ba%e5%88%b6" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h4><ul>
+<li><strong>栈随机化</strong> 每次运行程序时，栈的起始地址随机变化</li>
+<li><strong>Stack Canary（栈金丝雀）</strong> 栈金丝雀是编译器放在缓冲区和返回地址之间的一个随机值（具体位置有编译器确定），在返回函数前，检查栈金丝雀是否被修改，若被修改，则调用 <code>__stack_chk_fail</code> 函数，立即终止程序</li>
+<li><strong>不可执行栈</strong> 栈被标记为不可执行的，避免攻击者将攻击代码放到栈上执行</li>
+</ul>
+<h2 class="heading-element" id="函数调用"><span>函数调用</span>
+  <a href="#%e5%87%bd%e6%95%b0%e8%b0%83%e7%94%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>函数调用使用 <code>call &lt;func&gt;</code></p>
+<p>执行 <code>call</code> 时发生了以下几件事</p>
+<ul>
+<li><strong>压栈</strong> 将 <code>call</code> 的接下来一条指令压入栈中，为函数执行完毕后继续运行做准备</li>
+<li><strong>准备进入函数</strong> 将被调用函数的第一条指令的地址复制到 <code>rip</code> 中</li>
+</ul>
+<blockquote>
+<p>寄存器 <code>rip</code> 是程序计数器，专门存储下一条指令的内存地址，在介绍寄存器时，详细介绍</p>
+</blockquote>
+<p>另外，在使用 <code>call</code> 指令时，需要对齐，即保证 <code>rsp</code> 为 16 的整数倍</p>
+<blockquote>
+<p>一般而言，函数需要创建自己的栈帧，但是<strong>叶子函数</strong>则不需要，叶子函数是不调用其他函数的函数</p>
+</blockquote>
+<h3 class="heading-element" id="函数传参"><span>函数传参</span>
+  <a href="#%e5%87%bd%e6%95%b0%e4%bc%a0%e5%8f%82" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>前六个参数分别存储在六个寄存器中：<code>rdi</code>，<code>rsi</code>，<code>rdx</code>，<code>rcx</code>，<code>r8</code>，<code>r9</code>，当然，这六个寄存器只能存储整数和内存地址。更多参数存储在栈中，规则是按照从右往左的顺序压栈，这样就可以从左往右出栈</p>
+<blockquote>
+<p>除此以外，还有一些其他规则。当传浮点数时，使用 8 个 SSE 寄存器（xmm0~xmm7），这种寄存器可存储 16 字节</p>
+</blockquote>
+<p>所以说，并不是说函数传参超过 6 个就会压栈，而是要更根据参数参数的具体类型决定</p>
+<h4 class="heading-element" id="可变参数"><span>可变参数</span>
+  <a href="#%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h4><p>当使用可变参数时，还需设置 <code>al</code> 寄存器来表明用了多少个浮点数以优化速度</p>
+<p>可变参数在返回地址的上方，callee 函数只负责读取，而 caller 函数需要负责清理</p>
+<h3 class="heading-element" id="函数返回"><span>函数返回</span>
+  <a href="#%e5%87%bd%e6%95%b0%e8%bf%94%e5%9b%9e" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>函数的返回值大多数时候存储在 <code>rax</code> 寄存器中，但并非没有意外</p>
+<ol>
+<li>
+<p><strong>寄存器类型限制</strong> 前面已经知道，<code>rax</code> 这类寄存器只能存储整数和内存地址，那么显然，如果返回浮点数，就需要 SSE 寄存器了，这是会将返回值存储到 <code>xmm0</code> 中</p>
+</li>
+<li>
+<p><strong>寄存器大小限制</strong> 这个需要分为两类，基础类型和复合类型：</p>
+<ul>
+<li><u>基础类型</u>  当存储 128 位整数时没有寄存器能胜任这个任务，所以采取的方案时，拼装两个寄存器 <code>rdx</code> 和 <code>rax</code>，<code>rdx</code> 存储高 64 位，<code>rax</code> 存储低 64 位</li>
+<li><u>复合类型</u>  当存储结构体时，采取的做法是将结构体拆分到 <code>rax</code>，<code>rdx</code>，<code>xmm0</code>，<code>xmm1</code> 中，若结构过大，则会采取，由 caller 分配内存，<code>rax</code> 存储其内存地址的方式</li>
+</ul>
+</li>
+</ol>
+<p>在函数的末尾，使用 <code>ret</code> 指令，其作用是将存放栈中的返回地址弹出，写入 <code>rip</code> 中</p>
+<h2 class="heading-element" id="寄存器"><span>寄存器</span>
+  <a href="#%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>寄存器是真实存在的物理实体，它是 CPU 的一种速度极快的存储器</p>
+<h3 class="heading-element" id="通用寄存器"><span>通用寄存器</span>
+  <a href="#%e9%80%9a%e7%94%a8%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>在 64 位系统中，前 8 个寄存器有自己的名字，它们分别是 <code>rax</code>，<code>rbx</code>，<code>rcx</code>，<code>rdx</code>，<code>rsp</code>，<code>rbp</code>，<code>rdi</code>，<code>rsi</code>，后 8 个寄存器就是 r8~r15，重点学习前 8 个寄存器</p>
+<p>我们已经 <code>rax</code>，<code>rcx</code>，<code>rdx</code>，<code>rsp</code>，<code>rbp</code>，<code>rdi</code>，<code>rsi</code> 各有 ABI 为他们分配的任务，唯独 <code>rbx</code> 貌似没什么作用——事实上，它确实没有特殊作用。在习惯上，它常被用于数组的基址，但并非强制</p>
+<h3 class="heading-element" id="调用者保存寄存器"><span>调用者保存寄存器</span>
+  <a href="#%e8%b0%83%e7%94%a8%e8%80%85%e4%bf%9d%e5%ad%98%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><u>调用者保存寄存器</u>：即调用者负责保存的寄存器，所以被调用的函数可以随意对其进行修改，调用前后不保证寄存器内数据不变，有：<code>rax</code>,<code>rdx</code>,<code>rcx</code>,<code>rsi</code>,<code>rdi</code>,<code>r8</code>,<code>r9</code>,<code>r10</code>,<code>r11</code>,<code>xmm0~xmm15</code>
+可以发现，调用者保存寄存器包括了参数存放和函数返回的寄存器，这些量是在函数调用前后才有意义的，而r10和r11是专门留作临时工的，特殊记忆即可</p>
+<blockquote>
+<p>一个典型的误区是调用者保存不意味着调用者就会去保存，只是当需要保存时有调用者负责而已，其实大多数时候不会特意保存，故是易失的</p>
+</blockquote>
+<h3 class="heading-element" id="被调用者保存寄存器"><span>被调用者保存寄存器</span>
+  <a href="#%e8%a2%ab%e8%b0%83%e7%94%a8%e8%80%85%e4%bf%9d%e5%ad%98%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><u>被调用者保存</u>：即被调用者负责保存的寄存器，所以在函数调用前后可以保证其内数据不变，可以看作不易失的，包括<code>rbx</code>,<code>rbp</code>,<code>r12</code>,<code>r13</code>,<code>r14</code>,<code>r15</code>。从这里可以看出<code>rbx</code>的特殊之处</p>
+<h3 class="heading-element" id="特殊寄存器"><span>特殊寄存器</span>
+  <a href="#%e7%89%b9%e6%ae%8a%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><strong><code>rsp</code></strong>：由调用者和被调用共同维护，并且作为栈的实际栈顶</p>
+<blockquote>
+<p>虽然我们常常将 <code>rbp</code> 寄存器认为是当前函数栈底，但这不是严格的，只是约定俗称。而 <code>rsp</code> 确实严格为栈顶</p>
+</blockquote>
+<p><strong><code>rip</code></strong>：由 <code>call</code>/<code>ret</code> 隐式管理，无法显式地修改 <code>rip</code></p>
+<h3 class="heading-element" id="寄存器命名"><span>寄存器命名</span>
+  <a href="#%e5%af%84%e5%ad%98%e5%99%a8%e5%91%bd%e5%90%8d" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>在 64 位操作系统上，寄存器的命令法则有三套</p>
+<ol>
+<li><code>rax</code>, <code>rbx</code>, <code>rdx</code>, <code>rcx</code></li>
+</ol>
+<div class="table-wrapper">
+  <table data-sortable><thead>
+        <tr>
+            <th style="text-align: center">大小</th>
+            <th style="text-align: center">64 位</th>
+            <th style="text-align: center">32 位</th>
+            <th style="text-align: center">16 位</th>
+            <th style="text-align: center">高 8 位</th>
+            <th style="text-align: center">低 8 位</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center"><strong>rax 类</strong></td>
+            <td style="text-align: center">rax</td>
+            <td style="text-align: center">eax</td>
+            <td style="text-align: center">ax</td>
+            <td style="text-align: center">ah</td>
+            <td style="text-align: center">al</td>
+        </tr>
+        <tr>
+            <td style="text-align: center"><strong>rbx 类</strong></td>
+            <td style="text-align: center">rbx</td>
+            <td style="text-align: center">ebx</td>
+            <td style="text-align: center">bx</td>
+            <td style="text-align: center">bh</td>
+            <td style="text-align: center">bl</td>
+        </tr>
+        <tr>
+            <td style="text-align: center"><strong>rcx 类</strong></td>
+            <td style="text-align: center">rcx</td>
+            <td style="text-align: center">ecx</td>
+            <td style="text-align: center">cx</td>
+            <td style="text-align: center">ch</td>
+            <td style="text-align: center">cl</td>
+        </tr>
+        <tr>
+            <td style="text-align: center"><strong>rdx 类</strong></td>
+            <td style="text-align: center">rdx</td>
+            <td style="text-align: center">edx</td>
+            <td style="text-align: center">dx</td>
+            <td style="text-align: center">dh</td>
+            <td style="text-align: center">dl</td>
+        </tr>
+    </tbody>
+  </table>
+</div><ol start="2">
+<li><code>rdi</code>, <code>rsi</code>, <code>rsp</code>, <code>rbp</code></li>
+</ol>
+<div class="table-wrapper">
+  <table data-sortable><thead>
+        <tr>
+            <th style="text-align: center">大小</th>
+            <th style="text-align: center">64 位</th>
+            <th style="text-align: center">32 位</th>
+            <th style="text-align: center">16 位</th>
+            <th style="text-align: center">低 8 位</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center"><strong>rdi 类</strong></td>
+            <td style="text-align: center">rdi</td>
+            <td style="text-align: center">edi</td>
+            <td style="text-align: center">di</td>
+            <td style="text-align: center">dil</td>
+        </tr>
+        <tr>
+            <td style="text-align: center"><strong>rsi 类</strong></td>
+            <td style="text-align: center">rsi</td>
+            <td style="text-align: center">esi</td>
+            <td style="text-align: center">si</td>
+            <td style="text-align: center">sil</td>
+        </tr>
+        <tr>
+            <td style="text-align: center"><strong>rsp 类</strong></td>
+            <td style="text-align: center">rsp</td>
+            <td style="text-align: center">esp</td>
+            <td style="text-align: center">sp</td>
+            <td style="text-align: center">spl</td>
+        </tr>
+        <tr>
+            <td style="text-align: center"><strong>rbp 类</strong></td>
+            <td style="text-align: center">rbp</td>
+            <td style="text-align: center">ebp</td>
+            <td style="text-align: center">bp</td>
+            <td style="text-align: center">bpl</td>
+        </tr>
+    </tbody>
+  </table>
+</div><ol start="3">
+<li><code>r8</code> ~ <code>r15</code></li>
+</ol>
+<div class="table-wrapper">
+  <table data-sortable><thead>
+        <tr>
+            <th style="text-align: center">大小</th>
+            <th style="text-align: center">64 位</th>
+            <th style="text-align: center">32 位</th>
+            <th style="text-align: center">16 位</th>
+            <th style="text-align: center">低 8 位</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center">名称</td>
+            <td style="text-align: center">r8~r15</td>
+            <td style="text-align: center">r8d~r15d</td>
+            <td style="text-align: center">r8w~r15w</td>
+            <td style="text-align: center">r8b~r15b</td>
+        </tr>
+    </tbody>
+  </table>
+</div><p><u><strong>关键规则</strong></u>：当写入32位寄存器时，会把高32位清零。但写入16位和8位并不会改变其他的数位</p>
+<h3 class="heading-element" id="rflags-寄存器"><span><code>rflags</code> 寄存器</span>
+  <a href="#rflags-%e5%af%84%e5%ad%98%e5%99%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><code>rflags</code> 寄存器是一个特殊的寄存器，它的每一位都都是特殊的标志位（高 32 位保留）</p>
+<p>下面看常见的标志位：</p>
+<ol>
+<li>
+<p><strong>ZF</strong>（Zero Flag）：结果为 0 时为 1</p>
+</li>
+<li>
+<p><strong>SF</strong>（Sign Flag）：最高位为 1 就为 1</p>
+</li>
+<li>
+<p><strong>OF</strong>（Overflow Flag）：有符号溢出则为 1</p>
+</li>
+<li>
+<p><strong>CF</strong>（Carry Flag）：无符号进位/借位则为 1</p>
+</li>
+</ol>
+<h2 class="heading-element" id="常用指令"><span>常用指令</span>
+  <a href="#%e5%b8%b8%e7%94%a8%e6%8c%87%e4%bb%a4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>指令是汇编中的核心操作，主要是通过操作栈和寄存器进行的。在编写时牢记以下几点：</p>
+<ol>
+<li>
+<p>在 AT&amp;T 语法中，一律为 <code>指令 源操作数, 目的操作数</code></p>
+</li>
+<li>
+<p>每条指令最多访问一次内存，但可以多次访问寄存器</p>
+</li>
+<li>
+<p>目的操作数不能是立即数</p>
+</li>
+</ol>
+<p>下面介绍以下常用指令：</p>
+<h3 class="heading-element" id="数据传送指令"><span>数据传送指令</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e4%bc%a0%e9%80%81%e6%8c%87%e4%bb%a4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><ul>
+<li>
+<p><u><strong>mov</strong></u></p>
+<p><code>mov</code> 是最常用的指令之一，它的作用是把源操作数中的数据复制到目的操作数</p>
+<p>如：<code>movq %rax, %rbx</code></p>
+<p>表示把 <code>rax</code> 中存储的数据移动到 <code>rbx</code> 中，如果给 <code>rax</code> 加一层括号，就类似于 C 中的解引用操作</p>
+<p><code>movq (%rax), %rbx</code></p>
+<p>表示以 <code>rax</code> 中存储的数据为内存地址寻找数据，将找到的数据存储在 <code>rbx</code> 中</p>
+</li>
+<li>
+<p><u><strong>lea</strong></u></p>
+<p><code>lea</code> 非常容易与 <code>mov</code> 搞混，它代表直接读取源操作数的地址到目的操作数中</p>
+<p><code>leaq (%rax), %rbx</code></p>
+<p>表示将 <code>rax</code> 中存储的地址读取到 <code>rbx</code> 中</p>
+<blockquote>
+<p>值得注意的是，这里的 <code>(%rax)</code> 并非代表与上面类似的解引用操作，而是表明 <code>rax</code> 内存储着地址</p>
+</blockquote>
+<p><code>leaq %rax, %rbx</code>是不合法的</p>
+<p>正是以为 <code>leaq</code> 的特性，常常被用作高效乘法，具体后面介绍</p>
+</li>
+<li>
+<p><u><strong>push 与 pop</strong></u></p>
+<p><code>push</code> 的原理等同于 <code>sub</code> + <code>mov</code>，即先存储空间，再将目的操作数的数据复制到栈中</p>
+<p><code>pop</code> 的原理等于同 <code>mov</code> + <code>add</code>，即先将栈中内容复制到目的操作数中</p>
+</li>
+</ul>
+<h3 class="heading-element" id="算术与逻辑指令"><span>算术与逻辑指令</span>
+  <a href="#%e7%ae%97%e6%9c%af%e4%b8%8e%e9%80%bb%e8%be%91%e6%8c%87%e4%bb%a4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><ul>
+<li>
+<p><u><strong>一元操作算术</strong></u></p>
+<p><code>inc</code>，<code>dec</code>，<code>neg</code> 三者分别对应自增，自减，取负</p>
+</li>
+<li>
+<p><u><strong>二元操作算术</strong></u></p>
+<p><code>add</code>，<code>sub</code> 两者分别对应加，减</p>
+<blockquote>
+<p><code>lea</code> 可以完成同等功能，但并非取代，在不同场景下有不同的最优解，一个比较明显的区别是 <code>lea</code> 并不会修改 <code>rflags</code></p>
+</blockquote>
+</li>
+<li>
+<p><u><strong>逻辑操作算术</strong></u></p>
+<p><code>and</code>，<code>or</code>，<code>xor</code> 分别表示与、或、异或</p>
+</li>
+<li>
+<p><u><strong>移位操作算术</strong></u></p>
+<p><code>sal</code>, <code>shl</code>, <code>sar</code>, <code>shr</code></p>
+<p>分别是<strong>算数左移</strong>（Shift Arithmetic Left），<strong>逻辑左移</strong>（Shift Logical Left），<strong>算数右移</strong>（Shift Arithmetic Right），<strong>逻辑右移</strong>（Shift Logical Right）</p>
+<p>其中<u>逻辑</u>表明直接执行位移操作而不进行额外判断</p>
+<p><u>算数</u>表明执行位移操作时，会尽量使负数维持为负数，正数维持为正数。但左移必定破坏最高位符号位，所以逻辑左移等同算数左移</p>
+<blockquote>
+<p>另外对于源操作数有特殊要求，必须是立即数，或是存储在 <code>cl</code> 寄存器（rcx 的低 8 位）中</p>
+</blockquote>
+</li>
+</ul>
+<p>以上的指令都有显著特征：即会改变 <code>rflags</code> 寄存器，且在算数逻辑单元中执行运算</p>
+<h3 class="heading-element" id="控制流指令"><span>控制流指令</span>
+  <a href="#%e6%8e%a7%e5%88%b6%e6%b5%81%e6%8c%87%e4%bb%a4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><ul>
+<li>
+<p><u><strong>cmp 与 test</strong></u></p>
+<p><code>cmp</code> 的原理是，进行运算：目的操作数 - 源操作数，类似于 <code>sub</code>，但 <code>cmp</code> 不会保存运算结果，仅设置条件码</p>
+<p><code>test</code> 与 <code>cmp</code> 类似，执行 <code>and</code> 操作，但不保留结果，仅设置条件码</p>
+</li>
+<li>
+<p><u><strong>jmp</strong></u>
+<code>jmp</code> 指令很简单 <code>jmp Label</code> 将 <code>rip</code> 内地址修改为 Label 地址</p>
+<p><code>jmp *%rax</code>：表示跳转到 <code>%rax</code> 中存储的地址</p>
+<p><code>jmp *(%rax)</code>：表示跳转到以 <code>(%rax)</code> 中存储的地址指向的数据为地址的内存地址</p>
+<p>难点在<strong>jmp 类指令</strong>，这类指令根据条件码的情况进行跳转操作，有以下几种</p>
+<ol>
+<li>
+<p><strong>je（jump if equal）</strong> ZF = 1 时跳转</p>
+</li>
+<li>
+<p><strong>jne（jump if not equal）</strong> ZF = 0 时跳转</p>
+</li>
+<li>
+<p><strong>jg（jump if greater）</strong> 用于有符号比较，需要综合考虑 <code>SF</code>，<code>OF</code>，<code>ZF</code>，类似的还有 <code>jge</code>，与 <code>jg/jge</code> 对应的是 <code>jl/jle</code>（jump if less/jump if less or equal）</p>
+</li>
+<li>
+<p><strong>ja（jump if above）</strong> 用于无符号比较，需要综合考虑 <code>CF</code>，<code>ZF</code>，类似的还有 <code>jae</code>，与 <code>ja/jae</code> 对应的是 <code>jb/jbe</code>（jump if less/jump if less or equal）</p>
+</li>
+</ol>
+<p>记忆这几个的方法是记住，<strong>所有的大或者小都是相对于目的操作数而言的</strong></p>
+</li>
+</ul>
+<p>流程控制的主要目的是模拟 C 中的 <code>for</code>，<code>while</code>，<code>do-while</code></p>
+<h3 class="heading-element" id="函数调用与栈帧指令"><span>函数调用与栈帧指令</span>
+  <a href="#%e5%87%bd%e6%95%b0%e8%b0%83%e7%94%a8%e4%b8%8e%e6%a0%88%e5%b8%a7%e6%8c%87%e4%bb%a4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><code>call</code>，<code>ret</code>，<code>leave</code> 这三个指令在上面已经介绍得很清楚了，不加赘述</p>
+<h2 class="heading-element" id="数据声明与访问"><span>数据声明与访问</span>
+  <a href="#%e6%95%b0%e6%8d%ae%e5%a3%b0%e6%98%8e%e4%b8%8e%e8%ae%bf%e9%97%ae" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><h3 class="heading-element" id="内存布局"><span>内存布局</span>
+  <a href="#%e5%86%85%e5%ad%98%e5%b8%83%e5%b1%80" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgODAwIiB3aWR0aD0iMTAwJSIgc3R5bGU9Im1heC13aWR0aDo4MDBweDsgZm9udC1mYW1pbHk6c2Fucy1zZXJpZjsgYmFja2dyb3VuZC1jb2xvcjp3aGl0ZTsgZGlzcGxheTpibG9jazsgbWFyZ2luOjAgYXV0bzsiPjxyZWN0IHg9IjIyMCIgeT0iNTAiIHdpZHRoPSIzMDAiIGhlaWdodD0iNzAwIiBmaWxsPSIjZTZlNmU2IiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIgLz48cmVjdCB4PSIyMjAiIHk9IjY5MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI2MCIgZmlsbD0iIzljZDFmMCIgLz48cmVjdCB4PSIyMjAiIHk9IjQyMCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI4MCIgZmlsbD0iIzljZDFmMCIgLz48cmVjdCB4PSIyMjAiIHk9IjI1MCIgd2lkdGg9IjMwMCIgaGVpZ2h0PSIxMDAiIGZpbGw9IiM5Y2QxZjAiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjE4MCIgeDI9IjUyMCIgeTI9IjE4MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjI1MCIgeDI9IjUyMCIgeTI9IjI1MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjM1MCIgeDI9IjUyMCIgeTI9IjM1MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjQyMCIgeDI9IjUyMCIgeTI9IjQyMCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjUwMCIgeDI9IjUyMCIgeTI9IjUwMCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjU3MCIgeDI9IjUyMCIgeTI9IjU3MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjYzMCIgeDI9IjUyMCIgeTI9IjYzMCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjY5MCIgeDI9IjUyMCIgeTI9IjY5MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PGxpbmUgeDE9IjIyMCIgeTE9IjUwIiB4Mj0iNTIwIiB5Mj0iNTAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSI0IiAvPjxnIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiPjx0ZXh0IHg9IjM3MCIgeT0iMTA1Ij5LZXJuZWwgdmlydHVhbCBtZW1vcnk8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSIxMzAiPihjb2RlLCBkYXRhLCBoZWFwLCBzdGFjayk8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSIyMTAiPlVzZXIgc3RhY2s8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSIyMzUiPihjcmVhdGVkIGF0IHJ1biB0aW1lKTwvdGV4dD48dGV4dCB4PSIzNzAiIHk9IjM3NSI+TWVtb3J5LW1hcHBlZCByZWdpb24gZm9yPC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iNDAwIj5zaGFyZWQgbGlicmFyaWVzPC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iNTI1Ij5SdW4tdGltZSBoZWFwPC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iNTUwIj4oY3JlYXRlZCBieSA8dHNwYW4gZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+bWFsbG9jPC90c3Bhbj4pPC90ZXh0Pjx0ZXh0IHg9IjM3MCIgeT0iNTkwIj5SZWFkL3dyaXRlIHNlZ21lbnQ8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI2MTUiPig8dHNwYW4gZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+LmRhdGE8L3RzcGFuPiwgPHRzcGFuIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPi5ic3M8L3RzcGFuPik8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI2NTAiPlJlYWQtb25seSBjb2RlIHNlZ21lbnQ8L3RleHQ+PHRleHQgeD0iMzcwIiB5PSI2NzUiPig8dHNwYW4gZm9udC1mYW1pbHk9Im1vbm9zcGFjZSI+LmluaXQ8L3RzcGFuPiwgPHRzcGFuIGZvbnQtZmFtaWx5PSJtb25vc3BhY2UiPi50ZXh0PC90c3Bhbj4sIDx0c3BhbiBmb250LWZhbWlseT0ibW9ub3NwYWNlIj4ucm9kYXRhPC90c3Bhbj4pPC90ZXh0PjwvZz48dGV4dCB4PSI1MzUiIHk9IjI1NSIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzIyMiI+JWVzcCAoc3RhY2sgcG9pbnRlcik8L3RleHQ+PGxpbmUgeDE9IjUzMiIgeTE9IjI1MCIgeDI9IjUyMiIgeTI9IjI1MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PHBvbHlnb24gcG9pbnRzPSI1MjIsMjUwIDUyOCwyNDcgNTI4LDI1MyIgZmlsbD0iIzIyMiIvPjx0ZXh0IHg9IjUzNSIgeT0iNTA1IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMjIyIj5icms8L3RleHQ+PGxpbmUgeDE9IjUzMiIgeTE9IjUwMCIgeDI9IjUyMiIgeTI9IjUwMCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PHBvbHlnb24gcG9pbnRzPSI1MjIsNTAwIDUyOCw0OTcgNTI4LDUwMyIgZmlsbD0iIzIyMiIvPjxwYXRoIGQ9Ik0gNTMwIDU3MCBDIDU0MCA1NzAsIDU0MCA1ODAsIDU0MCA1ODAgTCA1NDAgNjgwIEMgNTQwIDY4MCwgNTQwIDY5MCwgNTMwIDY5MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PHRleHQgeD0iNTQ1IiB5PSI2MjAiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiPkxvYWRlZCBmcm9tIHRoZTwvdGV4dD48dGV4dCB4PSI1NDUiIHk9IjY0NSIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzIyMiI+ZXhlY3V0YWJsZSBmaWxlPC90ZXh0Pjx0ZXh0IHg9IjU0NSIgeT0iODAiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiPk1lbW9yeTwvdGV4dD48dGV4dCB4PSI1NDUiIHk9IjEwNSIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzIyMiI+aW52aXNpYmxlIHRvPC90ZXh0Pjx0ZXh0IHg9IjU0NSIgeT0iMTMwIiBmb250LXNpemU9IjE1IiBmaWxsPSIjMjIyIj51c2VyIGNvZGU8L3RleHQ+PGxpbmUgeDE9IjUzNSIgeTE9IjE1MCIgeDI9IjUzNSIgeTI9IjcwIiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIgLz48cG9seWdvbiBwb2ludHM9IjUzNSw3MCA1MzIsNzYgNTM4LDc2IiBmaWxsPSIjMjIyIi8+PHRleHQgeD0iMjA1IiB5PSI1NSIgZm9udC1zaXplPSIxNSIgZmlsbD0iIzIyMiIgdGV4dC1hbmNob3I9ImVuZCI+PHRzcGFuPjI8L3RzcGFuPjx0c3BhbiBmb250LXNpemU9IjEwIiBkeT0iLTYiPjQ4PC90c3Bhbj48dHNwYW4gZHk9IjYiPiAtIDE8L3RzcGFuPjwvdGV4dD48bGluZSB4MT0iMjEyIiB5MT0iNTAiIHgyPSIyMTgiIHkyPSI1MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PHBvbHlnb24gcG9pbnRzPSIyMTgsNTAgMjEyLDQ3IDIxMiw1MyIgZmlsbD0iIzIyMiIvPjx0ZXh0IHg9IjIwNSIgeT0iNjk1IiBmb250LXNpemU9IjE1IiBmaWxsPSIjMjIyIiB0ZXh0LWFuY2hvcj0iZW5kIj4weDQwMDAwMDwvdGV4dD48bGluZSB4MT0iMjEyIiB5MT0iNjkwIiB4Mj0iMjE4IiB5Mj0iNjkwIiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIgLz48cG9seWdvbiBwb2ludHM9IjIxOCw2OTAgMjEyLDY4NyAyMTIsNjkzIiBmaWxsPSIjMjIyIi8+PHRleHQgeD0iMjA1IiB5PSI3NTUiIGZvbnQtc2l6ZT0iMTUiIGZpbGw9IiMyMjIiIHRleHQtYW5jaG9yPSJlbmQiPjA8L3RleHQ+PGxpbmUgeDE9IjM3MCIgeTE9IjI3MCIgeDI9IjM3MCIgeTI9IjI5MCIgc3Ryb2tlPSIjMjIyIiBzdHJva2Utd2lkdGg9IjIiIC8+PHBvbHlnb24gcG9pbnRzPSIzNzAsMjkwIDM2NywyODQgMzczLDI4NCIgZmlsbD0iIzIyMiIvPjxsaW5lIHgxPSIzNzAiIHkxPSIzNDAiIHgyPSIzNzAiIHkyPSIzMjAiIHN0cm9rZT0iIzIyMiIgc3Ryb2tlLXdpZHRoPSIyIiAvPjxwb2x5Z29uIHBvaW50cz0iMzcwLDMyMCAzNjcsMzI2IDM3MywzMjYiIGZpbGw9IiMyMjIiLz48bGluZSB4MT0iMzcwIiB5MT0iNDgwIiB4Mj0iMzcwIiB5Mj0iNDQwIiBzdHJva2U9IiMyMjIiIHN0cm9rZS13aWR0aD0iMiIgLz48cG9seWdvbiBwb2ludHM9IjM3MCw0NDAgMzY3LDQ0NiAzNzMsNDQ2IiBmaWxsPSIjMjIyIi8+PC9zdmc+" alt="Linux Virtual Memory Layout" />
+<h2 class="heading-element" id="全局变量与静态变量"><span>全局变量与静态变量</span>
+  <a href="#%e5%85%a8%e5%b1%80%e5%8f%98%e9%87%8f%e4%b8%8e%e9%9d%99%e6%80%81%e5%8f%98%e9%87%8f" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>两者都存储在 <code>.bss</code> 和 <code>.data</code> 段内，不同的是普通全局变量是外部链接，通过伪指令 <code>.global</code> 声明；而静态全局变量是内部链接，通过伪指令 <code>.local</code> 声明</p>
+<p>如</p>
+<pre tabindex="0"><code>int a = 10;
+static int b = 10;</code></pre><p>对应的汇编如下</p>
+<pre tabindex="0"><code>.section .data
 
 a: .long 10
 b: .long 10
 
 .local b
-.global a</code></pre><blockquote><p><code>.bss</code> 和 <code>.data</code> 的区别在于，<code>.bss</code> 中存储的是未初始化或初始化为 0 的变量，<code>.data</code> 则不是这样的</p></blockquote><p>在声明时，一般格式为 <code>名称: 伪指令</code>
-常见的有 <code>.byte</code>，<code>.word</code>，<code>.long</code>，<code>.quad</code> 这四个分别对应 1 字节，2 字节，4 字节，8 字节</p><p><code>.string</code> 表示自动加 <code>\0</code> 的字符串，<code>.ascii</code> 表示不会自动加 <code>\0</code> 的字符串</p><p><code>.zero N</code> 表示预留 N 字节空间，并初始化为 0，<code>.space N</code> 表示预留 N 字节空间，不初始化</p><p>除了 <code>.bss</code> 和 <code>.data</code> 段，还有 <code>.rodata</code> 段，表示 Read-only Data，一般存放字符串。一个典型的例子就是 <code>printf("%d",number);</code>，其中这个 <code>%d</code> 就会被存放到 <code>rodata</code> 段</p><blockquote><p>C 中的一个常见的坑就是 <code>char* str = "Hello";</code>，不能使用 <code>str[0]</code> 来修改字符串，这是因为 str 指向的字符串是在 <code>rodata</code> 段上的</p></blockquote><p>因为每次程序加载的地址都不一样，所以使用 <code>.bss/.data/.rodata</code> 时应使用 RIP 相对地址：<code>变量名(%rip)</code></p><h3 class=heading-element id=数组><span>数组</span>
-<a href=#%e6%95%b0%e7%bb%84 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><h4 class=heading-element id=全局静态变量数组><span>全局（静态）变量数组</span>
-<a href=#%e5%85%a8%e5%b1%80%e9%9d%99%e6%80%81%e5%8f%98%e9%87%8f%e6%95%b0%e7%bb%84 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h4><p>其声明方法与其他全局变量类似：</p><div class="code-block highlight line-nos-hidden" data-mode=classic data-copyable=true><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-asm data-lang=asm><span style=display:flex><span>nums: <span style=color:#a6e22e>.long</span> <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>.long</span> <span style=color:#ae81ff>2</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>.long</span> <span style=color:#ae81ff>3</span>
-</span></span><span style=display:flex><span>      <span style=color:#a6e22e>.space</span> <span style=color:#ae81ff>308</span></span></span></code></pre></div><p>等同于</p><div class="code-block highlight line-nos-hidden" data-mode=classic data-copyable=true><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#66d9ef>int</span> nums[<span style=color:#ae81ff>80</span>] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>1</span>,<span style=color:#ae81ff>2</span>,<span style=color:#ae81ff>3</span>};</span></span></code></pre></div><p>访问方法也很简单</p><div class="code-block highlight line-nos-hidden" data-mode=classic data-copyable=true><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-asm data-lang=asm><span style=display:flex><span><span style=color:#a6e22e>movl</span> <span style=color:#66d9ef>nums</span><span style=color:#960050;background-color:#1e0010>+</span><span style=color:#ae81ff>4</span>(%rip), %eax</span></span></code></pre></div><p>等同于</p><div class="code-block highlight line-nos-hidden" data-mode=classic data-copyable=true><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-C data-lang=C><span style=display:flex><span><span style=color:#66d9ef>int</span> num <span style=color:#f92672>=</span> nums[<span style=color:#ae81ff>1</span>];</span></span></code></pre></div><h4 class=heading-element id=局部变量数组><span>局部变量数组</span>
-<a href=#%e5%b1%80%e9%83%a8%e5%8f%98%e9%87%8f%e6%95%b0%e7%bb%84 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h4><p>相较于全部变量数组，局部变量数组更加常用，也更复杂</p><p>所谓局部变量，默认是存储在栈上的变量，其访问格式为：</p><p>$$
+.global a</code></pre><blockquote>
+<p><code>.bss</code> 和 <code>.data</code> 的区别在于，<code>.bss</code> 中存储的是未初始化或初始化为 0 的变量，<code>.data</code> 则不是这样的</p>
+</blockquote>
+<p>在声明时，一般格式为 <code>名称: 伪指令</code>
+常见的有 <code>.byte</code>，<code>.word</code>，<code>.long</code>，<code>.quad</code> 这四个分别对应 1 字节，2 字节，4 字节，8 字节</p>
+<p><code>.string</code> 表示自动加 <code>\0</code> 的字符串，<code>.ascii</code> 表示不会自动加 <code>\0</code> 的字符串</p>
+<p><code>.zero N</code> 表示预留 N 字节空间，并初始化为 0，<code>.space N</code> 表示预留 N 字节空间，不初始化</p>
+<p>除了 <code>.bss</code> 和 <code>.data</code> 段，还有 <code>.rodata</code> 段，表示 Read-only Data，一般存放字符串。一个典型的例子就是 <code>printf(&quot;%d&quot;,number);</code>，其中这个 <code>%d</code> 就会被存放到 <code>rodata</code> 段</p>
+<blockquote>
+<p>C 中的一个常见的坑就是 <code>char* str = &quot;Hello&quot;;</code>，不能使用 <code>str[0]</code> 来修改字符串，这是因为 str 指向的字符串是在 <code>rodata</code> 段上的</p>
+</blockquote>
+<p>因为每次程序加载的地址都不一样，所以使用 <code>.bss/.data/.rodata</code> 时应使用 RIP 相对地址：<code>变量名(%rip)</code></p>
+<h3 class="heading-element" id="数组"><span>数组</span>
+  <a href="#%e6%95%b0%e7%bb%84" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><h4 class="heading-element" id="全局静态变量数组"><span>全局（静态）变量数组</span>
+  <a href="#%e5%85%a8%e5%b1%80%e9%9d%99%e6%80%81%e5%8f%98%e9%87%8f%e6%95%b0%e7%bb%84" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h4><p>其声明方法与其他全局变量类似：</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span>nums: <span style="color:#a6e22e">.long</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">.long</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">.long</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">.space</span> <span style="color:#ae81ff">308</span></span></span></code></pre></div><p>等同于</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> nums[<span style="color:#ae81ff">80</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>};</span></span></code></pre></div><p>访问方法也很简单</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">movl</span> <span style="color:#66d9ef">nums</span><span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">4</span>(%rip), %eax</span></span></code></pre></div><p>等同于</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> num <span style="color:#f92672">=</span> nums[<span style="color:#ae81ff">1</span>];</span></span></code></pre></div><h4 class="heading-element" id="局部变量数组"><span>局部变量数组</span>
+  <a href="#%e5%b1%80%e9%83%a8%e5%8f%98%e9%87%8f%e6%95%b0%e7%bb%84" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h4><p>相较于全部变量数组，局部变量数组更加常用，也更复杂</p>
+<p>所谓局部变量，默认是存储在栈上的变量，其访问格式为：</p>
+<p>$$
 offset(base, index, scale) = base + index * scale + offset
-$$</p><p><strong>其中 <code>base</code> 必须为寄存器，<code>index</code> 必须为通用寄存器（不能为 <code>%rsp</code>）或为空，<code>scale</code> 只能为 1,2,4,8，且 <code>base</code> 和 <code>index</code> 必须为相同大小的寄存器</strong></p><p>正是因为在这个取址运算中用到了乘法，所以常常使用 <code>lea</code> 来实现高效的乘法</p><p>结构体和联合体访问与数组类似。不过结构体是不同数据类型的集合，并且需要考虑内存对齐，联合体所占字节为最大成员变量所占字节数</p><h2 class=heading-element id=gdb-使用技巧><span>GDB 使用技巧</span>
-<a href=#gdb-%e4%bd%bf%e7%94%a8%e6%8a%80%e5%b7%a7 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h2><h3 class=heading-element id=基本指令><span>基本指令</span>
-<a href=#%e5%9f%ba%e6%9c%ac%e6%8c%87%e4%bb%a4 class=heading-mark><svg class="octicon octicon-link" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5.0 114.95 4.95l-2.5 2.5a3.5 3.5.0 01-4.95.0.751.751.0 01.018-1.042.751.751.0 011.042-.018 1.998 1.998.0 002.83.0l2.5-2.5a2.002 2.002.0 00-2.83-2.83l-1.25 1.25a.751.751.0 01-1.042-.018.751.751.0 01-.018-1.042zm-4.69 9.64a1.998 1.998.0 002.83.0l1.25-1.25a.751.751.0 011.042.018.751.751.0 01.018 1.042l-1.25 1.25a3.5 3.5.0 11-4.95-4.95l2.5-2.5a3.5 3.5.0 014.95.0.751.751.0 01-.018 1.042.751.751.0 01-1.042.018 1.998 1.998.0 00-2.83.0l-2.5 2.5a1.998 1.998.0 000 2.83z"/></svg></a></h3><ol><li><u><strong>break</strong></u></li></ol><p>作用：打断点
-<em>usage</em></p><pre><code>break 行号
+$$</p>
+<p><strong>其中 <code>base</code> 必须为寄存器，<code>index</code> 必须为通用寄存器（不能为 <code>%rsp</code>）或为空，<code>scale</code> 只能为 1,2,4,8，且 <code>base</code> 和 <code>index</code> 必须为相同大小的寄存器</strong></p>
+<p>正是因为在这个取址运算中用到了乘法，所以常常使用 <code>lea</code> 来实现高效的乘法</p>
+<p>结构体和联合体访问与数组类似。不过结构体是不同数据类型的集合，并且需要考虑内存对齐，联合体所占字节为最大成员变量所占字节数</p>
+<h2 class="heading-element" id="gdb-使用技巧"><span>GDB 使用技巧</span>
+  <a href="#gdb-%e4%bd%bf%e7%94%a8%e6%8a%80%e5%b7%a7" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><h3 class="heading-element" id="基本指令"><span>基本指令</span>
+  <a href="#%e5%9f%ba%e6%9c%ac%e6%8c%87%e4%bb%a4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><ol>
+<li><u><strong>break</strong></u></li>
+</ol>
+<p>作用：打断点
+<em>usage</em></p>
+<pre><code>break 行号
 break 函数名
 break 文件名:行号
 break *地址
 break 对象 if 条件
 rbreak 正则表达式
-</code></pre><p>用 <code>tbreak</code> 替代 <code>break</code> 代表临时断点</p><ol start=2><li><u><strong>watch</strong></u></li></ol><p>作用观察变量是否被修改</p><p><em>usage</em></p><pre><code>watch 变量名 //当变量值发生改变时暂停
+</code></pre>
+<p>用 <code>tbreak</code> 替代 <code>break</code> 代表临时断点</p>
+<ol start="2">
+<li><u><strong>watch</strong></u></li>
+</ol>
+<p>作用观察变量是否被修改</p>
+<p><em>usage</em></p>
+<pre><code>watch 变量名 //当变量值发生改变时暂停
 rwatch 变量名 //当变量值被读取时暂停
 awatch 变量名 //当变量值被读取或写入时暂停
 watch 变量名 if 条件
-</code></pre><ol start=3><li><u><strong>disas</strong></u></li></ol><p>反汇编命令</p><p><em>usage</em></p><pre><code>disas //反汇编当前栈帧对应函数
+</code></pre>
+<ol start="3">
+<li><u><strong>disas</strong></u></li>
+</ol>
+<p>反汇编命令</p>
+<p><em>usage</em></p>
+<pre><code>disas //反汇编当前栈帧对应函数
 disas 函数名 //反汇编此函数
 disas $pc //反汇编$pc所在函数
 disas 地址 //反汇编地址所在函数
@@ -82,17 +619,110 @@ disas 起始地址, 终止地址 //反汇编此地址区间
 disas 起始地址, 偏移量 //从起始地址开始反汇编指定偏移量
 disas /s //混合显示C源码和汇编代码
 disas /b //显示汇编源码和机器指令
-</code></pre><ol start=3><li><u><strong>examine</strong></u></li></ol><p><em>usage</em>
-标准语法：<code>x/&lt;N>&lt;F>&lt;U> &lt;ADDR></code></p><ul><li><strong>N</strong> 表示重复次数，连续往后查找</li><li><strong>U</strong> 表示单位大小 可选 <code>b(byte)</code>，<code>h(halfword)</code>，<code>w(word)</code>，<code>g(giant word)</code>，分别对应 1 字节，2 字节，4 字节，8 字节</li></ul><blockquote><p>需要注意的是，在汇编中，w（double word）代表 4 字节</p></blockquote><ul><li><strong>F</strong> 表示显示格式</li></ul><div class=table-wrapper><table data-sortable><thead><tr><th style=text-align:center>x</th><th style=text-align:center>d</th><th style=text-align:center>u</th><th style=text-align:center>o</th><th style=text-align:center>t</th><th style=text-align:center>f</th><th style=text-align:center>c</th><th style=text-align:center>s</th><th style=text-align:center>a</th></tr></thead><tbody><tr><td style=text-align:center>十六进制数</td><td style=text-align:center>有符号十进制</td><td style=text-align:center>无符号十进制</td><td style=text-align:center>八进制</td><td style=text-align:center>二进制</td><td style=text-align:center>浮点数</td><td style=text-align:center>字符</td><td style=text-align:center>字符串</td><td style=text-align:center>地址</td></tr></tbody></table></div><p>例如：<code>x/8gx</code> 代表 8 个 8 字节的 16 进制数（一般就是地址）</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span title="更新于 2026-11-09 08:35:13">更新于 2026-11-09&nbsp;</span></div><div class=post-info-license><span><a rel="license external nofollow noopener noreferrer" href=https://creativecommons.org/licenses/by-nc-sa/4.0/ target=_blank>CC BY-NC-SA 4.0</a></span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fa-solid fa-tags me-1" aria-hidden=true></i><a href=/tags/%E6%B1%87%E7%BC%96/ class=post-tag title="标签 - 汇编">汇编</a><a href=/tags/csapp/ class=post-tag title="标签 - CSAPP">CSAPP</a></section><section class=post-actions><span><a href=javascript:void(0); onclick=window.history.back()>返回</a></span>
-<span class=separator aria-hidden=true></span>
-<span><a href=/>主页</a></span></section></div><div class=post-nav><a href=/posts/csapp-chapter-6/ class=post-nav-item rel=next title="深入理解计算机系统 第六章">深入理解计算机系统 第六章<i class="fa-solid fa-angle-right" aria-hidden=true></i></a></div></div></article><aside class="toc animate__animated animate__fadeIn animate__faster" id=toc-auto aria-label=目录><h2 class=toc-title><span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden=true></i></span>
-<button type=button class=toc-print-btn onclick=event.stopPropagation(),window.print() aria-label=打印><i class="fa-solid fa-print" aria-hidden=true></i></button></h2><div class=toc-content id=toc-content-auto></div></aside></main><footer class=footer><div class=footer-container><div class=footer-bottom><div class=footer-legal><div class="footer-line copyright" itemscope itemtype=http://schema.org/CreativeWork><i class="fa-regular fa-copyright" aria-hidden=true></i>
-<span itemprop=copyrightYear>2024 - 2026</span><span class=author itemprop=copyrightHolder>
-<a href=/authors/anonymous/></a></span></div></div><div class=footer-tech><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target=_blank rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target=_blank rel=external title="FixIt v1.0.0-rc.1">FixIt</a> 驱动</div></div></div></div></footer></div><div class=widgets><div id=mask></div><dialog id=nav-dialog aria-labelledby=nav-dialog-title closedby=any><button type=button class=nav-close-btn aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden=true></i></button><div class=toc><h2 class=toc-title id=nav-dialog-title>导航</h2><div class=toc-content id=toc-content-drawer></div></div></dialog><dialog id=search-dialog class=search-dialog aria-label=搜索 closedby=any><div class=search-modal><div class=search-modal-header><span class=search-delimiter></span>
-<button type=button class=search-close-btn aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden=true></i></button></div><div class=search-source-footer><div class=search-shortcuts><span class=search-shortcut><kbd><i class=lucide-arrow-up aria-hidden=true></i></kbd>
-<kbd><i class=lucide-arrow-down aria-hidden=true></i></kbd>
-切换
-</span><span class=search-shortcut><kbd><i class=lucide-corner-down-left aria-hidden=true></i></kbd>
-选择
-</span><span class=search-shortcut><kbd>ESC</kbd>
-关闭</span></div><span class=search-engine>搜索引擎 <a href=https://fusejs.io/ target=_blank rel="external nofollow noopener noreferrer">Fuse.js</a></span></div></div></dialog><div class=fixed-buttons><button type=button class="fixed-button back-to-top animate__faster hidden" aria-label=回到顶部><i class="fa-solid fa-arrow-up" aria-hidden=true></i></button><button type=button id=nav-drawer-button class="fixed-button nav-drawer-button hidden" aria-label=导航 aria-controls=nav-dialog aria-expanded=false><i class="fa-solid fa-bars" aria-hidden=true></i></button></div><noscript><div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div></noscript></div><link rel=stylesheet href=/lib/cookieconsent/cookieconsent.min.css><script src=/lib/autocomplete-js/index.production.js defer></script><script src=/js/lib/fuse.min.js defer></script><script src=/lib/cookieconsent/cookieconsent.min.js defer></script><script src=/js/lib/cookieconsent.min.js defer></script><script src=/lib/cell-tooltip/cell-tooltip.umd.js defer></script><script src=/js/lib/table-sort.min.js defer></script><script src=/js/config/cf597379c44e5539637202e2ca955017.min.js defer></script><script src=/js/lib/file-tree.min.js defer></script><script src=/js/main.min.js defer></script><script src=/js/custom.min.js defer></script></body></html>
+</code></pre>
+<ol start="3">
+<li><u><strong>examine</strong></u></li>
+</ol>
+<p><em>usage</em>
+标准语法：<code>x/&lt;N&gt;&lt;F&gt;&lt;U&gt; &lt;ADDR&gt;</code></p>
+<ul>
+<li><strong>N</strong> 表示重复次数，连续往后查找</li>
+<li><strong>U</strong> 表示单位大小 可选 <code>b(byte)</code>，<code>h(halfword)</code>，<code>w(word)</code>，<code>g(giant word)</code>，分别对应 1 字节，2 字节，4 字节，8 字节</li>
+</ul>
+<blockquote>
+<p>需要注意的是，在汇编中，w（double word）代表 4 字节</p>
+</blockquote>
+<ul>
+<li><strong>F</strong> 表示显示格式</li>
+</ul>
+<div class="table-wrapper">
+  <table data-sortable><thead>
+        <tr>
+            <th style="text-align: center">x</th>
+            <th style="text-align: center">d</th>
+            <th style="text-align: center">u</th>
+            <th style="text-align: center">o</th>
+            <th style="text-align: center">t</th>
+            <th style="text-align: center">f</th>
+            <th style="text-align: center">c</th>
+            <th style="text-align: center">s</th>
+            <th style="text-align: center">a</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="text-align: center">十六进制数</td>
+            <td style="text-align: center">有符号十进制</td>
+            <td style="text-align: center">无符号十进制</td>
+            <td style="text-align: center">八进制</td>
+            <td style="text-align: center">二进制</td>
+            <td style="text-align: center">浮点数</td>
+            <td style="text-align: center">字符</td>
+            <td style="text-align: center">字符串</td>
+            <td style="text-align: center">地址</td>
+        </tr>
+    </tbody>
+  </table>
+</div><p>例如：<code>x/8gx</code> 代表 8 个 8 字节的 16 进制数（一般就是地址）</p></div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod"><span title="更新于 2026-11-09 08:35:13">更新于 2026-11-09&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="vscode://file//home/yu419/blog/my-blog/content/posts/深入理解计算机系统 第三章.md" title="在编辑器中打开" class="link-to-editor">在编辑器中打开</a></span></div><div class="post-info-share">
+          <span></span>
+        </div></div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/%E6%B1%87%E7%BC%96/" class="post-tag" title="标签 - 汇编">汇编</a><a href="/tags/csapp/" class="post-tag" title="标签 - CSAPP">CSAPP</a></section>
+    <section class="post-actions"><span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>
+      <span class="separator" aria-hidden="true"></span>
+      <span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/csapp-chapter-6/" class="post-nav-item" rel="next" title="深入理解计算机系统 第六章">深入理解计算机系统 第六章<i class="fa-solid fa-angle-right" aria-hidden="true"></i></a></div>
+</div>
+</article><aside class="toc animate__animated animate__fadeIn animate__faster" id="toc-auto" aria-label="目录"><h2 class="toc-title">
+      <span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden="true"></i></span>
+      <button type="button" class="toc-print-btn" onclick="event.stopPropagation(); window.print()" aria-label="打印"><i class="fa-solid fa-print" aria-hidden="true"></i></button>
+    </h2>
+    <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+  <div class="footer-container"><div class="footer-bottom"><div class="footer-legal"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
+                  <span itemprop="copyrightYear">2024 - 2026</span><span class="author" itemprop="copyrightHolder">
+                    <a href="/authors/anonymous/"></a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
+              </div></div></div></div>
+</footer>
+</div><div class="widgets"><div id="mask"></div><dialog id="nav-dialog" aria-labelledby="nav-dialog-title" closedby="any">
+    <button type="button" class="nav-close-btn" aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden="true"></i></button>
+    <div class="toc">
+      <h2 class="toc-title" id="nav-dialog-title">导航</h2><div class="toc-content" id="toc-content-drawer"></div></div>
+  </dialog><dialog id="search-dialog" class="search-dialog" aria-label="搜索" closedby="any">
+      <div class="search-modal">
+        <div class="search-modal-header">
+          <span class="search-delimiter"></span>
+          <button type="button" class="search-close-btn" aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </div>
+        <div class="search-source-footer">
+          <div class="search-shortcuts">
+            <span class="search-shortcut">
+              <kbd><i class="lucide-arrow-up" aria-hidden="true"></i></kbd>
+              <kbd><i class="lucide-arrow-down" aria-hidden="true"></i></kbd>
+              切换
+            </span>
+            <span class="search-shortcut">
+              <kbd><i class="lucide-corner-down-left" aria-hidden="true"></i></kbd>
+              选择
+            </span>
+            <span class="search-shortcut">
+              <kbd>ESC</kbd>
+              关闭
+            </span>
+          </div><span class="search-engine">搜索引擎 <a href="https://fusejs.io/" target="_blank" rel="external nofollow noopener noreferrer">Fuse.js</a></span></div>
+      </div>
+    </dialog><div class="fixed-buttons"><button type="button" class="fixed-button back-to-top animate__faster hidden" aria-label="回到顶部"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button><button type="button" id="nav-drawer-button" class="fixed-button nav-drawer-button hidden" aria-label="导航" aria-controls="nav-dialog" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div><noscript>
+    <div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/lib/table-sort.js" defer></script><script src="/js/config/cf597379c44e5539637202e2ca955017.js" defer></script><script src="/js/lib/file-tree.js" defer></script><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script></body>
+</html>

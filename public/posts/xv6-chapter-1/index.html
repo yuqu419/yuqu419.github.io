@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN" dir="ltr">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <title>Xv6 Chapter1 - yu419</title><meta name="author" content="Anonymous">
+<meta name="description" content=" Preface
+Let us go to the world of xv6.
+— 2026/11/11
+"><meta name="robots" content="index, follow"><meta name="keywords" content='xv6'>
+	<meta itemprop="name" content="xv6 chapter1">
+	<meta itemprop="description" content="Preface
+Let us go to the world of xv6.
+— 2026/11/11">
+	<meta itemprop="datePublished" content="2026-11-11T15:24:13+08:00">
+	<meta itemprop="dateModified" content="2026-11-11T15:24:13+08:00">
+	<meta itemprop="wordCount" content="1090">
+	<meta itemprop="keywords" content="Xv6"><meta property="og:url" content="http://localhost:1313/posts/xv6-chapter-1/">
+	<meta property="og:site_name" content="yu419">
+	<meta property="og:title" content="xv6 chapter1">
+	<meta property="og:description" content="Preface
+Let us go to the world of xv6.
+— 2026/11/11">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-11-11T15:24:13+08:00">
+		<meta property="article:modified_time" content="2026-11-11T15:24:13+08:00">
+		<meta property="article:tag" content="Xv6">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="xv6 chapter1">
+  <meta name="twitter:description" content="Preface
+Let us go to the world of xv6.
+— 2026/11/11"><meta name="application-name" content="yu419">
+<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/xv6-chapter-1/" title="xv6 chapter1 - yu419" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/583bc6c/" title="深入理解计算机系统 第三章" /><link rel="stylesheet" href="/css/unocss.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/css/pages/posts.css"><link rel="stylesheet" href="/css/custom.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.js" as="script"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "xv6 chapter1",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/xv6-chapter-1\/"
+    },"genre": "posts","keywords": "xv6","wordcount":  1090 ,
+    "url": "http:\/\/localhost:1313\/posts\/xv6-chapter-1\/","datePublished": "2026-11-11T15:24:13+08:00","dateModified": "2026-11-11T15:24:13+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "作者"
+      },"description": ""
+  }
+  </script><script src="/js/head.js"></script></head>
+  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster is-blur" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="32" width="32"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
+    <nav class="nav-main" aria-label="主菜单">
+      <ul class="menu"><li class="menu-item">
+            <a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item">
+            <a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item">
+            <a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link">
+            <a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li></ul>
+    </nav><nav class="nav-system" aria-label="站点功能">
+      <ul class="menu"><li class="menu-item delimiter"></li><li class="menu-item search">
+            <button type="button" class="search-trigger desktop" aria-label="搜索" title="搜索">
+              <i class="fa-solid fa-search" aria-hidden="true"></i>
+              搜索
+              <kbd></kbd>
+            </button>
+          </li>
+          <li class="menu-item delimiter"></li><li class="menu-item theme-switch-item">
+          <button type="button" class="theme-switch" aria-label="切换主题" title="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster is-blur" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="26" width="26"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+      <button type="button" class="menu-toggle" id="menu-toggle-mobile" aria-controls="menu-mobile" aria-expanded="false" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item"><a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link"><a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li><li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Xv6 Chapter1</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">Operating system interfaces</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="/authors/anonymous/" title="作者" rel="author" class="author"><i class="fa-solid fa-user-circle me-1" aria-hidden="true"></i>Anonymous</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/xv6/" class="post-category" title="分类 - Xv6"><i class="fa-regular fa-folder" aria-hidden="true"></i> Xv6</a> 和 </span></div>
+      <div class="post-meta-line"><span title="发布于 2026-11-11 15:24:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-11">2026-11-11</time></span>&nbsp;<span title="1090 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>约 1100 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 6 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"></div>
+      </div><template data-toc><nav id="TableOfContents">
+  <ul>
+    <li><a href="#operating-system">Operating System</a></li>
+    <li><a href="#process-and-memory">Process and memory</a></li>
+    <li><a href="#io-and-file-descriptors">I/O and File descriptors</a></li>
+    <li><a href="#pipes">Pipes</a></li>
+  </ul>
+</nav></template><div class="content" id="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
+<p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
+<div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>
+<p style="font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;">
+<p>Let us go to the world of xv6.</p>
+</p>
+<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/11</p>
+</div>
+> This markdown was established to record my journey of learning risc-v xv6 system.And it is written in English on purpose
+<h2 class="heading-element" id="operating-system"><span>Operating System</span>
+  <a href="#operating-system" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>An operating system is designed to manages and abstracts the low-level hardware.</p>
+<p>To keep each process isolated, the kernel use hardware protection mechanisms provided by CPU.When more permissions are needed(the function-like calling is known as system call),the user program invokes a system call,the hardware raises the privilege level</p>
+<h2 class="heading-element" id="process-and-memory"><span>Process and memory</span>
+  <a href="#process-and-memory" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>An xv6 process consists of user-space memory.</p>
+<p>All C library are not allowed to use.Because it depends on the x86/AMD assembly while the xv6 operating system is based on risc-v.</p>
+<p>Luckily,most of useful functions are provided.We can check all functions ,which is able to be called freely,in <code>user/user.h</code></p>
+<p>All right.Let us gain an inspection on some of functions provided</p>
+<ol>
+<li>
+<p><code>fork</code></p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">fork</span>()</span></span></code></pre></div><p><code>fork</code> is used to create a child process which possess a exact copy of the calling process&rsquo;s memory.<code>fork</code> copy everything of calling process into the new process&rsquo;s memory.</p>
+<p>Just like we know,<code>fork</code> returns in both original and new processes.In the original process,it returns the new process&rsquo;s PID,while in the new process,it returns zero.If receiving a negative number,it means that fork failed.</p>
+</li>
+<li>
+<p><code>exit</code></p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">exit</span>(<span style="color:#66d9ef">int</span> status)</span></span></code></pre></div><p><code>exit</code> system call causes the calling process to stop and release resource such as memory and file descriptor</p>
+<p>When calling <code>exit</code>,a status argument is reuquired.Convetionally,0 indicates success and 1 stands for failure</p>
+</li>
+<li>
+<p><code>wait</code></p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">wait</span>(<span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> status)</span></span></code></pre></div><p>Unlike <code>wait</code> in Linux,<code>wait</code> in xv6 is similar to <code>waitpid(-1,&amp;status,0)</code> in Linux.</p>
+<p>it returns the PID of an exited child process and copies the exit status of the child to the address passed to wait.</p>
+<p>if none of the caller&rsquo;s children has exited,<code>wait</code> waits for one to do so.If the caller has no children,<code>wait</code> returns -1 immediately.</p>
+<p>Supposing the caller have no interest in the status of a child,passing 0(also NULL) is allowed.</p>
+</li>
+<li>
+<p><code>exec</code></p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">exec</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])</span></span></code></pre></div><p>Just like the <code>execve</code> in Linux,<code>exec</code> system call replaces the calling process&rsquo;s memory with a new memory image loaded from a file stored in the file system.Xv6 operating system uses ELF format as executable program.</p>
+<p>Considering <code>exec</code> succeeds,it does not return.If it returns,we can ensure <code>exec</code> has failed</p>
+<p>When calling <code>exec</code>,two arguments are passed:the path of the executable file and an array of string arguments(the path included).</p>
+</li>
+</ol>
+<h2 class="heading-element" id="io-and-file-descriptors"><span>I/O and File descriptors</span>
+  <a href="#io-and-file-descriptors" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p><em>file descriptor</em> is a small integer representing a kernel-managed object that a process may read from or write to.</p>
+<p>To clarify it,a file descriptor is obtained while opening a file,directory,device or by creating a pipe.</p>
+<p>The xv6 kernel uses descriptor as an index into a per-process table.Every process has a private space of file descriptor starting at zero.</p>
+<p>By convention,a process reads file descriptor 0(standard input),writes output to file descriptor 1(standard output),writes error messages to file desciptor 2(standard error).</p>
+<ol>
+<li>
+<p><code>read</code> and <code>write</code></p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">read</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">int</span> n)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">write</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">int</span> n)</span></span></code></pre></div><p><code>read</code> is used to read n bytes at most from the file descriptor and store them into buf.</p>
+<blockquote>
+<p>NOTICE: <code>read</code> always not ensure n bytes are read</p>
+</blockquote>
+<p><code>read</code> returns the number of byte read as a matter of fact.</p>
+<p>So,when calling <code>read</code>,we always need to use <em>while</em>,if continuing calling <code>read</code>,<code>read</code> reads data from the current file offset.(the offest is stored by <code>struct file</code>)</p>
+<p>In xv6,<code>read</code> is not only used to read file but directory.When reading the directory,the files(including directory) are abstracted as a array of <code>dirent</code>.</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> dirent {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ushort inum;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span> name[DIRSIZ] <span style="color:#a6e22e">__attribute__</span>((nonstring));
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><p>Each <code>read</code> just reads one single <code>dirent</code>,so it is a good choice to use <code>while</code> to read all files in current directory.</p>
+<blockquote>
+<p>So,what is file descriptor in fact?</p>
+</blockquote>
+<blockquote>
+<p>We can regard a file descriptor as an index of the files kept in kernel.</p>
+</blockquote>
+<blockquote>
+<p>In fact, the profile of file is in <code>struct file</code>,including reference count, flags ,file offset and so on.Check it in <code>linux/fs.h</code></p>
+</blockquote>
+</li>
+<li>
+<p><code>open</code> and <code>close</code></p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">open</span>(<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">int</span> flags)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">close</span>(<span style="color:#66d9ef">int</span> fd)</span></span></code></pre></div><p>The second parameter of <code>open</code> is flags,which includes <code>O_RDOLNY</code>,<code>O_WRONLY</code>,<code>O_RDWR</code>,<code>O_CREATE</code>,<code>O_TRUNC</code>.They are defined in <code>fcntl.h</code> and obvious.</p>
+<p>The kernel will choose a smallest usable number as file descriptor.</p>
+<p><code>close</code> system call is used to close the file descriptor instead of the file.In a word,We just change the reference count of file.When the count of reference is zero,the <code>struct file</code> is released.</p>
+</li>
+<li>
+<p><code>dup</code></p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">dup</span>(<span style="color:#66d9ef">int</span> fd)</span></span></code></pre></div><p><code>dup</code> is the short for &ldquo;duplicate&rdquo;,which works as duplicating the file descriptor pointing the same file and increasing the count of reference.</p>
+<p>When calling <code>fork</code>,everything is almost copied to the new process,and the <code>struct file</code> included.</p>
+</li>
+</ol>
+<h2 class="heading-element" id="pipes"><span>Pipes</span>
+  <a href="#pipes" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p><em>pipe</em> is small kernel buffer exposed to processes as a pair of file descriptors,one for reading and one for writing.Pipes provide a way for interprocess communication.</p>
+<p><strong>function signature</strong></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">pipe</span>(<span style="color:#66d9ef">int</span> pipefd[<span style="color:#ae81ff">2</span>]);</span></span></code></pre></div><p><code>pipe</code> system call initialize a two-element array,one for reading and another for writing.</p>
+<p>Let us have a look an example provided by Linux documentation.</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;sys/wait.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;unistd.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span>    pipefd[<span style="color:#ae81ff">2</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span>   buf;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pid_t</span>  cpid;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (argc <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fprintf</span>(stderr, <span style="color:#e6db74">&#34;Usage: %s &lt;string&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, argv[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">exit</span>(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">pipe</span>(pipefd) <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;pipe&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">exit</span>(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cpid <span style="color:#f92672">=</span> <span style="color:#a6e22e">fork</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (cpid <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">perror</span>(<span style="color:#e6db74">&#34;fork&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">exit</span>(EXIT_FAILURE);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (cpid <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {    <span style="color:#75715e">/* Child reads from pipe */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">close</span>(pipefd[<span style="color:#ae81ff">1</span>]);          <span style="color:#75715e">/* Close unused write end */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> (<span style="color:#a6e22e">read</span>(pipefd[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">&amp;</span>buf, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">write</span>(STDOUT_FILENO, <span style="color:#f92672">&amp;</span>buf, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">write</span>(STDOUT_FILENO, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">close</span>(pipefd[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_exit</span>(EXIT_SUCCESS);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {            <span style="color:#75715e">/* Parent writes argv[1] to pipe */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">close</span>(pipefd[<span style="color:#ae81ff">0</span>]);          <span style="color:#75715e">/* Close unused read end */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">write</span>(pipefd[<span style="color:#ae81ff">1</span>], argv[<span style="color:#ae81ff">1</span>], <span style="color:#a6e22e">strlen</span>(argv[<span style="color:#ae81ff">1</span>]));
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">close</span>(pipefd[<span style="color:#ae81ff">1</span>]);          <span style="color:#75715e">/* Reader will see EOF */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">wait</span>(NULL);                <span style="color:#75715e">/* Wait for child */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">exit</span>(EXIT_SUCCESS);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><u><strong>How does it work?</strong></u></p>
+<p>We call <code>pipe</code> to initialize two file descriptor,one for writing and another for reading.And when forking, the pair of file descriptors are copied.For safety,it is a must to close the useless end(1 indicates writing end ,0 indicates reading end).</p>
+<p>When we call <code>write</code> on write-end,the data is written into pipe blocked.</p>
+<p>When we call <code>read</code> on read-end,the data is read into buffer.However, if there is no data in the stream,read will wait for either data to be written or for all file descriptors referring to the write end to be closed.In the latter case,<code>read</code> will return 0,just as if the EOF had been reached.</p>
+<p>In the xv6 shell <code>|</code> is regarded as pipelines because it works just like a pipe and pass the output current instruction to next instruction as the input.</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod"><span title="更新于 2026-11-11 15:24:13">更新于 2026-11-11&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="vscode://file//home/yu419/blog/my-blog/content/posts/xv6 chapter1.md" title="在编辑器中打开" class="link-to-editor">在编辑器中打开</a></span></div><div class="post-info-share">
+          <span></span>
+        </div></div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/xv6/" class="post-tag" title="标签 - Xv6">Xv6</a></section>
+    <section class="post-actions"><span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>
+      <span class="separator" aria-hidden="true"></span>
+      <span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"></div>
+</div>
+</article><aside class="toc animate__animated animate__fadeIn animate__faster" id="toc-auto" aria-label="目录"><h2 class="toc-title">
+      <span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden="true"></i></span>
+      <button type="button" class="toc-print-btn" onclick="event.stopPropagation(); window.print()" aria-label="打印"><i class="fa-solid fa-print" aria-hidden="true"></i></button>
+    </h2>
+    <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+  <div class="footer-container"><div class="footer-bottom"><div class="footer-legal"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
+                  <span itemprop="copyrightYear">2024 - 2026</span><span class="author" itemprop="copyrightHolder">
+                    <a href="/authors/anonymous/"></a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
+              </div></div></div></div>
+</footer>
+</div><div class="widgets"><div id="mask"></div><dialog id="nav-dialog" aria-labelledby="nav-dialog-title" closedby="any">
+    <button type="button" class="nav-close-btn" aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden="true"></i></button>
+    <div class="toc">
+      <h2 class="toc-title" id="nav-dialog-title">导航</h2><div class="toc-content" id="toc-content-drawer"></div></div>
+  </dialog><dialog id="search-dialog" class="search-dialog" aria-label="搜索" closedby="any">
+      <div class="search-modal">
+        <div class="search-modal-header">
+          <span class="search-delimiter"></span>
+          <button type="button" class="search-close-btn" aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </div>
+        <div class="search-source-footer">
+          <div class="search-shortcuts">
+            <span class="search-shortcut">
+              <kbd><i class="lucide-arrow-up" aria-hidden="true"></i></kbd>
+              <kbd><i class="lucide-arrow-down" aria-hidden="true"></i></kbd>
+              切换
+            </span>
+            <span class="search-shortcut">
+              <kbd><i class="lucide-corner-down-left" aria-hidden="true"></i></kbd>
+              选择
+            </span>
+            <span class="search-shortcut">
+              <kbd>ESC</kbd>
+              关闭
+            </span>
+          </div><span class="search-engine">搜索引擎 <a href="https://fusejs.io/" target="_blank" rel="external nofollow noopener noreferrer">Fuse.js</a></span></div>
+      </div>
+    </dialog><div class="fixed-buttons"><button type="button" class="fixed-button back-to-top animate__faster hidden" aria-label="回到顶部"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button><button type="button" id="nav-drawer-button" class="fixed-button nav-drawer-button hidden" aria-label="导航" aria-controls="nav-dialog" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div><noscript>
+    <div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/config/c0846d268c5e3ac0cfe086ba63f79413.js" defer></script><script src="/js/lib/file-tree.js" defer></script><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script></body>
+</html>
