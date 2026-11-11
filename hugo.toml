@@ -4,6 +4,7 @@ title = 'yu419'
 theme = 'FixIt'
 summaryLength = 32
 summaryPlainify = true
+hasCJKLanguage = true
 
 [taxonomies]
 _merge = "shallow"
@@ -47,6 +48,10 @@ blur = true
 
 [params.header.title]
 logo = 'images/avatar.jpg'
+
+[params.author]
+name = 'yu419'
+avatar = '/images/avatar.jpg'
 
 [params.app]
 svg_favicon = '/favicon.png'

@@ -3,7 +3,7 @@
   <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-    <title>深入理解计算机系统 第三章 - yu419</title><meta name="author" content="Anonymous">
+    <title>深入理解计算机系统 第三章 - yu419</title><meta name="author" content="yu419">
 <meta name="description" content=" Preface
 这些笔记写于大一加入凌睿工作室招新期间，更多的是知识的回顾，我将这些笔记记录下来，纪念那段奋斗的时光
 — 2026/11/9
@@ -16,7 +16,7 @@
 栈 栈基础知识 栈是一种后进先出的数据结构。理解栈帧，有助于跟踪汇编中的函数调用、局部变量与返回过程。">
 	<meta itemprop="datePublished" content="2026-11-09T08:35:13+08:00">
 	<meta itemprop="dateModified" content="2026-11-09T08:35:13+08:00">
-	<meta itemprop="wordCount" content="793">
+	<meta itemprop="wordCount" content="4866">
 	<meta itemprop="keywords" content="汇编,CSAPP"><meta property="og:url" content="http://localhost:1313/posts/583bc6c/">
 	<meta property="og:site_name" content="yu419">
 	<meta property="og:title" content="深入理解计算机系统 第三章">
@@ -49,12 +49,12 @@
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": "http:\/\/localhost:1313\/posts\/583bc6c\/"
-    },"genre": "posts","keywords": "汇编, CSAPP","wordcount":  793 ,
+    },"genre": "posts","keywords": "汇编, CSAPP","wordcount":  4866 ,
     "url": "http:\/\/localhost:1313\/posts\/583bc6c\/","datePublished": "2026-11-09T08:35:13+08:00","dateModified": "2026-11-09T08:35:13+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
         "@type": "Person",
-        "name": "作者"
+        "name": "yu419"
       },"description": ""
   }
   </script><script src="/js/head.js"></script></head>
@@ -100,8 +100,8 @@
 <main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>深入理解计算机系统 第三章</span>
       </h1><p class="single-subtitle animate__animated animate__fadeIn">来看好玩的汇编吧</p></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><a href="/authors/anonymous/" title="作者" rel="author" class="author"><i class="fa-solid fa-user-circle me-1" aria-hidden="true"></i>Anonymous</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-collection" title="合集 - CSAPP学习笔记"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> CSAPP学习笔记</a></span></div>
-      <div class="post-meta-line"><span title="发布于 2026-11-09 08:35:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-09">2026-11-09</time></span>&nbsp;<span title="793 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>约 800 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 4 分钟</span>&nbsp;</div>
+      <div class="post-meta-line"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' alt="yu419" height="16" width="16">&nbsp;yu419</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/csapp%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="post-collection" title="合集 - CSAPP学习笔记"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> CSAPP学习笔记</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2026-11-09 08:35:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-09">2026-11-09</time></span>&nbsp;<span title="4866 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>4866 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 10 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
           <span>目录</span>
@@ -691,7 +691,7 @@ disas /b //显示汇编源码和机器指令
     <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
   <div class="footer-container"><div class="footer-bottom"><div class="footer-legal"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
                   <span itemprop="copyrightYear">2024 - 2026</span><span class="author" itemprop="copyrightHolder">
-                    <a href="/authors/anonymous/"></a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
+                    <a href="/authors/yu419/">yu419</a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
               </div></div></div></div>
 </footer>
 </div><div class="widgets"><div id="mask"></div><dialog id="nav-dialog" aria-labelledby="nav-dialog-title" closedby="any">
