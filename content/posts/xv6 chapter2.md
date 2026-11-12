@@ -1,7 +1,7 @@
 ---
 title: xv6 chapter2
 subtitle: Operating system organziation
-date: 2026-11-12T15:24:13+08:00
+date: 2026-11-12T15:00:13+08:00
 slug: xv6-chapter-2
 draft: false
 description:

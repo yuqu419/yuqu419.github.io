@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN" dir="ltr">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <title>Xv6 Chapter2 - yu419</title><meta name="author" content="yu419">
+<meta name="description" content=" Preface
+The operating system will help you manage your programs.
+— 2026/11/11
+"><meta name="robots" content="index, follow"><meta name="keywords" content='xv6'>
+	<meta itemprop="name" content="xv6 chapter2">
+	<meta itemprop="description" content="Preface
+The operating system will help you manage your programs.
+— 2026/11/11">
+	<meta itemprop="datePublished" content="2026-11-12T15:00:13+08:00">
+	<meta itemprop="dateModified" content="2026-11-12T15:00:13+08:00">
+	<meta itemprop="wordCount" content="715">
+	<meta itemprop="keywords" content="Xv6"><meta property="og:url" content="http://localhost:1313/posts/xv6-chapter-2/">
+	<meta property="og:site_name" content="yu419">
+	<meta property="og:title" content="xv6 chapter2">
+	<meta property="og:description" content="Preface
+The operating system will help you manage your programs.
+— 2026/11/11">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-11-12T15:00:13+08:00">
+		<meta property="article:modified_time" content="2026-11-12T15:00:13+08:00">
+		<meta property="article:tag" content="Xv6">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="xv6 chapter2">
+  <meta name="twitter:description" content="Preface
+The operating system will help you manage your programs.
+— 2026/11/11"><meta name="application-name" content="yu419">
+<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/xv6-chapter-2/" title="xv6 chapter2 - yu419" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/xv6-chapter-1/" title="xv6 chapter1" /><link rel="stylesheet" href="/css/unocss.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/css/pages/posts.css"><link rel="stylesheet" href="/css/custom.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.js" as="script"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "xv6 chapter2",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/xv6-chapter-2\/"
+    },"genre": "posts","keywords": "xv6","wordcount":  715 ,
+    "url": "http:\/\/localhost:1313\/posts\/xv6-chapter-2\/","datePublished": "2026-11-12T15:00:13+08:00","dateModified": "2026-11-12T15:00:13+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "yu419"
+      },"description": ""
+  }
+  </script><script src="/js/head.js"></script></head>
+  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster is-blur" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="32" width="32"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
+    <nav class="nav-main" aria-label="主菜单">
+      <ul class="menu"><li class="menu-item">
+            <a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item">
+            <a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item">
+            <a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link">
+            <a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li></ul>
+    </nav><nav class="nav-system" aria-label="站点功能">
+      <ul class="menu"><li class="menu-item delimiter"></li><li class="menu-item search">
+            <button type="button" class="search-trigger desktop" aria-label="搜索" title="搜索">
+              <i class="fa-solid fa-search" aria-hidden="true"></i>
+              搜索
+              <kbd></kbd>
+            </button>
+          </li>
+          <li class="menu-item delimiter"></li><li class="menu-item theme-switch-item">
+          <button type="button" class="theme-switch" aria-label="切换主题" title="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster is-blur" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="26" width="26"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+      <button type="button" class="menu-toggle" id="menu-toggle-mobile" aria-controls="menu-mobile" aria-expanded="false" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item"><a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link"><a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li><li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Xv6 Chapter2</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">Operating system organziation</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' alt="yu419" height="16" width="16">&nbsp;yu419</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/xv6/" class="post-collection" title="合集 - Xv6"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Xv6</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2026-11-12 15:00:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-12">2026-11-12</time></span>&nbsp;<span title="715 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>715 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 2 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"></div>
+      </div><template data-toc><nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-operating-systems">Why operating systems?</a></li>
+    <li><a href="#user-modesupervisor-mode-and-system-calls">User mode,supervisor mode and system calls</a></li>
+    <li><a href="#xv6-organization">xv6 organization</a></li>
+    <li><a href="#process-overview">Process overview</a></li>
+  </ul>
+</nav></template><div class="content" id="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
+<p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
+<div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>
+<p style="font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;">
+<p>The operating system will help you manage your programs.</p>
+</p>
+<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/11</p>
+</div>
+<h1 class="heading-element" id="operating-system-organization"><span>Operating system organization</span>
+  <a href="#operating-system-organization" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h1><p>An operating system should satisfy three requirements:</p>
+<ol>
+<li>multiplexing
+The operating system must support several activities at once,sharing resources such as CUPs and memory among them.</li>
+<li>isolation
+The operating system should ensure that when a process occurs bugs,it won&rsquo;t affect other processes.</li>
+<li>interaction
+Different processes need to interact,such as pipelines.</li>
+</ol>
+<h2 class="heading-element" id="why-operating-systems"><span>Why operating systems?</span>
+  <a href="#why-operating-systems" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><ul>
+<li>achieve strong ioslation.Avoid the influence among processes.</li>
+<li>provide abstract resources and interface such as <code>open</code>,<code>read</code>and <code>write</code>,so that operating system take the responsibility of manage the disk.</li>
+<li>transparently switches CPUs among process.Save the state of registers.</li>
+</ul>
+<h2 class="heading-element" id="user-modesupervisor-mode-and-system-calls"><span>User mode,supervisor mode and system calls</span>
+  <a href="#user-modesupervisor-mode-and-system-calls" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>To achieve string isolation,CPUs provide hardware support.RISC-V has three privilege levels which constrain what code can do: <strong>machine mode</strong>, <strong>supervisor mode</strong>, <strong>user mode</strong>.</p>
+<p>machine mode has full privilege,which is mostly intended for setting up the computer during boot.Xv6 executes briefly in machine mode and then changes to supervisor mode.</p>
+<p>In supervisor mode,the CPU is allowed ti execute privileged instructions such as system calls.If in user mode,CPU doesn&rsquo;t execute the priviledge instruction,but &ldquo;traps&rdquo; to special code in supervisor mode.</p>
+<p>An application can execute only user-mode instructions and is said to be running in <em>user space</em>,while the software in supervisor mode can also execute privileged instructions and is said to be running in <em>kernel space</em>.The software running in kernel space is called the <em>kernel</em></p>
+<h2 class="heading-element" id="xv6-organization"><span>xv6 organization</span>
+  <a href="#xv6-organization" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p><u><strong>monolithic kernel</strong></u> The entire operating system resides in the kernel space.
+<u>**microkernel</u> Parts of operating system retains in the user space.</p>
+<p>xv6 is implemented as a monolithic kernel like Linux and most Unix operating systems.</p>
+<p>The xv6 kernel source is in the <code>kernel/</code> sub-directory.Files are divided into major areas of kernel responsibility:</p>
+<ol>
+<li>
+<p>starting the system(booting)</p>
+</li>
+<li>
+<p>creating and controlling process</p>
+</li>
+<li>
+<p>handling traps</p>
+</li>
+<li>
+<p>allocating memory and configuring virtual addresses</p>
+</li>
+<li>
+<p>controlling devices</p>
+</li>
+<li>
+<p>managing the file-system</p>
+</li>
+</ol>
+<p><img loading="lazy" src='image-2.png' alt="alt text"></p>
+<h2 class="heading-element" id="process-overview"><span>Process overview</span>
+  <a href="#process-overview" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>Process is regarded as an instance of program, which provides kits with program.</p>
+<p>Xv6 use page tables(which are implemented by handware) to give each process its own address space.The RISC-V page table translate a <em>virtual address</em> to <em>physical address</em>.</p>
+<p>Xv6 maintains a seperate page tabe for each process that defines that process&rsquo;s address space.
+The layout of virutal address space is like following:
+<img loading="lazy" src='image-3.png' alt="alt text">
+Instructions -&gt; global variables -&gt; stack -&gt; heap
+When looking up virtual addresses in page tables,the handware uses only the low 39 bits;and xv6 uses only 38 of those 39 bits.</p>
+<p>Thus,the maximum address is 0x3fffffffff,which is <code>MAXVA</code>(maximum virtual address).</p>
+<p>At the top of the address space, xv6 places a <em>trampoline page</em> and a <em>trapframe page</em>,which are used to transition into the kernel and back.</p>
+<p>The page contains the code to transition in and out of the kernel, and the trapframe os where the kernel saves the process&rsquo;s user registers.</p>
+<p>The xv6 kernel maintains many pieces of state for each process which is gathered into a <code>struct proc</code>.</p>
+<p>The significant pieces of the <code>proc</code>:</p>
+<ul>
+<li>page table</li>
+<li>kernel stack</li>
+<li>run state</li>
+</ul>
+<p>Each process has a thread of control that holds the state needed to execute and process.Concretely,to switch a CPU among processes, the kernel suspends the thread currently running on that CPU and save its state and restore the state of another process&rsquo;s prevously-suspended thread.</p>
+<p>Each thread has two stacks: a user stack and a kernel stack.When the process is executing user instructions,only the user stack is in use while the kernel stack is empty;when the process enters the kernel,the kernel code executes on the process&rsquo;s kernel stack;while a process is in the kernel,its user stack still contains saved data but not actively used.And the kernel stack is seperate from the user stack.</p>
+<p>A process&rsquo;s user code can make a system call by executing the RISC-V <code>ecall</code> instruction.This instruction switches to supervisor mode and changes the program counter to a kernel-defined entry point.
+The code at the entry point switches to the kernel stack and executes the code the system call implements.</p>
+<p>When system call completes,the kernel returns to user space by executing the <code>sret</code> instruction.</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">int</span> <span style="color:#66d9ef">pagetable_t</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">enum</span> procstate { 
+</span></span><span style="display:flex;"><span>    UNUSED, 
+</span></span><span style="display:flex;"><span>    USED, 
+</span></span><span style="display:flex;"><span>    SLEEPING, 
+</span></span><span style="display:flex;"><span>    RUNNABLE, 
+</span></span><span style="display:flex;"><span>    RUNNING, 
+</span></span><span style="display:flex;"><span>    ZOMBIE 
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> proc{
+</span></span><span style="display:flex;"><span>    uint64 kstack;<span style="color:#75715e">//the virtual address of the kernel stack
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pagetable_t</span> pagetable;<span style="color:#75715e">//user page table
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">enum</span> proctstate state; <span style="color:#75715e">//the state of the process
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">/*other fields*/</span>
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><ul>
+<li>
+<p><u><code>state</code></u> indicates the state of the process.</p>
+</li>
+<li>
+<p><u><code>pagetable</code></u> holds the process&rsquo;s page table.</p>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod"><span title="更新于 2026-11-12 15:00:13">更新于 2026-11-12&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="vscode://file//home/yu419/blog/my-blog/content/posts/xv6 chapter2.md" title="在编辑器中打开" class="link-to-editor">在编辑器中打开</a></span></div><div class="post-info-share">
+          <span></span>
+        </div></div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/xv6/" class="post-tag" title="标签 - Xv6">Xv6</a></section>
+    <section class="post-actions"><span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>
+      <span class="separator" aria-hidden="true"></span>
+      <span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"><a href="/posts/xv6-chapter-1/" class="post-nav-item" rel="prev" title="Xv6 Chapter1"><i class="fa-solid fa-angle-left" aria-hidden="true"></i>Xv6 Chapter1</a></div>
+</div>
+</article><aside class="toc animate__animated animate__fadeIn animate__faster" id="toc-auto" aria-label="目录"><h2 class="toc-title">
+      <span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden="true"></i></span>
+      <button type="button" class="toc-print-btn" onclick="event.stopPropagation(); window.print()" aria-label="打印"><i class="fa-solid fa-print" aria-hidden="true"></i></button>
+    </h2>
+    <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+  <div class="footer-container"><div class="footer-bottom"><div class="footer-legal"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
+                  <span itemprop="copyrightYear">2024 - 2026</span><span class="author" itemprop="copyrightHolder">
+                    <a href="/authors/yu419/">yu419</a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
+              </div></div></div></div>
+</footer>
+</div><div class="widgets"><div id="mask"></div><dialog id="nav-dialog" aria-labelledby="nav-dialog-title" closedby="any">
+    <button type="button" class="nav-close-btn" aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden="true"></i></button>
+    <div class="toc">
+      <h2 class="toc-title" id="nav-dialog-title">导航</h2><div class="toc-content" id="toc-content-drawer"></div></div>
+  </dialog><dialog id="search-dialog" class="search-dialog" aria-label="搜索" closedby="any">
+      <div class="search-modal">
+        <div class="search-modal-header">
+          <span class="search-delimiter"></span>
+          <button type="button" class="search-close-btn" aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </div>
+        <div class="search-source-footer">
+          <div class="search-shortcuts">
+            <span class="search-shortcut">
+              <kbd><i class="lucide-arrow-up" aria-hidden="true"></i></kbd>
+              <kbd><i class="lucide-arrow-down" aria-hidden="true"></i></kbd>
+              切换
+            </span>
+            <span class="search-shortcut">
+              <kbd><i class="lucide-corner-down-left" aria-hidden="true"></i></kbd>
+              选择
+            </span>
+            <span class="search-shortcut">
+              <kbd>ESC</kbd>
+              关闭
+            </span>
+          </div><span class="search-engine">搜索引擎 <a href="https://fusejs.io/" target="_blank" rel="external nofollow noopener noreferrer">Fuse.js</a></span></div>
+      </div>
+    </dialog><div class="reading-progress-bar" style="inset-inline-start: 0;top: 0;--fi-bg-progress: #687b91;--fi-bg-progress-dark: #c8d3e1;"></div><div class="fixed-buttons"><button type="button" class="fixed-button back-to-top animate__faster hidden" aria-label="回到顶部"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button><button type="button" id="nav-drawer-button" class="fixed-button nav-drawer-button hidden" aria-label="导航" aria-controls="nav-dialog" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div><noscript>
+    <div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/config/05c0532e14b5ffa958c31ff2487c67fb.js" defer></script><script src="/js/lib/file-tree.js" defer></script><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script></body>
+</html>

@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/collections/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/collections/xv6/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/tags/xv6/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/xv6-chapter-1/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <loc>http://localhost:1313/posts/xv6-chapter-2/</loc>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2026-11-11T15:24:13+08:00</lastmod>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2026-11-12T15:00:13+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:1313/posts/xv6-chapter-1/</loc>
     <lastmod>2026-11-11T15:24:13+08:00</lastmod>
   </url>
   <url>
@@ -49,7 +53,7 @@
     <lastmod>2026-11-09T08:35:13+08:00</lastmod>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/583bc6c/</loc>
+    <loc>http://localhost:1313/posts/cssapp-chapter-3/</loc>
     <lastmod>2026-11-09T08:35:13+08:00</lastmod>
   </url>
   <url>
