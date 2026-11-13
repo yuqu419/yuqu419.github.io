@@ -7,8 +7,8 @@
     <title>yu419</title><meta name="author" content="yu419">
 <meta name="description" content=""><meta name="robots" content="index, follow, max-image-preview:large">
 	<meta itemprop="name" content="yu419">
-	<meta itemprop="datePublished" content="2026-11-12T15:00:13+08:00">
-	<meta itemprop="dateModified" content="2026-11-12T15:00:13+08:00"><meta property="og:url" content="http://localhost:1313/">
+	<meta itemprop="datePublished" content="2026-11-13T14:48:13+08:00">
+	<meta itemprop="dateModified" content="2026-11-13T14:48:13+08:00"><meta property="og:url" content="http://localhost:1313/">
 	<meta property="og:site_name" content="yu419">
 	<meta property="og:title" content="yu419">
 	<meta property="og:locale" content="zh_CN">
@@ -69,7 +69,18 @@
 </header>
 
 <main class="fi-container"><div class="page home posts" data-posts-columns="1"><div class="home-profile"><div class="home-avatar"><a href="/archives/" title="Blogs"><img src='/images/avatar.jpg' alt="Home avatar" height="96" width="96"></a></div><h1 class="home-title">Less, but better.</h1><p class="home-subtitle"><span class="hidden">记录技术、生活与思考</span><span class="typeit"><template>记录技术、生活与思考</template></span></p></div>
-<div class="home-posts"><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="summary-body"><h2 class="single-title" itemprop="name headline"><a href="/posts/xv6-chapter-2/">Xv6 Chapter2</a>
+<div class="home-posts"><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="summary-body"><h2 class="single-title" itemprop="name headline"><a href="/posts/xv6-lab-syscalls/">Xv6 Lab System Calls</a>
+    </h2><div class="post-meta"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' alt="yu419" height="16" width="16">&nbsp;yu419</a></span>&nbsp;<span class="post-publish" title='2026-11-13 14:48:13'>发布于 <time datetime="2026-11-13">2026-11-13</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/xv6/" class="post-collection" title="合集 - Xv6"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Xv6</a></span></div><div class="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
+<p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
+<div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>
+<p style="font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;">
+<p>系统调用的流程到底是怎样的？</p>
+</p>
+<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/11</p>
+</div></div>
+  </div><div class="post-footer">
+    <a href="/posts/xv6-lab-syscalls/">阅读全文</a><div class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href='/tags/xv6/' class="post-tag">Xv6</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><div class="summary-body"><h2 class="single-title" itemprop="name headline"><a href="/posts/xv6-chapter-2/">Xv6 Chapter2</a>
     </h2><div class="post-meta"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' alt="yu419" height="16" width="16">&nbsp;yu419</a></span>&nbsp;<span class="post-publish" title='2026-11-12 15:00:13'>发布于 <time datetime="2026-11-12">2026-11-12</time></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/xv6/" class="post-collection" title="合集 - Xv6"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Xv6</a></span></div><div class="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
 <p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
 <div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>

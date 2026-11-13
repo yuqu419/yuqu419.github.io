@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN" dir="ltr">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <title>Xv6 Lab System Calls - yu419</title><meta name="author" content="yu419">
+<meta name="description" content=" Preface
+系统调用的流程到底是怎样的？
+— 2026/11/11
+"><meta name="robots" content="index, follow"><meta name="keywords" content='xv6'>
+	<meta itemprop="name" content="xv6 Lab System calls">
+	<meta itemprop="description" content="Preface
+系统调用的流程到底是怎样的？
+— 2026/11/11">
+	<meta itemprop="datePublished" content="2026-11-13T14:48:13+08:00">
+	<meta itemprop="dateModified" content="2026-11-13T14:48:13+08:00">
+	<meta itemprop="wordCount" content="3065">
+	<meta itemprop="keywords" content="Xv6"><meta property="og:url" content="http://localhost:1313/posts/xv6-lab-syscalls/">
+	<meta property="og:site_name" content="yu419">
+	<meta property="og:title" content="xv6 Lab System calls">
+	<meta property="og:description" content="Preface
+系统调用的流程到底是怎样的？
+— 2026/11/11">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-11-13T14:48:13+08:00">
+		<meta property="article:modified_time" content="2026-11-13T14:48:13+08:00">
+		<meta property="article:tag" content="Xv6">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="xv6 Lab System calls">
+  <meta name="twitter:description" content="Preface
+系统调用的流程到底是怎样的？
+— 2026/11/11"><meta name="application-name" content="yu419">
+<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/xv6-lab-syscalls/" title="xv6 Lab System calls - yu419" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/xv6-chapter-2/" title="xv6 chapter2" /><link rel="stylesheet" href="/css/unocss.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/css/pages/posts.css"><link rel="stylesheet" href="/css/custom.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.js" as="script"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "xv6 Lab System calls",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/xv6-lab-syscalls\/"
+    },"genre": "posts","keywords": "xv6","wordcount":  3065 ,
+    "url": "http:\/\/localhost:1313\/posts\/xv6-lab-syscalls\/","datePublished": "2026-11-13T14:48:13+08:00","dateModified": "2026-11-13T14:48:13+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "yu419"
+      },"description": ""
+  }
+  </script><script src="/js/head.js"></script></head>
+  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster is-blur" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="32" width="32"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
+    <nav class="nav-main" aria-label="主菜单">
+      <ul class="menu"><li class="menu-item">
+            <a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item">
+            <a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item">
+            <a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link">
+            <a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li></ul>
+    </nav><nav class="nav-system" aria-label="站点功能">
+      <ul class="menu"><li class="menu-item delimiter"></li><li class="menu-item search">
+            <button type="button" class="search-trigger desktop" aria-label="搜索" title="搜索">
+              <i class="fa-solid fa-search" aria-hidden="true"></i>
+              搜索
+              <kbd></kbd>
+            </button>
+          </li>
+          <li class="menu-item delimiter"></li><li class="menu-item theme-switch-item">
+          <button type="button" class="theme-switch" aria-label="切换主题" title="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster is-blur" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="26" width="26"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+      <button type="button" class="menu-toggle" id="menu-toggle-mobile" aria-controls="menu-mobile" aria-expanded="false" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item"><a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link"><a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li><li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Xv6 Lab System Calls</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">Operating system organziation</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' alt="yu419" height="16" width="16">&nbsp;yu419</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/xv6/" class="post-collection" title="合集 - Xv6"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Xv6</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2026-11-13 14:48:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-13">2026-11-13</time></span>&nbsp;<span title="3065 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>3065 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 7 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"></div>
+      </div><template data-toc><nav id="TableOfContents">
+  <ul>
+    <li><a href="#用户接口">用户接口</a></li>
+    <li><a href="#risc-v">RISC-V</a></li>
+    <li><a href="#syscall">syscall</a>
+      <ul>
+        <li><a href="#cpu-硬件执行原子操作">CPU 硬件执行原子操作</a></li>
+        <li><a href="#汇编层的软件处理">汇编层的软件处理</a></li>
+        <li><a href="#c-的软件处理">C 的软件处理</a></li>
+        <li><a href="#syscall-分发系统调用"><code>syscall</code> 分发系统调用</a></li>
+        <li><a href="#返回用户态">返回用户态</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></template><div class="content" id="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
+<p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
+<div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>
+<p style="font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;">
+<p>系统调用的流程到底是怎样的？</p>
+</p>
+<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/11</p>
+</div>
+<h1 class="heading-element" id="lab-system-calls"><span>Lab System calls</span>
+  <a href="#lab-system-calls" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h1><p>本 Lab 主要以完成 <code>interpose</code> 为例，让读者了解 xv6 中系统调用的全流程</p>
+<h2 class="heading-element" id="用户接口"><span>用户接口</span>
+  <a href="#%e7%94%a8%e6%88%b7%e6%8e%a5%e5%8f%a3" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>以 interpose 为例子</p>
+<p>我们会在用户层提供接口 <code>interpose(int syscall,char* name)</code>，
+这个接口的由汇编完成实现，汇编代码由 <code>usys.pl</code> 自动生成，我们只需要在 <code>usys.pl</code> 中添加 <code>entry(&quot;interpose&quot;)</code> 即可
+生成的汇编如下：</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-asm" data-lang="asm"><span style="display:flex;"><span><span style="color:#a6e22e">.global</span> <span style="color:#66d9ef">interpose</span> <span style="color:#75715e"># 外部链接interpose，表示对interpose函数的实现
+</span></span></span><span style="display:flex;"><span>interpose:
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">li</span> <span style="color:#66d9ef">a7</span>, <span style="color:#66d9ef">SYS_interpose</span> <span style="color:#75715e"># li表示load immediate，加载立即数到a7寄存器中
+</span></span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ecall</span> <span style="color:#75715e"># 触发系统调用
+</span></span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">ret</span> <span style="color:#75715e"># 返回</span></span></span></code></pre></div><p>需要说明的是，<code>ecall</code> 就相当于 x86 中的 <code>syscall</code>，而系统调用号是被放在 a7 中。</p>
+<h2 class="heading-element" id="risc-v"><span>RISC-V</span>
+  <a href="#risc-v" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>后续会涉及到 RISC-V 汇编知识，让我们简单了解一下相关知识
+寄存器</p>
+<ul>
+<li><u><strong>zero</strong></u> 硬接线为 0，表示值恒为 0</li>
+<li><u><strong>ra</strong></u> Return Address 用于存放返回地址</li>
+<li><u><strong>sp</strong></u> Stack Pointer 栈指针</li>
+<li><u><strong>a0~a7</strong></u> 存放整数参数，多余参数由调用者压栈，返回值保存在 a0</li>
+</ul>
+<blockquote>
+<p>在 <code>ecall</code> 时，a0~a5 用于从存放参数，a7 用于放系统调用号，返回值存在 a0</p>
+</blockquote>
+<p>RISC-V 与 x86 一个显著的区别就是有个特殊的 ra 寄存器存放返回地址，当一个函数调用另一个函数时，会将 <code>ra</code> 保存起来</p>
+<p>本 lab 关于 RISC-V 学习到这儿就足够了</p>
+<h2 class="heading-element" id="syscall"><span>syscall</span>
+  <a href="#syscall" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>当使用 <code>ecall</code> 之后会发生什么呢？</p>
+<p>ecall 属于 trap 的一种，主要分为四个步骤</p>
+<h3 class="heading-element" id="cpu-硬件执行原子操作"><span>CPU 硬件执行原子操作</span>
+  <a href="#cpu-%e7%a1%ac%e4%bb%b6%e6%89%a7%e8%a1%8c%e5%8e%9f%e5%ad%90%e6%93%8d%e4%bd%9c" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>CPU 做的事情主要是更改 pc，改变硬件控制寄存器（Hardware control registers）和改变特权级，硬件控制寄存器有许多个</p>
+<ol>
+<li>
+<p>将 <code>pc</code> 中的值保存到 <code>sepc</code>（Supervisor Exception Program Counter），保存函数调用后能返回到正确的位置</p>
+</li>
+<li>
+<p>记录 trap 的原因，在 <code>scause</code>（Supervisor Cause）写入一个数字，表明 trap 原因，因为 trap 不仅限于系统调用</p>
+</li>
+<li>
+<p>关闭中断，改变 <code>sstatus</code>（Supervisor Status），禁用中断，防止处理系统调用时被打断</p>
+</li>
+<li>
+<p>在 <code>sstatus</code> 中写入当前特权级，以便返回时后续该回到哪个权级</p>
+</li>
+<li>
+<p>改变特权级，将当前 CPU 的特权级设置为 Supervisor mode</p>
+</li>
+<li>
+<p>跳转 将 pc 设置为 <code>stvec</code> 寄存器中预先配置好的地址，这个地址式 Trap handler 的入口</p>
+</li>
+</ol>
+<h3 class="heading-element" id="汇编层的软件处理"><span>汇编层的软件处理</span>
+  <a href="#%e6%b1%87%e7%bc%96%e5%b1%82%e7%9a%84%e8%bd%af%e4%bb%b6%e5%a4%84%e7%90%86" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><code>stvec</code> 中的跳转地址已被内核修改为 <code>uservec</code> 的地址，<code>uservec</code> 位于 <code>trampoline.S</code> 文件中
+实现如下：</p>
+<pre tabindex="0"><code>uservec:    
+
+        # trap.c sets stvec to point here, so
+        # traps from user space start here,
+        # in supervisor mode, but with a
+        # user page table.
+        #
+
+        # save user a0 in sscratch so
+        # a0 can be used to get at TRAPFRAME.
+        csrw sscratch, a0
+
+        # each process has a separate p-&gt;trapframe memory area,
+        # but it&#39;s mapped to the same virtual address
+        # (TRAPFRAME) in every process&#39;s user page table.
+        li a0, TRAPFRAME
+        
+        # save the user registers in TRAPFRAME
+        sd ra, 40(a0)
+        sd sp, 48(a0)
+        sd gp, 56(a0)
+        sd tp, 64(a0)
+        sd t0, 72(a0)
+        sd t1, 80(a0)
+        sd t2, 88(a0)
+        sd s0, 96(a0)
+        sd s1, 104(a0)
+        sd a1, 120(a0)
+        sd a2, 128(a0)
+        sd a3, 136(a0)
+        sd a4, 144(a0)
+        sd a5, 152(a0)
+        sd a6, 160(a0)
+        sd a7, 168(a0)
+        sd s2, 176(a0)
+        sd s3, 184(a0)
+        sd s4, 192(a0)
+        sd s5, 200(a0)
+        sd s6, 208(a0)
+        sd s7, 216(a0)
+        sd s8, 224(a0)
+        sd s9, 232(a0)
+        sd s10, 240(a0)
+        sd s11, 248(a0)
+        sd t3, 256(a0)
+        sd t4, 264(a0)
+        sd t5, 272(a0)
+        sd t6, 280(a0)
+
+	# save the user a0 in p-&gt;trapframe-&gt;a0
+        csrr t0, sscratch
+        sd t0, 112(a0)
+
+        # initialize kernel stack pointer, from p-&gt;trapframe-&gt;kernel_sp
+        ld sp, 8(a0)
+
+        # make tp hold the current hartid, from p-&gt;trapframe-&gt;kernel_hartid
+        ld tp, 32(a0)
+
+        # load the address of usertrap(), from p-&gt;trapframe-&gt;kernel_trap
+        ld t0, 16(a0)
+
+        # fetch the kernel page table address, from p-&gt;trapframe-&gt;kernel_satp.
+        ld t1, 0(a0)
+
+        # wait for any previous memory operations to complete, so that
+        # they use the user page table.
+        sfence.vma zero, zero
+
+        # install the kernel page table.
+        csrw satp, t1
+
+        # flush now-stale user entries from the TLB.
+        sfence.vma zero, zero
+
+        # call usertrap()
+        jalr t0</code></pre><p><code>trapframe</code> 实现</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> trapframe {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*   0 */</span> uint64 kernel_satp;   <span style="color:#75715e">// kernel page table
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*   8 */</span> uint64 kernel_sp;     <span style="color:#75715e">// top of process&#39;s kernel stack
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  16 */</span> uint64 kernel_trap;   <span style="color:#75715e">// usertrap()
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  24 */</span> uint64 epc;           <span style="color:#75715e">// saved user program counter
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  32 */</span> uint64 kernel_hartid; <span style="color:#75715e">// saved kernel tp
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  40 */</span> uint64 ra;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  48 */</span> uint64 sp;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  56 */</span> uint64 gp;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  64 */</span> uint64 tp;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  72 */</span> uint64 t0;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  80 */</span> uint64 t1;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  88 */</span> uint64 t2;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/*  96 */</span> uint64 s0;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 104 */</span> uint64 s1;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 112 */</span> uint64 a0;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 120 */</span> uint64 a1;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 128 */</span> uint64 a2;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 136 */</span> uint64 a3;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 144 */</span> uint64 a4;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 152 */</span> uint64 a5;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 160 */</span> uint64 a6;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 168 */</span> uint64 a7;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 176 */</span> uint64 s2;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 184 */</span> uint64 s3;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 192 */</span> uint64 s4;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 200 */</span> uint64 s5;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 208 */</span> uint64 s6;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 216 */</span> uint64 s7;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 224 */</span> uint64 s8;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 232 */</span> uint64 s9;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 240 */</span> uint64 s10;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 248 */</span> uint64 s11;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 256 */</span> uint64 t3;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 264 */</span> uint64 t4;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 272 */</span> uint64 t5;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* 280 */</span> uint64 t6;
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><p><code>sd</code>（Store Doubleword）表示将寄存器中值存到指定内存中去</p>
+<p><code>uservec</code> 所做的事情：</p>
+<ul>
+<li><strong>保存用户寄存器到 <code>trapframe</code> 中</strong> <code>trapframe</code> 是进程虚拟内存空间的一个特殊区域，专门保存 trap 时的用户寄存器</li>
+<li><strong>切换到内核栈</strong> 将 <code>sp</code> 设置为当前进程的内核栈</li>
+</ul>
+<blockquote>
+<p>内核栈不同于用户栈，用户栈是在当前进程的虚拟地址空间当中。每个进程都有自己的内核栈，但内核栈属于内核虚拟地址空间，内核地址空间有所有进程共享。在 <code>proc</code> 中 <code>kstack</code> 字段专门存放内核栈的虚拟地址</p>
+</blockquote>
+<ul>
+<li><strong>切换内核页表</strong> 将 <code>satp</code> 设置为内核页表的地址</li>
+</ul>
+<blockquote>
+<p>内核页表是全局变量，定义在 <code>vm.c</code> 中
+<code>pagetable_t kernel_pagetable;</code>
+这个页表映射内核代码，内核数据，每个进程的 <code>trapframe</code> 等等。每个进程都有独立的内核栈，但都映射到同一个内核页表中</p>
+</blockquote>
+<ul>
+<li><strong>跳转到 C 代码</strong> 从 <code>uservec</code> 跳转到 <code>usertrap()</code> 函数</li>
+</ul>
+<h3 class="heading-element" id="c-的软件处理"><span>C 的软件处理</span>
+  <a href="#c-%e7%9a%84%e8%bd%af%e4%bb%b6%e5%a4%84%e7%90%86" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><code>usertrap()</code> 是内核中处理用户态 Trap 的核心 C 函数，位于 <code>kernel/trap.c</code></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>uint64 <span style="color:#a6e22e">usertrap</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> which_dev <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ((<span style="color:#a6e22e">r_sstatus</span>() <span style="color:#f92672">&amp;</span> SSTATUS_SPP) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">panic</span>(<span style="color:#e6db74">&#34;usertrap: not from user mode&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// send interrupts and exceptions to kerneltrap(),
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// since we&#39;re now in the kernel.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">w_stvec</span>((uint64)kernelvec); <span style="color:#75715e">//DOC: kernelvec
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">struct</span> proc <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#a6e22e">myproc</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// save user program counter.
+</span></span></span><span style="display:flex;"><span>  p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>epc <span style="color:#f92672">=</span> <span style="color:#a6e22e">r_sepc</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">r_scause</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// system call
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">killed</span>(p))
+</span></span><span style="display:flex;"><span>      <span style="color:#a6e22e">kexit</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// sepc points to the ecall instruction,
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// but we want to return to the next instruction.
+</span></span></span><span style="display:flex;"><span>    p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>epc <span style="color:#f92672">+=</span> <span style="color:#ae81ff">4</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// an interrupt will change sepc, scause, and sstatus,
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// so enable only now that we&#39;re done with those registers.
+</span></span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">intr_on</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">syscall</span>();
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ((which_dev <span style="color:#f92672">=</span> <span style="color:#a6e22e">devintr</span>()) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ok
+</span></span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> ((<span style="color:#a6e22e">r_scause</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">15</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">r_scause</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>) <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#a6e22e">vmfault</span>(p<span style="color:#f92672">-&gt;</span>pagetable, p<span style="color:#f92672">-&gt;</span>sz, <span style="color:#a6e22e">r_stval</span>(),
+</span></span><span style="display:flex;"><span>                     (<span style="color:#a6e22e">r_scause</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">13</span>) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// page fault on lazily-allocated page
+</span></span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printk</span>(<span style="color:#e6db74">&#34;usertrap(): unexpected scause 0x%lx pid=%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">r_scause</span>(), p<span style="color:#f92672">-&gt;</span>pid);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printk</span>(<span style="color:#e6db74">&#34;            sepc=0x%lx stval=0x%lx</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#a6e22e">r_sepc</span>(), <span style="color:#a6e22e">r_stval</span>());
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">setkilled</span>(p);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">killed</span>(p))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">kexit</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// give up the CPU if this is a timer interrupt.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (which_dev <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">yield</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">prepare_return</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// the user page table to switch to, for trampoline.S
+</span></span></span><span style="display:flex;"><span>  uint64 satp <span style="color:#f92672">=</span> <span style="color:#a6e22e">MAKE_SATP</span>(p<span style="color:#f92672">-&gt;</span>pagetable);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// return to trampoline.S; satp value in a0.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> satp;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><code>usertrap</code> 所做的事情</p>
+<ul>
+<li><strong>将 <code>sepc</code> 中的返回地址保存到 <code>trapframe</code></strong> 不依赖寄存器长期保存地址。此外若为系统调用，还要将 <code>epc += 4</code>，这是因为，<code>sepc</code> 存的是 <code>ecall</code> 之前 <code>pc</code> 中的值，<code>pc</code> 保存下一条指令的地址，也就是 <code>ecall</code>，但我们想要的是系统调用返回后执行 <code>ecall</code> 的下一条指令，因此偏移 4 个字节</li>
+</ul>
+<blockquote>
+<p>至于为什么是加 4，而不是加 8，这是因为 <code>ecall</code> 指令占 4 个字节</p>
+</blockquote>
+<ul>
+<li><strong>重启系统中断</strong> 调用 <code>intr_on()</code> 函数重启中断</li>
+<li><strong>分发处理</strong> 依据 <code>scause</code> 中的值判断 trap 的原因，并进行相应处理，对于系统调用，并调用 <code>syscall</code> 函数</li>
+</ul>
+<blockquote>
+<p>除了系统调用，还可能是设备中断（Device Interrupt）或者异常（Exception），Expcetion 时，usertrap 会打印错误信息（包括 scause,sepc,stval 等）</p>
+</blockquote>
+<h3 class="heading-element" id="syscall-分发系统调用"><span><code>syscall</code> 分发系统调用</span>
+  <a href="#syscall-%e5%88%86%e5%8f%91%e7%b3%bb%e7%bb%9f%e8%b0%83%e7%94%a8" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p><code>syscall()</code> 位于 <code>kernel/syscall.c</code></p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">syscall</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">int</span> num;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">struct</span> proc <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#a6e22e">myproc</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  num <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>a7;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (num <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> num <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">NELEM</span>(syscalls) <span style="color:#f92672">&amp;&amp;</span> syscalls[num]) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Use num to lookup the system call function for num, call it,
+</span></span></span><span style="display:flex;"><span>    <span style="color:#75715e">// and store its return value in p-&gt;trapframe-&gt;a0
+</span></span></span><span style="display:flex;"><span>    p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>a0 <span style="color:#f92672">=</span> syscalls[num]();
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printk</span>(<span style="color:#e6db74">&#34;%d %s: unknown sys call %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, p<span style="color:#f92672">-&gt;</span>pid, p<span style="color:#f92672">-&gt;</span>name, num);
+</span></span><span style="display:flex;"><span>    p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>a0 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>其功能显而易见，读取 <code>a7</code> 中系统调用号，分发系统调用，并保存返回值到 <code>a0</code> 寄存器中</p>
+<p>那么系统调用处理函数怎么工作呢？</p>
+<p>在开始是我们在用户层定义了 <code>interpose</code> 函数接口</p>
+<p>在调用 <code>interpose</code> 接口函数时，有两个参数被传入，根据函数调用约定，这个两个参数被存放在寄存器 <code>a0</code> 和 <code>a1</code> 中，然后这两个参数在汇编处理阶段被存入 <code>trapframe</code> 中，所以在具体实现中，我们需要去 <code>trapframe</code> 中找这两个参数</p>
+<p>好消息是，在 <code>kernel/syscall.c</code> 为我们提供了相关接口获取参数 <code>argraw</code> 极其衍生函数，如 <code>argint</code> 和 <code>argstr</code></p>
+<h3 class="heading-element" id="返回用户态"><span>返回用户态</span>
+  <a href="#%e8%bf%94%e5%9b%9e%e7%94%a8%e6%88%b7%e6%80%81" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><p>在 <code>syscall</code> 函数完毕后，进入 <code>prepare_return()</code> 函数</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">prepare_return</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">struct</span> proc <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> <span style="color:#a6e22e">myproc</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// we&#39;re about to switch the destination of traps from
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// kerneltrap() to usertrap(). because a trap from kernel
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// code to usertrap would be a disaster, turn off interrupts.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">intr_off</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// send syscalls, interrupts, and exceptions to uservec in trampoline.S
+</span></span></span><span style="display:flex;"><span>  uint64 trampoline_uservec <span style="color:#f92672">=</span> TRAMPOLINE <span style="color:#f92672">+</span> (uservec <span style="color:#f92672">-</span> trampoline);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">w_stvec</span>(trampoline_uservec);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set up trapframe values that uservec will need when
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// the process next traps into the kernel.
+</span></span></span><span style="display:flex;"><span>  p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>kernel_satp <span style="color:#f92672">=</span> <span style="color:#a6e22e">r_satp</span>();         <span style="color:#75715e">// kernel page table
+</span></span></span><span style="display:flex;"><span>  p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>kernel_sp <span style="color:#f92672">=</span> p<span style="color:#f92672">-&gt;</span>kstack <span style="color:#f92672">+</span> PGSIZE; <span style="color:#75715e">// process&#39;s kernel stack
+</span></span></span><span style="display:flex;"><span>  p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>kernel_trap <span style="color:#f92672">=</span> (uint64)usertrap;
+</span></span><span style="display:flex;"><span>  p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>kernel_hartid <span style="color:#f92672">=</span> <span style="color:#a6e22e">r_tp</span>(); <span style="color:#75715e">// hartid for cpuid()
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set up the registers that trampoline.S&#39;s sret will use
+</span></span></span><span style="display:flex;"><span>  <span style="color:#75715e">// to get to user space.
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set S Previous Privilege mode to User.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> x <span style="color:#f92672">=</span> <span style="color:#a6e22e">r_sstatus</span>();
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&amp;=</span> <span style="color:#f92672">~</span>SSTATUS_SPP; <span style="color:#75715e">// clear SPP to 0 for user mode
+</span></span></span><span style="display:flex;"><span>  x <span style="color:#f92672">|=</span> SSTATUS_SPIE; <span style="color:#75715e">// enable interrupts in user mode
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">w_sstatus</span>(x);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set S Exception Program Counter to the saved user pc.
+</span></span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">w_sepc</span>(p<span style="color:#f92672">-&gt;</span>trapframe<span style="color:#f92672">-&gt;</span>epc);
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p><code>prepare</code> 重新关闭中断；修改 <code>stvec</code> 为 trap 入口，保证下次 trap 时正常进入 <code>uservec</code>；调整 <code>trapframe</code> 的内核信息；修改 <code>sstatus</code>。最后在 <code>usertrap</code> 中返回 <code>satp</code></p>
+<p><code>usertrap</code> 返回在 <code>userret</code> 中
+<code>userret</code> 实现如下</p>
+<pre tabindex="0"><code>userret:
+        # usertrap() returns here, with user satp in a0.
+        # return from kernel to user.
+
+        # flush icache, in case this is the first time
+        # we&#39;re running this proc on this hart.
+        fence.i
+
+        # switch to the user page table.
+        sfence.vma zero, zero
+        csrw satp, a0
+        sfence.vma zero, zero
+
+        li a0, TRAPFRAME
+
+        # restore all but a0 from TRAPFRAME
+        ld ra, 40(a0)
+        ld sp, 48(a0)
+        ld gp, 56(a0)
+        ld tp, 64(a0)
+        ld t0, 72(a0)
+        ld t1, 80(a0)
+        ld t2, 88(a0)
+        ld s0, 96(a0)
+        ld s1, 104(a0)
+        ld a1, 120(a0)
+        ld a2, 128(a0)
+        ld a3, 136(a0)
+        ld a4, 144(a0)
+        ld a5, 152(a0)
+        ld a6, 160(a0)
+        ld a7, 168(a0)
+        ld s2, 176(a0)
+        ld s3, 184(a0)
+        ld s4, 192(a0)
+        ld s5, 200(a0)
+        ld s6, 208(a0)
+        ld s7, 216(a0)
+        ld s8, 224(a0)
+        ld s9, 232(a0)
+        ld s10, 240(a0)
+        ld s11, 248(a0)
+        ld t3, 256(a0)
+        ld t4, 264(a0)
+        ld t5, 272(a0)
+        ld t6, 280(a0)
+
+	# restore user a0
+        ld a0, 112(a0)
+        
+        # return to user mode and user pc.
+        # prepare_return() sets up sstatus and sepc.
+        sret</code></pre><p>基本就是在将 trapframe 中的值重新写入寄存器中，最后 <code>sret</code> 返回，硬件自动将特权级切换至 User Mode.</p>
+<p>整体调用链：</p>
+<div class="code-tabs diagram-tabs" data-diagram="mermaid">
+    <div class="tabs-header">
+      <div class="tabs-items">
+        <span class="tab-item active" data-tab="diagram" title="图表">图表</span>
+        <span class="tab-item" data-tab="code" title="代码">代码</span>
+      </div>
+      <div class="tabs-actions">
+        <button type="button" class="action-btn diagram-zoom-out-btn" aria-label="缩小" title="缩小"><i class="fa-solid fa-magnifying-glass-minus" aria-hidden="true"></i></button>
+        <button type="button" class="action-btn diagram-zoom-in-btn" aria-label="放大" title="放大"><i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i></button>
+        <button type="button" class="action-btn diagram-reset-btn" aria-label="重置" title="重置"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i></button>
+        <button type="button" class="action-btn diagram-download-btn" aria-label="下载 SVG" title="下载 SVG"><i class="fa-solid fa-download" aria-hidden="true"></i></button>
+      </div>
+    </div>
+    <div class="tabs-content">
+      <div class="code-block diagram-view active" data-filename="mermaid.mmd">
+        <div class="diagram-container">
+          <pre class="mermaid">flowchart LR
+  A["CPU硬件处理<br/>ecall 触发 trap"] --> B["uservec<br/>trampoline.S"]
+  B --> C["usertrap<br/>trap.c"]
+  C --> D["syscall<br/>syscall.c"]
+  D --> E["prepare_return<br/>trap.c"]
+  E --> F["userret<br/>trampoline.S"]
+  F --> G["返回用户态继续执行"]</pre>
+          <pre class="mermaid-dark">flowchart LR
+  A["CPU硬件处理<br/>ecall 触发 trap"] --> B["uservec<br/>trampoline.S"]
+  B --> C["usertrap<br/>trap.c"]
+  C --> D["syscall<br/>syscall.c"]
+  D --> E["prepare_return<br/>trap.c"]
+  E --> F["userret<br/>trampoline.S"]
+  F --> G["返回用户态继续执行"]</pre>
+          <pre class="mermaid-neutral">flowchart LR
+  A["CPU硬件处理<br/>ecall 触发 trap"] --> B["uservec<br/>trampoline.S"]
+  B --> C["usertrap<br/>trap.c"]
+  C --> D["syscall<br/>syscall.c"]
+  D --> E["prepare_return<br/>trap.c"]
+  E --> F["userret<br/>trampoline.S"]
+  F --> G["返回用户态继续执行"]</pre>
+        </div>
+      </div><div class="code-block highlight diagram-code line-nos-hidden" data-mode="classic" data-copyable="true" copyable="true" fullscreen="true" filename="mermaid.mmd"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>flowchart LR
+</span></span><span style="display:flex;"><span>  A[&#34;CPU硬件处理&lt;br/&gt;ecall 触发 trap&#34;] --&gt; B[&#34;uservec&lt;br/&gt;trampoline.S&#34;]
+</span></span><span style="display:flex;"><span>  B --&gt; C[&#34;usertrap&lt;br/&gt;trap.c&#34;]
+</span></span><span style="display:flex;"><span>  C --&gt; D[&#34;syscall&lt;br/&gt;syscall.c&#34;]
+</span></span><span style="display:flex;"><span>  D --&gt; E[&#34;prepare_return&lt;br/&gt;trap.c&#34;]
+</span></span><span style="display:flex;"><span>  E --&gt; F[&#34;userret&lt;br/&gt;trampoline.S&#34;]
+</span></span><span style="display:flex;"><span>  F --&gt; G[&#34;返回用户态继续执行&#34;]</span></span></code></pre></div></div>
+  </div><p>这便是系统调用的全流程</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod"><span title="更新于 2026-11-13 14:48:13">更新于 2026-11-13&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="vscode://file//home/yu419/blog/my-blog/content/posts/xv6 Lab System calls.md" title="在编辑器中打开" class="link-to-editor">在编辑器中打开</a></span></div><div class="post-info-share">
+          <span></span>
+        </div></div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/xv6/" class="post-tag" title="标签 - Xv6">Xv6</a></section>
+    <section class="post-actions"><span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>
+      <span class="separator" aria-hidden="true"></span>
+      <span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"></div>
+</div>
+</article><aside class="toc animate__animated animate__fadeIn animate__faster" id="toc-auto" aria-label="目录"><h2 class="toc-title">
+      <span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden="true"></i></span>
+      <button type="button" class="toc-print-btn" onclick="event.stopPropagation(); window.print()" aria-label="打印"><i class="fa-solid fa-print" aria-hidden="true"></i></button>
+    </h2>
+    <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+  <div class="footer-container"><div class="footer-bottom"><div class="footer-legal"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
+                  <span itemprop="copyrightYear">2024 - 2026</span><span class="author" itemprop="copyrightHolder">
+                    <a href="/authors/yu419/">yu419</a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.169.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.169.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
+              </div></div></div></div>
+</footer>
+</div><div class="widgets"><div id="mask"></div><dialog id="nav-dialog" aria-labelledby="nav-dialog-title" closedby="any">
+    <button type="button" class="nav-close-btn" aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden="true"></i></button>
+    <div class="toc">
+      <h2 class="toc-title" id="nav-dialog-title">导航</h2><div class="toc-content" id="toc-content-drawer"></div></div>
+  </dialog><dialog id="search-dialog" class="search-dialog" aria-label="搜索" closedby="any">
+      <div class="search-modal">
+        <div class="search-modal-header">
+          <span class="search-delimiter"></span>
+          <button type="button" class="search-close-btn" aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </div>
+        <div class="search-source-footer">
+          <div class="search-shortcuts">
+            <span class="search-shortcut">
+              <kbd><i class="lucide-arrow-up" aria-hidden="true"></i></kbd>
+              <kbd><i class="lucide-arrow-down" aria-hidden="true"></i></kbd>
+              切换
+            </span>
+            <span class="search-shortcut">
+              <kbd><i class="lucide-corner-down-left" aria-hidden="true"></i></kbd>
+              选择
+            </span>
+            <span class="search-shortcut">
+              <kbd>ESC</kbd>
+              关闭
+            </span>
+          </div><span class="search-engine">搜索引擎 <a href="https://fusejs.io/" target="_blank" rel="external nofollow noopener noreferrer">Fuse.js</a></span></div>
+      </div>
+    </dialog><div class="reading-progress-bar" style="inset-inline-start: 0;top: 0;--fi-bg-progress: #687b91;--fi-bg-progress-dark: #c8d3e1;"></div><div class="fixed-buttons"><button type="button" class="fixed-button back-to-top animate__faster hidden" aria-label="回到顶部"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button><button type="button" id="nav-drawer-button" class="fixed-button nav-drawer-button hidden" aria-label="导航" aria-controls="nav-dialog" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div><noscript>
+    <div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.js" defer></script><script src="/lib/panzoom/panzoom.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/config/f43ce29d2964bb6e720c018f4b38012f.js" defer></script><script src="/js/lib/file-tree.js" defer></script><script src="/js/lib/mermaid-bootstrap.js" defer type="module"></script><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script></body>
+</html>
