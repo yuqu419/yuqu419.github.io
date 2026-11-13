@@ -1,6 +1,6 @@
 ---
 title: xv6 Lab System calls
-subtitle: Operating system organziation
+subtitle: 浅析 xv6 中的系统调用
 date: 2026-11-13T14:48:13+08:00
 slug: xv6-lab-syscalls
 draft: false
@@ -37,7 +37,7 @@ repost:
 
 </p>
 
-<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/11</p>
+<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/13</p>
 
 </div>
 
