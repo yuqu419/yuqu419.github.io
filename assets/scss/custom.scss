@@ -2065,13 +2065,58 @@ body {
 }
 
 .page.single:not(.special) #content figure {
-  margin-block: 1.75rem;
+  margin: clamp(2rem, 5vw, 3rem) 0;
+  padding: clamp(0.45rem, 1.4vw, 0.8rem);
+  text-align: center;
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.07), rgba(226, 232, 240, 0.1));
+  border-radius: 1.05rem;
+  background: light-dark(rgba(255, 255, 255, 0.42), rgba(23, 27, 34, 0.4));
+  box-shadow:
+    0 1px 1px light-dark(rgba(36, 48, 64, 0.03), rgba(0, 0, 0, 0.18)),
+    0 18px 40px light-dark(rgba(36, 48, 64, 0.08), rgba(0, 0, 0, 0.26));
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .page.single:not(.special) #content figure img {
-  border: 1px solid light-dark(rgba(32, 42, 56, 0.08), rgba(226, 232, 240, 0.09));
-  border-radius: 0.7rem;
-  box-shadow: 0 10px 28px light-dark(rgba(36, 48, 64, 0.07), rgba(0, 0, 0, 0.2));
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 0.65rem;
+}
+
+.page.single:not(.special) #content > p:has(> img:only-child) {
+  margin-block: clamp(2rem, 5vw, 3rem);
+  padding: clamp(0.45rem, 1.4vw, 0.8rem);
+  border: 1px solid light-dark(rgba(32, 42, 56, 0.07), rgba(226, 232, 240, 0.1));
+  border-radius: 1.05rem;
+  background: light-dark(rgba(255, 255, 255, 0.42), rgba(23, 27, 34, 0.4));
+  box-shadow:
+    0 1px 1px light-dark(rgba(36, 48, 64, 0.03), rgba(0, 0, 0, 0.18)),
+    0 18px 40px light-dark(rgba(36, 48, 64, 0.08), rgba(0, 0, 0, 0.26));
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.page.single:not(.special) #content > p > img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 0.65rem;
+}
+
+.page.single:not(.special) #content figure:hover,
+.page.single:not(.special) #content > p:has(> img:only-child):hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 2px 2px light-dark(rgba(36, 48, 64, 0.04), rgba(0, 0, 0, 0.22)),
+    0 24px 48px light-dark(rgba(36, 48, 64, 0.12), rgba(0, 0, 0, 0.32));
 }
 
 .page.single:not(.special) #content .image-caption:not(:empty) {
@@ -2249,6 +2294,22 @@ body {
       padding: 1.15rem;
     }
 
+    .page.single:not(.special) #content figure,
+    .page.single:not(.special) #content > p:has(> img:only-child) {
+      margin-block: 1.75rem;
+    }
+
+    .page.single:not(.special) #content figure img,
+    .page.single:not(.special) #content > p > img {
+        border-radius: 0.5rem;
+      }
+
+      .page.single:not(.special) #content figure,
+      .page.single:not(.special) #content > p:has(> img:only-child) {
+        padding: 0.35rem;
+        border-radius: 0.8rem;
+    }
+
     .page.single:not(.special) > .post-meta .post-meta-line {
       gap: 0.35rem;
     }
@@ -2313,11 +2374,15 @@ body {
     align-items: flex-end;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .page.single:not(.special) .post-nav .post-nav-item {
-      transition: none;
-    }
+@media (prefers-reduced-motion: reduce) {
+  .page.single:not(.special) #content figure img,
+  .page.single:not(.special) #content > p > img,
+  .page.single:not(.special) #content figure,
+  .page.single:not(.special) #content > p:has(> img:only-child),
+  .page.single:not(.special) .post-nav .post-nav-item {
+    transition: none;
   }
+}
 
 .page.single:not(.special) > .post-meta .post-meta-line:first-child {
   gap: 0.65rem 1rem;

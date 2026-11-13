@@ -90,7 +90,7 @@ The xv6 kernel source is in the `kernel/` sub-directory.Files are divided into m
 
 6. managing the file-system
 
-![alt text](image-2.png)
+![alt text](/posts/image-2.png)
 
 ## Process overview
 
@@ -100,7 +100,9 @@ Xv6 use page tables(which are implemented by handware) to give each process its 
 
 Xv6 maintains a seperate page tabe for each process that defines that process's address space.
 The layout of virutal address space is like following:
-![alt text](image-3.png)
+
+![alt text](/posts/image-3.png)
+
 Instructions -> global variables -> stack -> heap
 When looking up virtual addresses in page tables,the handware uses only the low 39 bits;and xv6 uses only 38 of those 39 bits.
 

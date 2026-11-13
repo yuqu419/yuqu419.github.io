@@ -168,15 +168,15 @@ Different processes need to interact,such as pipelines.</li>
 <p>managing the file-system</p>
 </li>
 </ol>
-<p><img loading="lazy" src='image-2.png' alt="alt text"></p>
+<p><img loading="lazy" src='/posts/image-2.png' alt="alt text"></p>
 <h2 class="heading-element" id="process-overview"><span>Process overview</span>
   <a href="#process-overview" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
 </h2><p>Process is regarded as an instance of program, which provides kits with program.</p>
 <p>Xv6 use page tables(which are implemented by handware) to give each process its own address space.The RISC-V page table translate a <em>virtual address</em> to <em>physical address</em>.</p>
 <p>Xv6 maintains a seperate page tabe for each process that defines that process&rsquo;s address space.
-The layout of virutal address space is like following:
-<img loading="lazy" src='image-3.png' alt="alt text">
-Instructions -&gt; global variables -&gt; stack -&gt; heap
+The layout of virutal address space is like following:</p>
+<p><img loading="lazy" src='/posts/image-3.png' alt="alt text"></p>
+<p>Instructions -&gt; global variables -&gt; stack -&gt; heap
 When looking up virtual addresses in page tables,the handware uses only the low 39 bits;and xv6 uses only 38 of those 39 bits.</p>
 <p>Thus,the maximum address is 0x3fffffffff,which is <code>MAXVA</code>(maximum virtual address).</p>
 <p>At the top of the address space, xv6 places a <em>trampoline page</em> and a <em>trapframe page</em>,which are used to transition into the kernel and back.</p>
@@ -236,7 +236,7 @@ The code at the entry point switches to the kernel stack and executes the code t
       <span class="separator" aria-hidden="true"></span>
       <span><a href="/">主页</a></span>
     </section>
-  </div><div class="post-nav"><a href="/posts/xv6-chapter-1/" class="post-nav-item" rel="prev" title="Xv6 Chapter1"><i class="fa-solid fa-angle-left" aria-hidden="true"></i>Xv6 Chapter1</a></div>
+  </div><div class="post-nav"></div>
 </div>
 </article><aside class="toc animate__animated animate__fadeIn animate__faster" id="toc-auto" aria-label="目录"><h2 class="toc-title">
       <span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden="true"></i></span>
