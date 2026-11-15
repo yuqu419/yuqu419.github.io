@@ -54,7 +54,7 @@ name = 'yu419'
 avatar = '/images/avatar.jpg'
 
 [params.app]
-svg_favicon = '/favicon.png'
+svg_favicon = '/favicon.svg'
 
 [params.home.profile]
 enable = true

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>yu419 Blog</title>
+  <rect width="64" height="64" rx="16" fill="#f3f5f7"/>
+  <path d="M17 15.5h22.5A7.5 7.5 0 0 1 47 23v27.5H24.5A7.5 7.5 0 0 0 17 58V15.5Z" fill="#202833"/>
+  <path d="M47 50.5H24.5A7.5 7.5 0 0 0 17 58h22.5a7.5 7.5 0 0 0 7.5-7.5Z" fill="#687b91"/>
+  <path d="M24.5 23.5h14M24.5 30h14M24.5 36.5h9" fill="none" stroke="#f3f5f7" stroke-linecap="round" stroke-width="3"/>
+  <path d="m43 15 3.8 7.7L55 24l-6.5 5.7L50 38l-7-4.1L36 38l1.5-8.3L31 24l8.2-1.3L43 15Z" fill="#c8d3e1"/>
+</svg>

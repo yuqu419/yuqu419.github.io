@@ -4,10 +4,17 @@
     <title>yu419 - 作者 - yu419</title>
     <link>http://localhost:1313/authors/yu419/</link>
     <description>yu419</description>
-    <generator>Hugo 0.169.0 &amp; FixIt v1.0.0-rc.1</generator>
+    <generator>Hugo 0.170.0 &amp; FixIt v1.0.0-rc.1</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 12 Nov 2026 15:00:13 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2026 14:48:13 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/authors/yu419/index.xml" rel="self" type="application/rss+xml" /><item>
+      <title>xv6 Lab System calls</title>
+      <link>http://localhost:1313/posts/xv6-lab-syscalls/</link>
+      <pubDate>Fri, 13 Nov 2026 14:48:13 +0800</pubDate>
+      <guid>http://localhost:1313/posts/xv6-lab-syscalls/</guid>
+      <category domain="http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0/">学习</category>
+      <description>&lt;div style=&#34;max-width: 620px; margin: 56px auto; font-family: &#39;Noto Serif SC&#39;,&#39;Songti SC&#39;,Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;&#34;&gt;&#xA;&lt;p style=&#34;font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;&#34;&gt;Preface&lt;/p&gt;&#xA;&lt;div style=&#34;width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;&#34;&gt;&lt;/div&gt;&#xA;&lt;p style=&#34;font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;&#34;&gt;&#xA;&lt;p&gt;系统调用的流程到底是怎样的？&lt;/p&gt;&#xA;&lt;/p&gt;&#xA;&lt;p style=&#34;font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;&#34;&gt;— 2026/11/13&lt;/p&gt;&#xA;&lt;/div&gt;</description>
+    </item><item>
       <title>xv6 chapter2</title>
       <link>http://localhost:1313/posts/xv6-chapter-2/</link>
       <pubDate>Thu, 12 Nov 2026 15:00:13 +0800</pubDate>
