@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN" dir="ltr">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
     <title>Xv6 Chapter1 - yu419</title><meta name="author" content="yu419">
@@ -15,7 +15,7 @@ Let us go to the world of xv6.
 	<meta itemprop="datePublished" content="2026-11-11T15:24:13+08:00">
 	<meta itemprop="dateModified" content="2026-11-11T15:24:13+08:00">
 	<meta itemprop="wordCount" content="1069">
-	<meta itemprop="keywords" content="Xv6"><meta property="og:url" content="http://localhost:1313/posts/xv6-chapter-1/">
+	<meta itemprop="keywords" content="Xv6"><meta property="og:url" content="https://yuqu419.github.io/posts/xv6-chapter-1/">
 	<meta property="og:site_name" content="yu419">
 	<meta property="og:title" content="xv6 chapter1">
 	<meta property="og:description" content="Preface
@@ -33,9 +33,9 @@ Let us go to the world of xv6.
   <meta name="twitter:description" content="Preface
 Let us go to the world of xv6.
 — 2026/11/11"><meta name="application-name" content="yu419">
-<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/xv6-chapter-1/" title="xv6 chapter1 - yu419" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/cssapp-chapter-3/" title="深入理解计算机系统 第三章" /><link rel="next" type="text/html" href="http://localhost:1313/posts/xv6-chapter-2/" title="xv6 chapter2" /><link rel="stylesheet" href="/css/unocss.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/css/pages/posts.css"><link rel="stylesheet" href="/css/custom.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="https://yuqu419.github.io/posts/xv6-chapter-1/" title="xv6 chapter1 - yu419" /><link rel="prev" type="text/html" href="https://yuqu419.github.io/posts/cssapp-chapter-3/" title="深入理解计算机系统 第三章" /><link rel="next" type="text/html" href="https://yuqu419.github.io/posts/xv6-chapter-2/" title="xv6 chapter2" /><link rel="stylesheet" href="/css/unocss.min.css"><link rel="stylesheet" href="/css/main.min.css"><link rel="stylesheet" href="/css/pages/posts.min.css"><link rel="stylesheet" href="/css/custom.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.js" as="script"><script type="application/ld+json">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.min.js" as="script"><script type="application/ld+json">
   {
     "@context": "http://schema.org",
     "@type": "BlogPosting",
@@ -43,20 +43,20 @@ Let us go to the world of xv6.
     "inLanguage": "zh-CN",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "http:\/\/localhost:1313\/posts\/xv6-chapter-1\/"
+      "@id": "https:\/\/yuqu419.github.io\/posts\/xv6-chapter-1\/"
     },"genre": "posts","keywords": "xv6","wordcount":  1069 ,
-    "url": "http:\/\/localhost:1313\/posts\/xv6-chapter-1\/","datePublished": "2026-11-11T15:24:13+08:00","dateModified": "2026-11-11T15:24:13+08:00","publisher": {
+    "url": "https:\/\/yuqu419.github.io\/posts\/xv6-chapter-1\/","datePublished": "2026-11-11T15:24:13+08:00","dateModified": "2026-11-11T15:24:13+08:00","publisher": {
       "@type": "Organization",
       "name": ""},"author": {
         "@type": "Person",
         "name": "yu419"
       },"description": ""
   }
-  </script><script src="/js/head.js"></script></head>
+  </script><script src="/js/head.min.js"></script></head>
   <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster is-blur" id="header-desktop">
   <div class="header-wrapper">
     <div class="header-title">
-      <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="32" width="32"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
+      <a href="/" title="yu419" class="header-title-link"><img class="logo" loading="lazy" src='/images/avatar.jpg' alt="yu419" height="32" width="32" decoding="async"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
     <nav class="nav-main" aria-label="主菜单">
       <ul class="menu"><li class="menu-item">
             <a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item">
@@ -80,7 +80,7 @@ Let us go to the world of xv6.
   <div class="header-container">
     <div class="header-wrapper">
       <div class="header-title">
-        <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="26" width="26"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+        <a href="/" title="yu419" class="header-title-link"><img class="logo" loading="lazy" src='/images/avatar.jpg' alt="yu419" height="26" width="26" decoding="async"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
       <button type="button" class="menu-toggle" id="menu-toggle-mobile" aria-controls="menu-mobile" aria-expanded="false" aria-labelledby="menu-mobile">
         <span></span><span></span><span></span>
       </button>
@@ -269,7 +269,7 @@ Let us go to the world of xv6.
             <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
           </div></div>
     <div class="post-info-line">
-      <div class="post-info-md"><span><a href="vscode://file//home/yu419/blog/my-blog/content/posts/xv6 chapter1.md" title="在编辑器中打开" class="link-to-editor">在编辑器中打开</a></span></div><div class="post-info-share">
+      <div class="post-info-md"></div><div class="post-info-share">
           <span></span>
         </div></div>
   </div>
@@ -322,5 +322,5 @@ Let us go to the world of xv6.
     </dialog><div class="reading-progress-bar" style="inset-inline-start: 0;top: 0;--fi-bg-progress: #687b91;--fi-bg-progress-dark: #c8d3e1;"></div><div class="fixed-buttons"><button type="button" class="fixed-button back-to-top animate__faster hidden" aria-label="回到顶部"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button><button type="button" id="nav-drawer-button" class="fixed-button nav-drawer-button hidden" aria-label="导航" aria-controls="nav-dialog" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div><noscript>
     <div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div>
   </noscript>
-</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/config/c0846d268c5e3ac0cfe086ba63f79413.js" defer></script><script src="/js/lib/file-tree.js" defer></script><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script></body>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.min.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.min.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/config/c0846d268c5e3ac0cfe086ba63f79413.min.js" defer></script><script src="/js/lib/file-tree.min.js" defer></script><script src="/js/main.min.js" defer></script><script src="/js/custom.min.js" defer></script></body>
 </html>

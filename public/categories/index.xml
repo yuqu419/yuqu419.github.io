@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Categories on yu419</title>
-		<link>http://localhost:1313/categories/</link>
+		<link>https://yuqu419.github.io/categories/</link>
 		<description>Recent content in Categories on yu419</description>
 		<generator>Hugo</generator>
 		<language>zh-CN</language>
@@ -12,12 +12,12 @@
 		
 			<lastBuildDate>Mon, 16 Nov 2026 15:30:13 +0800</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://yuqu419.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>学习</title>
-				<link>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0/</link>
+				<link>https://yuqu419.github.io/categories/%E5%AD%A6%E4%B9%A0/</link>
 				<pubDate>Mon, 16 Nov 2026 15:30:13 +0800</pubDate>
-				<guid>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0/</guid>
+				<guid>https://yuqu419.github.io/categories/%E5%AD%A6%E4%B9%A0/</guid>
 				<description></description>
 			</item>
 	</channel>

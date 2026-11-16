@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Tags on yu419</title>
-		<link>http://localhost:1313/tags/</link>
+		<link>https://yuqu419.github.io/tags/</link>
 		<description>Recent content in Tags on yu419</description>
 		<generator>Hugo</generator>
 		<language>zh-CN</language>
@@ -12,26 +12,26 @@
 		
 			<lastBuildDate>Mon, 16 Nov 2026 15:30:13 +0800</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://yuqu419.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Xv6</title>
-				<link>http://localhost:1313/tags/xv6/</link>
+				<link>https://yuqu419.github.io/tags/xv6/</link>
 				<pubDate>Mon, 16 Nov 2026 15:30:13 +0800</pubDate>
-				<guid>http://localhost:1313/tags/xv6/</guid>
+				<guid>https://yuqu419.github.io/tags/xv6/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>CSAPP</title>
-				<link>http://localhost:1313/tags/csapp/</link>
+				<link>https://yuqu419.github.io/tags/csapp/</link>
 				<pubDate>Mon, 09 Nov 2026 08:35:13 +0800</pubDate>
-				<guid>http://localhost:1313/tags/csapp/</guid>
+				<guid>https://yuqu419.github.io/tags/csapp/</guid>
 				<description></description>
 			</item>
 			<item>
 				<title>汇编</title>
-				<link>http://localhost:1313/tags/%E6%B1%87%E7%BC%96/</link>
+				<link>https://yuqu419.github.io/tags/%E6%B1%87%E7%BC%96/</link>
 				<pubDate>Mon, 09 Nov 2026 08:35:13 +0800</pubDate>
-				<guid>http://localhost:1313/tags/%E6%B1%87%E7%BC%96/</guid>
+				<guid>https://yuqu419.github.io/tags/%E6%B1%87%E7%BC%96/</guid>
 				<description></description>
 			</item>
 	</channel>
