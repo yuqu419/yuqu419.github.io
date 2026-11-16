@@ -2,38 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/collections/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/collections/xv6/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/tags/xv6/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
-    <loc>http://localhost:1313/posts/xv6-lab-syscalls/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <loc>http://localhost:1313/posts/xv6-lab-pagetable/</loc>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2026-11-13T14:48:13+08:00</lastmod>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
   </url>
   <url>
     <loc>http://localhost:1313/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2026-11-16T15:30:13+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://localhost:1313/posts/xv6-lab-syscalls/</loc>
     <lastmod>2026-11-13T14:48:13+08:00</lastmod>
   </url>
   <url>

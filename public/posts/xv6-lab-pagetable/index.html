@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="zh-CN" dir="ltr">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+    <title>Xv6 Lab Page Table - yu419</title><meta name="author" content="yu419">
+<meta name="description" content=" Preface
+虚拟地址如何找到物理地址呢？
+— 2026/11/13
+"><meta name="robots" content="index, follow"><meta name="keywords" content='xv6'>
+	<meta itemprop="name" content="xv6 Lab Page Table">
+	<meta itemprop="description" content="Preface
+虚拟地址如何找到物理地址呢？
+— 2026/11/13">
+	<meta itemprop="datePublished" content="2026-11-16T15:30:13+08:00">
+	<meta itemprop="dateModified" content="2026-11-16T15:30:13+08:00">
+	<meta itemprop="wordCount" content="3301">
+	<meta itemprop="keywords" content="Xv6"><meta property="og:url" content="http://localhost:1313/posts/xv6-lab-pagetable/">
+	<meta property="og:site_name" content="yu419">
+	<meta property="og:title" content="xv6 Lab Page Table">
+	<meta property="og:description" content="Preface
+虚拟地址如何找到物理地址呢？
+— 2026/11/13">
+	<meta property="og:locale" content="zh_CN">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-11-16T15:30:13+08:00">
+		<meta property="article:modified_time" content="2026-11-16T15:30:13+08:00">
+		<meta property="article:tag" content="Xv6">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="xv6 Lab Page Table">
+  <meta name="twitter:description" content="Preface
+虚拟地址如何找到物理地址呢？
+— 2026/11/13"><meta name="application-name" content="yu419">
+<meta name="apple-mobile-web-app-title" content="yu419"><meta name="theme-color" data-light="#f6f8fa" data-dark="#151b23" content="#f6f8fa"><meta name="msapplication-TileColor" content="#2d89ef"><link rel="icon" href="/favicon.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#FF7359"><link rel="canonical" type="text/html" href="http://localhost:1313/posts/xv6-lab-pagetable/" title="xv6 Lab Page Table - yu419" /><link rel="prev" type="text/html" href="http://localhost:1313/posts/xv6-lab-syscalls/" title="xv6 Lab System calls" /><link rel="stylesheet" href="/css/unocss.css"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/css/pages/posts.css"><link rel="stylesheet" href="/css/custom.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.removeAttribute('onload');this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="preload" href="/js/main.js" as="script"><script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "BlogPosting",
+    "headline": "xv6 Lab Page Table",
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "http:\/\/localhost:1313\/posts\/xv6-lab-pagetable\/"
+    },"genre": "posts","keywords": "xv6","wordcount":  3301 ,
+    "url": "http:\/\/localhost:1313\/posts\/xv6-lab-pagetable\/","datePublished": "2026-11-16T15:30:13+08:00","dateModified": "2026-11-16T15:30:13+08:00","publisher": {
+      "@type": "Organization",
+      "name": ""},"author": {
+        "@type": "Person",
+        "name": "yu419"
+      },"description": ""
+  }
+  </script><script src="/js/head.js"></script></head>
+  <body data-instant-intensity="viewport" data-header-desktop="sticky" data-header-mobile="auto"><div class="wrapper" data-page-style="normal"><header class="desktop animate__faster is-blur" id="header-desktop">
+  <div class="header-wrapper">
+    <div class="header-title">
+      <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="32" width="32"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div>
+    <nav class="nav-main" aria-label="主菜单">
+      <ul class="menu"><li class="menu-item">
+            <a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item">
+            <a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item">
+            <a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link">
+            <a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li></ul>
+    </nav><nav class="nav-system" aria-label="站点功能">
+      <ul class="menu"><li class="menu-item delimiter"></li><li class="menu-item search">
+            <button type="button" class="search-trigger desktop" aria-label="搜索" title="搜索">
+              <i class="fa-solid fa-search" aria-hidden="true"></i>
+              搜索
+              <kbd></kbd>
+            </button>
+          </li>
+          <li class="menu-item delimiter"></li><li class="menu-item theme-switch-item">
+          <button type="button" class="theme-switch" aria-label="切换主题" title="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+        </li></ul>
+    </nav>
+  </div>
+</header><header class="mobile animate__faster is-blur" id="header-mobile">
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header-title">
+        <a href="/" title="yu419" class="header-title-link"><img class="logo" src='/images/avatar.jpg' alt="yu419" height="26" width="26"><span class="header-title-text">yu419</span></a><span class="header-subtitle"></span></div><button type="button" class="search-trigger mobile" aria-label="搜索"><i class="fa-solid fa-search" aria-hidden="true"></i></button><button type="button" class="theme-switch" aria-label="切换主题"><i class="fa-solid fa-adjust" aria-hidden="true"></i></button>
+      <button type="button" class="menu-toggle" id="menu-toggle-mobile" aria-controls="menu-mobile" aria-expanded="false" aria-labelledby="menu-mobile">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav>
+      <ul class="menu" id="menu-mobile"><li class="menu-item"><a class="menu-link" href="/archives/">Blogs</a></li><li class="menu-item"><a class="menu-link" href="/categories/">Categories</a></li><li class="menu-item"><a class="menu-link" href="/about/">About</a></li><li class="menu-item github-link"><a class="menu-link" href="https://github.com/yuqu419" rel="noopener noreferrer" target="_blank"><i class="fa-brands fa-github fa-sm" aria-hidden="true"></i> GitHub</a></li><li class="menu-item menu-system"></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
+    <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Xv6 Lab Page Table</span>
+      </h1><p class="single-subtitle animate__animated animate__fadeIn">浅析 xv6 中的页表机制</p></div><div class="post-meta">
+      <div class="post-meta-line"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' alt="yu419" height="16" width="16">&nbsp;yu419</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/xv6/" class="post-collection" title="合集 - Xv6"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Xv6</a></span></div>
+      <div class="post-meta-line"><span title="发布于 2026-11-16 15:30:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-16">2026-11-16</time></span>&nbsp;<span title="3301 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>3301 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 7 分钟</span>&nbsp;</div>
+    </div><div class="details toc" id="toc-static" data-kept="false">
+        <div class="details-summary toc-title">
+          <span>目录</span>
+          <span><i class="details-icon fa-solid fa-angle-right" aria-hidden="true"></i></span>
+        </div>
+        <div class="details-content toc-content" id="toc-content-static"></div>
+      </div><template data-toc><nav id="TableOfContents">
+  <ul>
+    <li><a href="#三级索引机制">三级索引机制</a></li>
+    <li><a href="#pte">PTE</a></li>
+    <li><a href="#walk-函数"><code>walk</code> 函数</a></li>
+    <li><a href="#mappages-函数"><code>mappages</code> 函数</a></li>
+    <li><a href="#用户地址空间与内核地址空间">用户地址空间与内核地址空间</a>
+      <ul>
+        <li><a href="#区域功能详解">区域功能详解</a></li>
+        <li><a href="#内核地址空间">内核地址空间</a></li>
+      </ul>
+    </li>
+    <li><a href="#物理页的分配">物理页的分配</a></li>
+    <li><a href="#从虚拟地址到物理地址">从虚拟地址到物理地址</a></li>
+    <li><a href="#最后">最后</a></li>
+  </ul>
+</nav></template><div class="content" id="content"><div style="max-width: 620px; margin: 56px auto; font-family: 'Noto Serif SC','Songti SC',Georgia,serif; color: light-dark(#2b2b2b, #d1d5db); line-height: 2;">
+<p style="font-size: 11px; letter-spacing: .5em; text-transform: uppercase; color: light-dark(#888, #9aa3b2); margin: 0 0 24px;">Preface</p>
+<div style="width: 36px; height: 1px; background: light-dark(#111, #e1e6ed); margin-bottom: 34px;"></div>
+<p style="font-size: 15px; text-align: justify; text-justify: inter-ideograph; margin: 0 0 18px;">
+<p>虚拟地址如何找到物理地址呢？</p>
+</p>
+<p style="font-size: 13px; color: light-dark(#888, #9aa3b2); letter-spacing: .1em; text-align: right; margin: 40px 0 0;">— 2026/11/13</p>
+</div>
+<h2 class="heading-element" id="三级索引机制"><span>三级索引机制</span>
+  <a href="#%e4%b8%89%e7%ba%a7%e7%b4%a2%e5%bc%95%e6%9c%ba%e5%88%b6" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>xv6 中，64 位虚拟地址只有低 39 位被使用，低 39 位中的前 27 位被拆成 3 个 9 位的索引，也就是三级索引。之所以每级索引占 9 位，是因为这个索引索引的是页表项（PTE），每个 PTE 占 8 个字节，故每页有 512 个 PTE</p>
+<p>后 12 位表示页内偏移量，因为一页大小为 4096bytes，故 offset 需要 12 位表示</p>
+<p><code>satp</code> 寄存器保存着根页表的<strong>物理地址</strong></p>
+<blockquote>
+<p>在实际使用中，xv6 将虚拟地址限制在 38 位，在 <code>kernel/riscv.h</code> 中定义了 <code>#define MAXVA (1L &lt;&lt; (9 + 9 + 9 + 12 - 1))</code>。在 RISC-V 标准中，第 39 位作为符号位出现，标记位不同的区域，用户地址空间位于正半区，而内核地址空间位于负半区。但 xv6 为了简化设计，弃用了负半区，转而在 <code>kernel/memlayout.h</code> 中设定了 <code>#define KERNBASE 0x80000000L</code>，高于 <code>KERNBASE</code> 的空间就是内核地址空间了</p>
+</blockquote>
+<div style="position:relative;width:900px;height:580px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#cbd5e1;font-size:14px;">
+  <svg style="position:absolute;top:0;left:0;width:900px;height:580px;z-index:0;pointer-events:none;">
+    <defs>
+      <marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#45aaf2"/></marker>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#eb3b5a"/></marker>
+    </defs>
+    <!-- 虚拟地址连线 (蓝) -->
+    <path d="M 240 72 L 240 200 L 170 200 L 170 255" fill="none" stroke="#45aaf2" stroke-width="1.5" marker-end="url(#ab)"/>
+    <path d="M 340 72 L 340 310" fill="none" stroke="#45aaf2" stroke-width="1.5" marker-end="url(#ab)"/>
+    <path d="M 440 72 L 440 380" fill="none" stroke="#45aaf2" stroke-width="1.5" marker-end="url(#ab)"/>
+    <path d="M 520 72 L 520 100 L 830 100 L 830 72" fill="none" stroke="#45aaf2" stroke-width="1.5" marker-end="url(#ab)"/>
+    <!-- 物理地址连线 (红) -->
+    <path d="M 80 490 L 80 380 L 70 380" fill="none" stroke="#eb3b5a" stroke-width="1.5" marker-end="url(#ar)"/>
+    <path d="M 135 380 L 135 420 L 405 420 L 405 450" fill="none" stroke="#eb3b5a" stroke-width="1.5" marker-end="url(#ar)"/>
+    <path d="M 405 450 L 405 480 L 675 480 L 675 520" fill="none" stroke="#eb3b5a" stroke-width="1.5" marker-end="url(#ar)"/>
+    <path d="M 675 380 L 675 140 L 740 140 L 740 72" fill="none" stroke="#eb3b5a" stroke-width="1.5" marker-end="url(#ar)"/>
+  </svg>
+  <!-- 符号扩展提示 -->
+  <div style="position:absolute;top:36px;left:80px;font-size:11px;color:#8b98a8;text-align:right;width:90px;line-height:1.4;">
+    高 25 位必须与<br>bit 38 符号扩展一致<br>(bit 63:39)
+  </div>
+  <!-- 虚拟地址 -->
+  <div style="position:absolute;top:20px;left:190px;width:460px;">
+    <div style="text-align:center;margin-bottom:6px;">Virtual Address (Sv39)</div>
+    <div style="display:flex;font-size:11px;color:#8b98a8;margin-bottom:4px;">
+      <div style="width:100px;text-align:center;">9</div>
+      <div style="width:100px;text-align:center;">9</div>
+      <div style="width:100px;text-align:center;">9</div>
+      <div style="width:160px;text-align:center;">12</div>
+    </div>
+    <div style="display:flex;border:1.5px solid #45aaf2;border-radius:4px;background:rgba(69,170,242,0.1);color:#45aaf2;font-family:ui-monospace,Menlo,monospace;font-size:13px;text-align:center;line-height:32px;">
+      <div style="width:100px;border-right:1.5px solid #45aaf2;">VPN[2]</div>
+      <div style="width:100px;border-right:1.5px solid #45aaf2;">VPN[1]</div>
+      <div style="width:100px;border-right:1.5px solid #45aaf2;">VPN[0]</div>
+      <div style="width:160px;">Offset</div>
+    </div>
+  </div>
+  <!-- 物理地址 -->
+  <div style="position:absolute;top:20px;left:680px;width:180px;">
+    <div style="text-align:center;margin-bottom:6px;">Physical Address</div>
+    <div style="display:flex;font-size:11px;color:#8b98a8;margin-bottom:4px;">
+      <div style="width:120px;text-align:center;">44</div>
+      <div style="width:60px;text-align:center;">12</div>
+    </div>
+    <div style="display:flex;border:1.5px solid #eb3b5a;border-radius:4px;background:rgba(235,59,90,0.1);color:#eb3b5a;font-family:ui-monospace,Menlo,monospace;font-size:13px;text-align:center;line-height:32px;">
+      <div style="width:120px;border-right:1.5px solid #eb3b5a;">PPN</div>
+      <div style="width:60px;">Offset</div>
+    </div>
+  </div>
+  <!-- 一级页表 (Root, Level 2) -->
+  <div style="position:absolute;top:240px;left:70px;width:200px;">
+    <div style="display:flex;font-size:11px;color:#8b98a8;margin-bottom:4px;">
+      <div style="width:130px;text-align:center;">PPN [53:10]</div>
+      <div style="flex:1;text-align:center;">Flags [9:0]</div>
+    </div>
+    <div style="border:1.5px solid rgba(148,163,184,0.6);border-radius:6px;background:#161b22;overflow:hidden;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#cbd5e1;">
+      <div style="display:flex;background:rgba(148,163,184,0.15);position:relative;height:30px;line-height:30px;text-align:center;">
+         <span style="position:absolute;left:-30px;top:0;color:#8b98a8;font-size:11px;">511</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+         <div style="position:absolute;left:65px;bottom:-4px;width:8px;height:8px;border-radius:50%;background:#eb3b5a;border:2px solid #161b22;"></div>
+      </div>
+      <div style="height:30px;background:repeating-linear-gradient(45deg,rgba(148,163,184,0.05),rgba(148,163,184,0.05) 10px,transparent 10px,transparent 20px);border-bottom:1.5px solid rgba(148,163,184,0.3);line-height:30px;text-align:center;color:rgba(148,163,184,0.5);">⋮</div>
+      <div style="display:flex;height:30px;line-height:30px;text-align:center;border-bottom:1.5px solid rgba(148,163,184,0.3);position:relative;">
+         <span style="position:absolute;left:-18px;top:0;color:#8b98a8;font-size:11px;">1</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+      </div>
+      <div style="display:flex;height:30px;line-height:30px;text-align:center;position:relative;">
+         <span style="position:absolute;left:-18px;top:0;color:#8b98a8;font-size:11px;">0</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:14px;margin-top:8px;">Page Directory (Level 2)</div>
+  </div>
+  <!-- 二级页表 (Level 1) -->
+  <div style="position:absolute;top:310px;left:340px;width:200px;">
+    <div style="display:flex;font-size:11px;color:#8b98a8;margin-bottom:4px;">
+      <div style="width:130px;text-align:center;">PPN [53:10]</div>
+      <div style="flex:1;text-align:center;">Flags [9:0]</div>
+    </div>
+    <div style="border:1.5px solid rgba(148,163,184,0.6);border-radius:6px;background:#161b22;overflow:hidden;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#cbd5e1;">
+      <div style="display:flex;background:rgba(148,163,184,0.15);position:relative;height:30px;line-height:30px;text-align:center;">
+         <span style="position:absolute;left:-30px;top:0;color:#8b98a8;font-size:11px;">511</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+         <div style="position:absolute;left:65px;bottom:-4px;width:8px;height:8px;border-radius:50%;background:#eb3b5a;border:2px solid #161b22;"></div>
+      </div>
+      <div style="height:30px;background:repeating-linear-gradient(45deg,rgba(148,163,184,0.05),rgba(148,163,184,0.05) 10px,transparent 10px,transparent 20px);border-bottom:1.5px solid rgba(148,163,184,0.3);line-height:30px;text-align:center;color:rgba(148,163,184,0.5);">⋮</div>
+      <div style="display:flex;height:30px;line-height:30px;text-align:center;border-bottom:1.5px solid rgba(148,163,184,0.3);position:relative;">
+         <span style="position:absolute;left:-18px;top:0;color:#8b98a8;font-size:11px;">1</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+      </div>
+      <div style="display:flex;height:30px;line-height:30px;text-align:center;position:relative;">
+         <span style="position:absolute;left:-18px;top:0;color:#8b98a8;font-size:11px;">0</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:14px;margin-top:8px;">Page Directory (Level 1)</div>
+  </div>
+  <!-- 三级页表 (Level 0) -->
+  <div style="position:absolute;top:380px;left:610px;width:200px;">
+    <div style="display:flex;font-size:11px;color:#8b98a8;margin-bottom:4px;">
+      <div style="width:130px;text-align:center;">PPN [53:10]</div>
+      <div style="flex:1;text-align:center;">Flags [9:0]</div>
+    </div>
+    <div style="border:1.5px solid rgba(148,163,184,0.6);border-radius:6px;background:#161b22;overflow:hidden;font-family:ui-monospace,Menlo,monospace;font-size:13px;color:#cbd5e1;">
+      <div style="display:flex;background:rgba(148,163,184,0.15);position:relative;height:30px;line-height:30px;text-align:center;">
+         <span style="position:absolute;left:-30px;top:0;color:#8b98a8;font-size:11px;">511</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+         <div style="position:absolute;left:65px;bottom:-4px;width:8px;height:8px;border-radius:50%;background:#eb3b5a;border:2px solid #161b22;"></div>
+      </div>
+      <div style="height:30px;background:repeating-linear-gradient(45deg,rgba(148,163,184,0.05),rgba(148,163,184,0.05) 10px,transparent 10px,transparent 20px);border-bottom:1.5px solid rgba(148,163,184,0.3);line-height:30px;text-align:center;color:rgba(148,163,184,0.5);">⋮</div>
+      <div style="display:flex;height:30px;line-height:30px;text-align:center;border-bottom:1.5px solid rgba(148,163,184,0.3);position:relative;">
+         <span style="position:absolute;left:-18px;top:0;color:#8b98a8;font-size:11px;">1</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+      </div>
+      <div style="display:flex;height:30px;line-height:30px;text-align:center;position:relative;">
+         <span style="position:absolute;left:-18px;top:0;color:#8b98a8;font-size:11px;">0</span>
+         <div style="width:130px;border-right:1.5px solid rgba(148,163,184,0.3);">PPN</div>
+         <div style="flex:1;">Flags</div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:14px;margin-top:8px;">Page Directory (Level 0)</div>
+  </div>
+  <!-- satp 寄存器 -->
+  <div style="position:absolute;top:490px;left:20px;width:120px;height:40px;border:1.5px solid rgba(148,163,184,0.4);background:rgba(148,163,184,0.1);border-radius:6px;text-align:center;line-height:40px;font-family:ui-monospace,Menlo,monospace;font-weight:bold;color:#cbd5e1;box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+    satp.PPN
+  </div>
+</div>
+<h2 class="heading-element" id="pte"><span>PTE</span>
+  <a href="#pte" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>PTE 即 Page Table Entry 译为页表项，每个 PTE 占 8 个字节。PTE 是页表的基本组成单元</p>
+<p>PTE 是一个 64 位的整数，但 64 并非全部使用，部分留作未来扩展，有效的主要由两部分组成。</p>
+<ol>
+<li>
+<p>PPN(Physical Page Number)
+PPN 是物理页号，占 44 位，这是 PTE 的核心，存储着映射的物理页的起始地址</p>
+</li>
+<li>
+<p>Flags
+Flags 记着该页的访问权限和状态，其中被 xv6 系统使用的有：</p>
+</li>
+</ol>
+<ul>
+<li><u><strong>V</strong></u> 第零位，作为有效位</li>
+<li><u><strong>R</strong></u> 第一位，作为可读权限位</li>
+<li><u><strong>W</strong></u> 第二位，作为可写权限位</li>
+<li><u><strong>X</strong></u> 第三位，作为可执行权限位</li>
+<li><u><strong>U</strong></u> 第四位，作为用户态权限位</li>
+</ul>
+<p>xv6 定义了一些宏于 <code>kernel/riscv.h</code>，以方便访问</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">#define PTE_V (1L &lt;&lt; 0) </span><span style="color:#75715e">// valid
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PTE_R (1L &lt;&lt; 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PTE_W (1L &lt;&lt; 2)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PTE_X (1L &lt;&lt; 3)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PTE_U (1L &lt;&lt; 4) </span><span style="color:#75715e">// user can access
+</span></span></span></code></pre></div><p>另外还有 <code>PTE_G</code>（标记全局映射），<code>PTE_A</code>（访问位）和 <code>PTE_D</code>（脏位），xv6 使用较少</p>
+<blockquote>
+<p>当 <code>PTE</code> 表示的下一级索引而非叶子时，标志位 <code>V</code> 位为 1，<code>R/W/X</code> 全为 0，这也是非叶子 PTE 的标志</p>
+</blockquote>
+<p>当访问虚拟地址时，通过页表将虚拟地址映射为物理地址</p>
+<p>$$</p>
+<p>Physical Address(56bits) = PPN(44bits) + Offset(12bits)</p>
+<p>$$</p>
+<h2 class="heading-element" id="walk-函数"><span><code>walk</code> 函数</span>
+  <a href="#walk-%e5%87%bd%e6%95%b0" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p><code>walk</code> 函数位于 <code>kernel/vm.c</code> 中，其主要作用就是按照三级索引下降，最终返回叶子 PTE 的指针</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">// Return the address of the PTE in page table pagetable
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// that corresponds to virtual address va.  If alloc!=0,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// create any required page-table pages.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// The risc-v Sv39 scheme has three levels of page-table
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// pages. A page-table page contains 512 64-bit PTEs.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// A 64-bit virtual address is split into five fields:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   39..63 -- must be zero.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   30..38 -- 9 bits of level-2 index.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   21..29 -- 9 bits of level-1 index.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   12..20 -- 9 bits of level-0 index.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//    0..11 -- 12 bits of byte offset within the page.
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">pte_t</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">walk</span>(<span style="color:#66d9ef">pagetable_t</span> pagetable, uint64 va, <span style="color:#66d9ef">int</span> alloc)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (va <span style="color:#f92672">&gt;=</span> MAXVA) <span style="color:#75715e">//判断传入的虚拟地址是否超过最大虚拟地址
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">panic</span>(<span style="color:#e6db74">&#34;walk&#34;</span>); <span style="color:#75715e">//如果超过就触发恐慌
+</span></span></span><span style="display:flex;"><span>        <span style="color:#75715e">//遍历三级索引
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> level <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; level <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>; level<span style="color:#f92672">--</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//提取索引
+</span></span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">pte_t</span> <span style="color:#f92672">*</span>pte <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>pagetable[<span style="color:#a6e22e">PX</span>(level, va)];
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//检查有效位
+</span></span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>pte <span style="color:#f92672">&amp;</span> PTE_V) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//将PTE转化为物理地址 
+</span></span></span><span style="display:flex;"><span>        pagetable <span style="color:#f92672">=</span> (<span style="color:#66d9ef">pagetable_t</span>)<span style="color:#a6e22e">PTE2PA</span>(<span style="color:#f92672">*</span>pte);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#ifdef LAB_PGTBL
+</span></span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">PTE_LEAF</span>(<span style="color:#f92672">*</span>pte)) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> pte;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span>        <span style="color:#75715e">//有效位为0，判断是否分配新的物理页
+</span></span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//只查找，不分配
+</span></span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>alloc <span style="color:#f92672">||</span> (pagetable <span style="color:#f92672">=</span> (<span style="color:#66d9ef">pde_t</span> <span style="color:#f92672">*</span>)<span style="color:#a6e22e">kalloc</span>()) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//缺失是分配新的物理页
+</span></span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">memset</span>(pagetable, <span style="color:#ae81ff">0</span>, PGSIZE);
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>pte <span style="color:#f92672">=</span> <span style="color:#a6e22e">PA2PTE</span>(pagetable) <span style="color:#f92672">|</span> PTE_V;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//返回物理页号
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span>pagetable[<span style="color:#a6e22e">PX</span>(<span style="color:#ae81ff">0</span>, va)];
+</span></span><span style="display:flex;"><span>    }</span></span></code></pre></div><p>其中：</p>
+<p><code>PX</code> 宏定义在 <code>kernel/riscv.h</code> 中，用于提取每一级 VPN（Virtual Page Number），即每一级索引</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">// extract the three 9-bit page table indices from a virtual address.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PXMASK         0x1FF </span><span style="color:#75715e">// 9 bits
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PXSHIFT(level) (PGSHIFT + (9 * (level)))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PX(level, va)  ((((uint64)(va)) &gt;&gt; PXSHIFT(level)) &amp; PXMASK)</span></span></span></code></pre></div><p><code>PA2PTE</code> 与 <code>PTE2PA</code> 是 PTE 与物理地址互相转化的工具(这里的 <code>two</code> 是 <code>to</code>)，同样定义在 <code>kernel/riscv.h</code> 中</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">// shift a physical address to the right place for a PTE.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define PA2PTE(pa) ((((uint64)pa) &gt;&gt; 12) &lt;&lt; 10)
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define PTE2PA(pte) (((pte) &gt;&gt; 10) &lt;&lt; 12)</span></span></span></code></pre></div><p>转化原理</p>
+<p><strong>PTE</strong>与<strong>PA</strong>结构如下</p>
+<div style="font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; max-width: 800px; margin: 20px 0; line-height: 1.5; color: inherit;">
+  <!-- ================= 物理地址 PA ================= -->
+  <div style="font-weight: 700; margin-bottom: 8px; font-size: 14px; opacity: 0.9;">
+    物理地址 PA（56 位）
+  </div>
+  <div style="display: grid; grid-template-columns: 44fr 12fr; border: 1px solid rgba(148, 163, 184, 0.5); border-radius: 6px; overflow: hidden; height: 42px; text-align: center; font-weight: 600;">
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(96, 165, 250, 0.15); color: #60a5fa; border-right: 1px solid rgba(148, 163, 184, 0.5);">
+      PPN (44 位)
+    </div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(74, 222, 128, 0.15); color: #4ade80;">
+      Offset (12 位)
+    </div>
+  </div>
+  <div style="display: grid; grid-template-columns: 44fr 12fr; text-align: center; font-size: 11px; opacity: 0.6; margin-top: 4px; margin-bottom: 28px;">
+    <div>bit 55 … 12</div>
+    <div>bit 11 … 0</div>
+  </div>
+  <!-- ================= 页表项 PTE ================= -->
+  <div style="font-weight: 700; margin-bottom: 8px; font-size: 14px; opacity: 0.9;">
+    页表项 PTE（64 位）
+  </div>
+  <!-- 使用 11 列的 Grid，完美分配宽度比例：10, 44, 2, 1x8 -->
+  <div style="display: grid; grid-template-columns: 10fr 44fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; border: 1px solid rgba(148, 163, 184, 0.5); border-radius: 6px; overflow: hidden; height: 42px; text-align: center; font-weight: 600; font-size: 12px;">
+    <!-- Reserved (10位) -->
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(148, 163, 184, 0.1); color: rgba(148, 163, 184, 1); border-right: 1px solid rgba(148, 163, 184, 0.3);">
+      Resv
+    </div>
+    <!-- PPN (44位) -->
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(96, 165, 250, 0.15); color: #60a5fa; border-right: 1px solid rgba(148, 163, 184, 0.3);">
+      PPN (44 位)
+    </div>
+    <!-- RSW (2位) -->
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(192, 132, 252, 0.15); color: #c084fc; border-right: 1px solid rgba(148, 163, 184, 0.3);">
+      RSW
+    </div>
+    <!-- D A G U X W R V (各1位) -->
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.15); color: #ef4444; border-right: 1px solid rgba(148, 163, 184, 0.3);">D</div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(249, 115, 22, 0.15); color: #f97316; border-right: 1px solid rgba(148, 163, 184, 0.3);">A</div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(234, 179, 8, 0.15); color: #eab308; border-right: 1px solid rgba(148, 163, 184, 0.3);">G</div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(132, 204, 22, 0.15); color: #84cc16; border-right: 1px solid rgba(148, 163, 184, 0.3);">U</div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(20, 184, 166, 0.15); color: #14b8a6; border-right: 1px solid rgba(148, 163, 184, 0.3);">X</div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(6, 182, 212, 0.15); color: #06b6d4; border-right: 1px solid rgba(148, 163, 184, 0.3);">W</div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(59, 130, 246, 0.15); color: #3b82f6; border-right: 1px solid rgba(148, 163, 184, 0.3);">R</div>
+    <div style="display: flex; align-items: center; justify-content: center; background: rgba(168, 85, 247, 0.15); color: #a855f7;">V</div>
+  </div>
+  <!-- PTE 下方标尺 -->
+  <div style="display: grid; grid-template-columns: 10fr 44fr 2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; text-align: center; font-size: 11px; opacity: 0.6; margin-top: 4px;">
+    <div>63…54</div>
+    <div>53…10</div>
+    <div>9-8</div>
+    <div style="grid-column: span 8; text-align: right; padding-right: 4px;">7 … 0</div>
+  </div>
+  <div style="margin-top: 24px; font-size: 13px; padding: 12px 16px; background: rgba(59, 130, 246, 0.08); border-left: 4px solid #3b82f6; border-radius: 0 6px 6px 0;">
+    <span style="color: #60a5fa; font-weight: 700;">PPN</span> 在 PA 里从 <b>bit 12</b> 开始，在 PTE 里从 <b>bit 10</b> 开始 —— 中间差 <b>2 位</b>。这就是为什么提取时 `>>10`，放回时 `<<12`
+  </div>
+</div>
+<h2 class="heading-element" id="mappages-函数"><span><code>mappages</code> 函数</span>
+  <a href="#mappages-%e5%87%bd%e6%95%b0" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p><code>mappages</code> 用于建立 物理内存 与虚拟地址之间的联系</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">// Create PTEs for virtual addresses starting at va that refer to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// physical addresses starting at pa.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// va and size MUST be page-aligned.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Returns 0 on success, -1 if walk() couldn&#39;t
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// allocate a needed page-table page.
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">mappages</span>(<span style="color:#66d9ef">pagetable_t</span> pagetable, uint64 va, 
+</span></span><span style="display:flex;"><span>        uint64 size, uint64 pa, <span style="color:#66d9ef">int</span> perm)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    uint64 a, last;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">pte_t</span> <span style="color:#f92672">*</span>pte;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//检查对齐
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((va <span style="color:#f92672">%</span> PGSIZE) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">panic</span>(<span style="color:#e6db74">&#34;mappages: va not aligned&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((size <span style="color:#f92672">%</span> PGSIZE) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">panic</span>(<span style="color:#e6db74">&#34;mappages: size not aligned&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (size <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">panic</span>(<span style="color:#e6db74">&#34;mappages: size&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    a <span style="color:#f92672">=</span> va;
+</span></span><span style="display:flex;"><span>    last <span style="color:#f92672">=</span> va <span style="color:#f92672">+</span> size <span style="color:#f92672">-</span> PGSIZE;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//for循环实现批量映射
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (;;) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ((pte <span style="color:#f92672">=</span> <span style="color:#a6e22e">walk</span>(pagetable, a, <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>pte <span style="color:#f92672">&amp;</span> PTE_V)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">panic</span>(<span style="color:#e6db74">&#34;mappages: remap&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//将地址和权限写入pte
+</span></span></span><span style="display:flex;"><span>        <span style="color:#f92672">*</span>pte <span style="color:#f92672">=</span> <span style="color:#a6e22e">PA2PTE</span>(pa) <span style="color:#f92672">|</span> perm <span style="color:#f92672">|</span> PTE_V;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (a <span style="color:#f92672">==</span> last)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//移动至下一页
+</span></span></span><span style="display:flex;"><span>        a <span style="color:#f92672">+=</span> PGSIZE;
+</span></span><span style="display:flex;"><span>        pa <span style="color:#f92672">+=</span> PGSIZE;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h2 class="heading-element" id="用户地址空间与内核地址空间"><span>用户地址空间与内核地址空间</span>
+  <a href="#%e7%94%a8%e6%88%b7%e5%9c%b0%e5%9d%80%e7%a9%ba%e9%97%b4%e4%b8%8e%e5%86%85%e6%a0%b8%e5%9c%b0%e5%9d%80%e7%a9%ba%e9%97%b4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>用户地址空间</p>
+<div style="padding: 32px 24px; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #e0e0e0; max-width: 500px; margin: 24px auto; box-sizing: border-box;">
+  <div style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 28px; color: #e0e0e0; letter-spacing: 0.5px;">
+    xv6 用户地址空间布局
+  </div>
+  <div style="display: flex; flex-direction: column; font-size: 14px; position: relative;">
+    <div style="display: flex;">
+      <!-- 左侧地址标签栏 (绝对定位精准对齐右侧加高后的区块) -->
+      <div style="width: 110px; flex: none; position: relative; padding-right: 16px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #888; text-align: right;">
+        <div style="position: absolute; top: 0; right: 16px; transform: translateY(-50%);">MAXVA</div>
+        <div style="position: absolute; top: 75px; right: 16px; transform: translateY(-50%);">TRAMPOLINE</div>
+        <div style="position: absolute; top: 150px; right: 16px; transform: translateY(-50%);">TRAPFRAME</div>
+        <div style="position: absolute; top: 385px; right: 16px; transform: translateY(-50%);">p-&gt;sz</div>
+        <div style="position: absolute; bottom: 0; right: 16px; transform: translateY(50%);">0</div>
+      </div>
+      <!-- 右侧内存区块 -->
+      <div style="flex: 1; display: flex; flex-direction: column; border: 1px solid #444; border-radius: 8px; overflow: hidden; background-color: #2b2b36;">
+        <div style="height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background-color: #1a2d3d; border-bottom: 1px solid #444;">
+          <span style="font-weight: 600; color: #6da3ef; font-size: 14px;">trampoline</span>
+          <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #6da3ef; opacity: 0.8;">内核跳板代码</span>
+        </div>
+        <div style="height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background-color: #2d1a22; border-bottom: 1px solid #444;">
+          <span style="font-weight: 600; color: #e57e96; font-size: 14px;">trapframe</span>
+          <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #e57e96; opacity: 0.8;">保存用户上下文</span>
+        </div>
+        <div style="height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background-color: #261e35; border-bottom: 1px solid #444;">
+          <span style="font-weight: 600; color: #b380c9; font-size: 14px;">用户栈 stack</span>
+          <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #b380c9; opacity: 0.8;">向低地址增长</span>
+        </div>
+        <div style="height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background: repeating-linear-gradient(45deg, #2a1818, #2a1818 6px, #201212 6px, #201212 12px); border-bottom: 1px solid #444;">
+          <span style="font-weight: 600; color: #e55e5e; font-size: 13px;">guard page</span>
+          <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; color: #e55e5e; opacity: 0.8;">不可访问</span>
+        </div>
+        <div style="height: 120px; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #2b2416; border-bottom: 1px solid #444;">
+          <span style="font-weight: 600; color: #d9a358; margin-bottom: 6px; font-size: 14px;">heap (堆)</span>
+          <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #d9a358; opacity: 0.8;">↑ sbrk() 向上增长</span>
+        </div>
+        <div style="height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background-color: #182e1d; border-bottom: 1px solid #444;">
+          <span style="font-weight: 600; color: #86c984; font-size: 14px;">data (.data + .bss)</span>
+          <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #86c984; opacity: 0.8;">全局/静态变量</span>
+        </div>
+        <div style="height: 75px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; background-color: #1a2436;">
+          <span style="font-weight: 600; color: #7b9ff2; font-size: 14px;">text (代码段)</span>
+          <span style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; color: #7b9ff2; opacity: 0.8;">只读、可执行</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 24px; font-size: 12px; color: #888; line-height: 1.6; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; border-top: 1px solid #333; padding-top: 16px;">
+    <div style="margin-top: 10px; opacity: 0.7;">* 各段高度仅为示意，实际依赖页面（PGSIZE）对齐。</div>
+  </div>
+</div>
+<h3 class="heading-element" id="区域功能详解"><span>区域功能详解</span>
+  <a href="#%e5%8c%ba%e5%9f%9f%e5%8a%9f%e8%83%bd%e8%af%a6%e8%a7%a3" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><div style="max-width:860px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;line-height:1.7;">
+<div style="font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;letter-spacing:.12em;opacity:.55;margin-bottom:12px;">进程地址空间布局 · 低地址 ↑ 高地址</div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #c0392b;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#c0392b;">text</div><div style="font-size:12px;opacity:.55;">代码段 · R-X</div></div><div style="flex:1 1 320px;">实际上是编译后的机器指令，<strong>只读、可执行</strong>，<code>pc</code> 所指向的常常就是这个区域。值得了解的是，在 RISC-V 中许多指令占 <strong>4 字节</strong>，而在 x86 中许多指令占 <strong>2 字节</strong>。</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #b8860b;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#b8860b;">rodata</div><div style="font-size:12px;opacity:.55;">只读数据段 · R--</div></div><div style="flex:1 1 320px;">存储着只读数据，夹在 <code>text</code> 和 <code>data</code> 之间（图中未画出）。</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #0e7490;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#0e7490;">data</div><div style="font-size:12px;opacity:.55;">数据段 · RW-</div></div><div style="flex:1 1 320px;">包括 <code>.data</code> 和 <code>.bss</code>：<code>.data</code> 是<strong>已初始化</strong>的数据，<code>.bss</code> 是<strong>未初始化或初始化为 0</strong> 的数据。</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #1d6fd0;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#1d6fd0;">heap</div><div style="font-size:12px;opacity:.55;">堆区 · RW-</div></div><div style="flex:1 1 320px;">向<strong>高地址</strong>方向增长，使用 <code>.sbrk()</code> 增大或缩小。</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #c62828;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#c62828;">guard page</div><div style="font-size:12px;opacity:.55;">保护页 · ---</div></div><div style="flex:1 1 320px;"><strong>不可访问</strong>，访问此区域时触发缺页异常（Page Fault），内核杀死该进程。常用来检测栈溢出；当然，当堆区过高时也会访问到这个区域。</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #7c3aed;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#7c3aed;">stack</div><div style="font-size:12px;opacity:.55;">栈 · RW-</div></div><div style="flex:1 1 320px;">可以说是最重要且最容易出错的区域之一，向<strong>低地址</strong>增长。值得一提的是，xv6 的栈相当小，可能申请 4096 个 bytes 就爆栈了。</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #c2570c;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#c2570c;">trapframe</div><div style="font-size:12px;opacity:.55;">陷阱帧 · RW-</div></div><div style="flex:1 1 320px;">保存系统调用时的上下文，在系统调用的 Lab 中已详细了解了该区域。每个 <code>struct proc</code> 都有一个 <code>trapframe</code> 字段，用于访问该进程上下文内容。</div></div>
+<div style="display:flex;flex-wrap:wrap;gap:14px;padding:12px 16px;margin-bottom:10px;border:1px solid rgba(148,163,184,.3);border-left:4px solid #15803d;border-radius:10px;"><div style="flex:0 0 150px;"><div style="font-family:ui-monospace,Menlo,monospace;font-size:15px;font-weight:700;color:#15803d;">trampoline</div><div style="font-size:12px;opacity:.55;">跳板页 · R-X</div></div><div style="flex:1 1 320px;">保存着系统调用时的内核跳转机器指令，也就是 <code>trampoline.S</code> 中所呈现的汇编指令。它同时被映射在用户页表和内核页表的同一虚拟地址上，因为陷入内核态时也需要访问该区域</div></div>
+</div>
+<hr>
+<h3 class="heading-element" id="内核地址空间"><span>内核地址空间</span>
+  <a href="#%e5%86%85%e6%a0%b8%e5%9c%b0%e5%9d%80%e7%a9%ba%e9%97%b4" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h3><div style="padding: 32px 24px; border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #e0e0e0; max-width: 560px; margin: 24px auto;  box-sizing: border-box; position: relative;">
+  <div style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 24px; color: #e0e0e0; letter-spacing: 0.5px;">
+    xv6 内核地址空间 (虚拟 &rarr; 物理映射)
+  </div>
+  <div style="position: relative; width: 100%; height: 780px; font-size: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;">
+    <!-- 顶部标题 -->
+    <div style="position: absolute; top: 0; left: 0; width: 180px; text-align: center; font-weight: 600; font-size: 14px; color: #888;">Virtual Addresses</div>
+    <div style="position: absolute; top: 0; right: 0; width: 180px; text-align: center; font-weight: 600; font-size: 14px; color: #888;">Physical Addresses</div>
+    <!-- 左侧地址标签 -->
+    <div style="position: absolute; top: 20px; left: -80px; width: 70px; text-align: right; color: #888; transform: translateY(-50%);">MAXVA</div>
+    <div style="position: absolute; top: 260px; left: -80px; width: 70px; text-align: right; color: #888; transform: translateY(-50%); line-height: 1.2;">PHYSTOP<br>(0x88000000)</div>
+    <div style="position: absolute; top: 440px; left: -80px; width: 70px; text-align: right; color: #888; transform: translateY(-50%); line-height: 1.2;">KERNBASE<br>(0x80000000)</div>
+    <div style="position: absolute; top: 540px; left: -80px; width: 70px; text-align: right; color: #888; transform: translateY(-50%);">0x10001000</div>
+    <div style="position: absolute; top: 570px; left: -80px; width: 70px; text-align: right; color: #888; transform: translateY(-50%);">0x10000000</div>
+    <div style="position: absolute; top: 600px; left: -80px; width: 70px; text-align: right; color: #888; transform: translateY(-50%);">0x0C000000</div>
+    <div style="position: absolute; bottom: 0; left: -80px; width: 70px; text-align: right; color: #888;">0</div>
+    <!-- 右侧地址标签 -->
+    <div style="position: absolute; top: 20px; right: -80px; width: 70px; text-align: left; color: #888; transform: translateY(-50%);">2^56-1</div>
+    <div style="position: absolute; top: 260px; right: -80px; width: 70px; text-align: left; color: #888; transform: translateY(-50%);">0x88000000</div>
+    <div style="position: absolute; top: 440px; right: -80px; width: 70px; text-align: left; color: #888; transform: translateY(-50%);">0x80000000</div>
+    <div style="position: absolute; top: 635px; right: -80px; width: 70px; text-align: left; color: #888; transform: translateY(-50%);">0x02000000</div>
+    <div style="position: absolute; top: 715px; right: -80px; width: 70px; text-align: left; color: #888; transform: translateY(-50%);">0x1000</div>
+    <div style="position: absolute; bottom: 0; right: -80px; width: 70px; text-align: left; color: #888;">0</div>
+    <!-- 左侧虚拟区块 -->
+    <div style="position: absolute; top: 20px; left: 0; width: 180px; height: 36px; background-color: #1a2d3d; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #6da3ef;">Trampoline</div>
+    <div style="position: absolute; top: 60px; left: 0; width: 180px; height: 20px; background: repeating-linear-gradient(45deg, #2a1818, #2a1818 6px, #201212 6px, #201212 12px); border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #e55e5e; font-size: 11px;">Guard page</div>
+    <div style="position: absolute; top: 84px; left: 0; width: 180px; height: 36px; background-color: #261e35; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #b380c9;">Kstack 0</div>
+    <div style="position: absolute; top: 124px; left: 0; width: 180px; height: 20px; background: repeating-linear-gradient(45deg, #2a1818, #2a1818 6px, #201212 6px, #201212 12px); border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #e55e5e; font-size: 11px;">Guard page</div>
+    <div style="position: absolute; top: 148px; left: 0; width: 180px; height: 36px; background-color: #261e35; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #b380c9;">Kstack 1</div>
+    <div style="position: absolute; top: 188px; left: 0; width: 180px; height: 20px; display: flex; align-items: center; justify-content: center; color: #888; font-size: 16px; letter-spacing: 2px;">...</div>
+    <div style="position: absolute; top: 260px; left: 0; width: 180px; height: 100px; background-color: #2b2416; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #d9a358;">Free memory</div>
+    <div style="position: absolute; top: 364px; left: 0; width: 180px; height: 40px; background-color: #182e1d; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #86c984;">Kernel data</div>
+    <div style="position: absolute; top: 408px; left: 0; width: 180px; height: 40px; background-color: #1a2436; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #7b9ff2;">Kernel text</div>
+    <div style="position: absolute; top: 540px; left: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">VIRTIO disk</div>
+    <div style="position: absolute; top: 570px; left: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">UART0</div>
+    <div style="position: absolute; top: 600px; left: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">PLIC</div>
+    <!-- 右侧物理区块 -->
+    <div style="position: absolute; top: 20px; right: 0; width: 180px; height: 236px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #888;">Unused</div>
+    <div style="position: absolute; top: 260px; right: 0; width: 180px; height: 176px; background-color: #2b2416; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #d9a358;">Physical memory (RAM)</div>
+    <div style="position: absolute; top: 440px; right: 0; width: 180px; height: 96px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #888; text-align: center; line-height: 1.4;">Unused<br>and other I/O devices</div>
+    <div style="position: absolute; top: 540px; right: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">VIRTIO disk</div>
+    <div style="position: absolute; top: 570px; right: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">UART0</div>
+    <div style="position: absolute; top: 600px; right: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">PLIC</div>
+    <div style="position: absolute; top: 635px; right: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">CLINT</div>
+    <div style="position: absolute; top: 665px; right: 0; width: 180px; height: 46px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #888;">Unused</div>
+    <div style="position: absolute; top: 715px; right: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #ccc;">boot ROM</div>
+    <div style="position: absolute; top: 745px; right: 0; width: 180px; height: 26px; background-color: #2b2b36; border: 1px solid #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #888;">Unused</div>
+    <!-- 中间映射连线 (SVG) -->
+    <svg style="position: absolute; top: 0; left: 190px; width: 150px; height: 780px; pointer-events: none;">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="#888" />
+        </marker>
+      </defs>
+      <!-- Trampoline -> RAM Top -->
+      <line x1="0" y1="38" x2="130" y2="280" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- Kstack 0 -> RAM -->
+      <line x1="0" y1="102" x2="130" y2="320" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- Kstack 1 -> RAM -->
+      <line x1="0" y1="166" x2="130" y2="350" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- Free memory Top (PHYSTOP) -> RAM Top -->
+      <line x1="0" y1="260" x2="130" y2="260" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- Free memory Bottom -> RAM Mid -->
+      <line x1="0" y1="360" x2="130" y2="360" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- Kernel data -> RAM Bottom -->
+      <line x1="0" y1="384" x2="130" y2="384" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- Kernel text -> RAM Bottom edge -->
+      <line x1="0" y1="428" x2="130" y2="428" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- VIRTIO -> VIRTIO -->
+      <line x1="0" y1="553" x2="130" y2="553" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- UART0 -> UART0 -->
+      <line x1="0" y1="583" x2="130" y2="583" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+      <!-- PLIC -> PLIC -->
+      <line x1="0" y1="613" x2="130" y2="613" stroke="#888" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow)" />
+    </svg>
+  </div>
+  <div style="margin-top: 10px; font-size: 12px; color: #888; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; text-align: center;">
+    * 左右地址空间通过页表映射对应
+  </div>
+</div>
+<p>内核地址空间多采用直接映射，内核空间从 <code>KERNBASE</code> 开始</p>
+<p>值得一提的是，每个进程都有一个内核栈，但内核栈并不保存在进程的用户地址空间中，而是保存在内核地址空间中，内核地址空间为所有进程共享，但只有当 CPU 处于 Supervisor Mode 时才可以访问。内核栈之间也会插入<strong>guard page</strong>，以防止栈溢出</p>
+<h2 class="heading-element" id="物理页的分配"><span>物理页的分配</span>
+  <a href="#%e7%89%a9%e7%90%86%e9%a1%b5%e7%9a%84%e5%88%86%e9%85%8d" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>在 <code>walk</code> 函数中，若 <code>alloc</code> ≠ 0 时，会通过 <code>kalloc()</code> 函数新分配物理页，<code>kalloc</code> 实现在 <code>kernel/kalloc.c</code> 中</p>
+<div class="code-block highlight line-nos-hidden" data-mode="classic" data-copyable="true"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#75715e">// Allocate one 4096-byte page of physical memory.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Returns a pointer that the kernel can use.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Returns 0 if the memory cannot be allocated.
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">kalloc</span>(<span style="color:#66d9ef">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">struct</span> run <span style="color:#f92672">*</span>r;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">acquire</span>(<span style="color:#f92672">&amp;</span>kmem.lock);
+</span></span><span style="display:flex;"><span>  r <span style="color:#f92672">=</span> kmem.freelist;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (r)
+</span></span><span style="display:flex;"><span>    kmem.freelist <span style="color:#f92672">=</span> r<span style="color:#f92672">-&gt;</span>next;
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">release</span>(<span style="color:#f92672">&amp;</span>kmem.lock);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (r)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">memset</span>((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)r, <span style="color:#ae81ff">5</span>, PGSIZE); <span style="color:#75715e">// fill with junk
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>)r;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>显然，<code>kalloc</code> 维护着一个链表，<code>freelist</code> 始终指向一个空闲页，当拿到空闲页时，会用 0x5 填充空闲页垃圾数据</p>
+<div style="padding:12px 16px;margin:10px 0;border:1px solid rgba(148,163,184,.3);border-left:4px solid #1d6fd0;border-radius:10px;background:rgba(29,111,208,.05);"><div style="font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;color:#1d6fd0;margin-bottom:6px;">kalloc 功用</div><div style="font-size:14px;line-height:1.7;">
+功能上，<code>kalloc</code>返回一个物理地址，但从实现上看，它返回的是一个指针，似乎更像是虚拟地址。实际上，<code>kalloc</code>只能由在内核态运行，由于内核采用直接映射，故虚拟地址等同于物理地址。当用户地址空间需要物理页时，由内核地址空间调用<code>kalloc</code>申请，然后通过<code>mappages</code>将物理页与虚拟地址产生联系
+</div></div>
+<h2 class="heading-element" id="从虚拟地址到物理地址"><span>从虚拟地址到物理地址</span>
+  <a href="#%e4%bb%8e%e8%99%9a%e6%8b%9f%e5%9c%b0%e5%9d%80%e5%88%b0%e7%89%a9%e7%90%86%e5%9c%b0%e5%9d%80" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>我们以虚拟地址 <u><strong>0x0000_0000_0000_1004</strong></u> 为例串联起从虚拟地址到物理地址全过程</p>
+<div style="display:flex;gap:12px;padding:12px 16px;margin:10px 0;border:1px solid rgba(148,163,184,.3);border-radius:10px;"><div style="flex:0 0 26px;height:26px;border-radius:50%;background:rgba(29,111,208,.15);color:#1d6fd0;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;">1</div><div style="flex:1;"><div style="font-size:14px;font-weight:600;margin-bottom:2px;">拆分地址</div><div style="font-size:13.5px;line-height:1.7;opacity:.8;">
+将虚拟地址后39位拆分，得到
+<div style="padding:4px 16px;margin:10px 0;border:1px solid rgba(148,163,184,.3);border-radius:10px;">
+<div style="display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(148,163,184,.15);"><div style="flex:0 0 120px;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:#1d6fd0;">VPN[0]</div><div style="flex:1;font-size:13.5px;line-height:1.7;">1</div></div>
+<div style="display:flex;gap:12px;padding:8px 0;"><div style="flex:0 0 120px;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:#1d6fd0;">VPN[1]</div><div style="flex:1;font-size:13.5px;line-height:1.7;">0</div></div>
+<div style="display:flex;gap:12px;padding:8px 0;"><div style="flex:0 0 120px;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:#1d6fd0;">VPN[2]</div><div style="flex:1;font-size:13.5px;line-height:1.7;">0</div></div>
+<div style="display:flex;gap:12px;padding:8px 0;"><div style="flex:0 0 120px;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:600;color:#1d6fd0;">Offset</div><div style="flex:1;font-size:13.5px;line-height:1.7;">4</div></div>
+</div>
+</div></div></div>
+<div style="display:flex;gap:12px;padding:12px 16px;margin:10px 0;border:1px solid rgba(148,163,184,.3);border-radius:10px;">
+<div style="flex:0 0 26px;height:26px;border-radius:50%;background:rgba(29,111,208,.15);color:#1d6fd0;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;">2</div><div style="flex:1;"><div style="font-size:14px;font-weight:600;margin-bottom:2px;">用户态访问</div><div style="font-size:13.5px;line-height:1.7;opacity:.8;">通过<code>*</code>访问虚拟地址，此时CPU处于用户态
+<div>1. 先从 <code>satp</code> 拿到根页表基址，找到第 <b>VPN[2] = 0 </b> 个PTE，发现它是有效的，从这个PTE中提取出出中间级页表的物理地址</div>
+<div>2. 再在前面的物理地址基址中，找到第 <b>VPN[1] = 0 </b> 个PTE，发现它是有效的，从这个PTE中提取出叶子级页表的物理地址</div>
+<div>3. 再在前面的物理地址基址，找到第 <b>VPN[0] = 1 </b> 个PTE，发现它是有效的，从这个PTE中提取物理页号，再拼上12位的<b>offset</b> , 得到物理地址</div>
+<div>4. 最后去相应物理地址出读出数据</div>
+</div></div></div>
+<div style="display:flex;gap:12px;padding:12px 16px;margin:10px 0;border:1px solid rgba(148,163,184,.3);border-radius:10px;"><div style="flex:0 0 26px;height:26px;border-radius:50%;background:rgba(29,111,208,.15);color:#1d6fd0;font-family:ui-monospace,Menlo,monospace;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;">3</div><div style="flex:1;"><div style="font-size:14px;font-weight:600;margin-bottom:2px;">分配新内存</div><div style="font-size:13.5px;line-height:1.7;opacity:.8;">假设用户程序调用了<code>malloc</code>函数申请堆内存
+<div>
+<code>malloc</code> 会触发 <code>sbrk</code>系统调用，然后进入内核态，内核调用<code>kalloc</code>函数申请物理页，再调用<code>mappages</code>将物理内存与用户的虚拟地址产生映射关系，最后返回物理页对应的虚拟地址
+</div>
+</div></div></div>
+<h2 class="heading-element" id="最后"><span>最后</span>
+  <a href="#%e6%9c%80%e5%90%8e" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
+</h2><p>虚拟内存机制是操作系统的重要机制，虚拟内存给进程提供连续、独立的虚拟地址空间，同时，物理页的申请由内核管理，保障了系统的安全。由于每个进程间虚拟内存的独立，保障了物理内存访问的安全性，也有利于实现进程间隔离。</p>
+<p>当然，虚拟内存并不只是软件的设计，更有CPU硬件的约束。在CPU中，
+<strong>MMU(Memory Management Unit)</strong> 作为硬件模块，遵循特定的索引访问机制。更确切地说，内核负责建立和维护页表、管理物理页框和映射策略；MMU 按硬件规定的页表格式和遍历规则完成地址转换与权限检查；缺页时 MMU 触发异常，由内核处理。</p>
+</div><div class="post-footer" id="post-footer">
+  <div class="post-info">
+    <div class="post-info-line">
+      <div class="post-info-mod"><span title="更新于 2026-11-16 15:30:13">更新于 2026-11-16&nbsp;</span>
+      </div><div class="post-info-license">
+            <span><a rel="license external nofollow noopener noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></span>
+          </div></div>
+    <div class="post-info-line">
+      <div class="post-info-md"><span><a href="vscode://file//home/yu419/blog/my-blog/content/posts/xv6 Lab Page Table.md" title="在编辑器中打开" class="link-to-editor">在编辑器中打开</a></span></div><div class="post-info-share">
+          <span></span>
+        </div></div>
+  </div>
+
+  <div class="post-info-more">
+    <section class="post-tags"><i class="fa-solid fa-tags me-1" aria-hidden="true"></i><a href="/tags/xv6/" class="post-tag" title="标签 - Xv6">Xv6</a></section>
+    <section class="post-actions"><span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>
+      <span class="separator" aria-hidden="true"></span>
+      <span><a href="/">主页</a></span>
+    </section>
+  </div><div class="post-nav"></div>
+</div>
+</article><aside class="toc animate__animated animate__fadeIn animate__faster" id="toc-auto" aria-label="目录"><h2 class="toc-title">
+      <span>目录<i class="toc-icon fa-solid fa-angle-down ms-1" aria-hidden="true"></i></span>
+      <button type="button" class="toc-print-btn" onclick="event.stopPropagation(); window.print()" aria-label="打印"><i class="fa-solid fa-print" aria-hidden="true"></i></button>
+    </h2>
+    <div class="toc-content" id="toc-content-auto"></div></aside></main><footer class="footer">
+  <div class="footer-container"><div class="footer-bottom"><div class="footer-legal"><div class="footer-line copyright" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright" aria-hidden="true"></i>
+                  <span itemprop="copyrightYear">2024 - 2026</span><span class="author" itemprop="copyrightHolder">
+                    <a href="/authors/yu419/">yu419</a></span></div></div><div class="footer-tech"><div class="footer-line powered">由 <a href="https://github.com/gohugoio/hugo?v=0.170.0" target="_blank" rel="external nofollow noopener noreferrer" title="Hugo 0.170.0">Hugo</a> 与 <a href="https://github.com/hugo-fixit/FixIt?v=v1.0.0-rc.1" target="_blank" rel="external" title="FixIt v1.0.0-rc.1">FixIt</a> 驱动
+              </div></div></div></div>
+</footer>
+</div><div class="widgets"><div id="mask"></div><dialog id="nav-dialog" aria-labelledby="nav-dialog-title" closedby="any">
+    <button type="button" class="nav-close-btn" aria-label="Close 导航"><i class="fa-solid fa-xmark fa-lg" aria-hidden="true"></i></button>
+    <div class="toc">
+      <h2 class="toc-title" id="nav-dialog-title">导航</h2><div class="toc-content" id="toc-content-drawer"></div></div>
+  </dialog><dialog id="search-dialog" class="search-dialog" aria-label="搜索" closedby="any">
+      <div class="search-modal">
+        <div class="search-modal-header">
+          <span class="search-delimiter"></span>
+          <button type="button" class="search-close-btn" aria-label="Close Search Dialog"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+        </div>
+        <div class="search-source-footer">
+          <div class="search-shortcuts">
+            <span class="search-shortcut">
+              <kbd><i class="lucide-arrow-up" aria-hidden="true"></i></kbd>
+              <kbd><i class="lucide-arrow-down" aria-hidden="true"></i></kbd>
+              切换
+            </span>
+            <span class="search-shortcut">
+              <kbd><i class="lucide-corner-down-left" aria-hidden="true"></i></kbd>
+              选择
+            </span>
+            <span class="search-shortcut">
+              <kbd>ESC</kbd>
+              关闭
+            </span>
+          </div><span class="search-engine">搜索引擎 <a href="https://fusejs.io/" target="_blank" rel="external nofollow noopener noreferrer">Fuse.js</a></span></div>
+      </div>
+    </dialog><div class="reading-progress-bar" style="inset-inline-start: 0;top: 0;--fi-bg-progress: #687b91;--fi-bg-progress-dark: #c8d3e1;"></div><div class="fixed-buttons"><button type="button" class="fixed-button back-to-top animate__faster hidden" aria-label="回到顶部"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i></button><button type="button" id="nav-drawer-button" class="fixed-button nav-drawer-button hidden" aria-label="导航" aria-controls="nav-dialog" aria-expanded="false"><i class="fa-solid fa-bars" aria-hidden="true"></i></button></div><noscript>
+    <div class="noscript-warning bg-danger text-white text-base font-bold fixed text-center inset-x-0 bottom-0 w-full z-fixed">该网站在启用 JavaScript 的情况下效果最佳。</div>
+  </noscript>
+</div><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete-js/index.production.js" defer></script><script src="/js/lib/fuse.js" defer></script><script src="/lib/cookieconsent/cookieconsent.min.js" defer></script><script src="/js/lib/cookieconsent.js" defer></script><script src="/lib/cell-tooltip/cell-tooltip.umd.js" defer></script><script src="/js/config/67348a67e1f2aea9b62accfe07e8ec8d.js" defer></script><script src="/js/lib/file-tree.js" defer></script><script src="/js/main.js" defer></script><script src="/js/custom.js" defer></script></body>
+</html>
