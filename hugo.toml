@@ -56,6 +56,9 @@ avatar = '/images/avatar.jpg'
 [params.app]
 svg_favicon = '/favicon.svg'
 
+[params.image]
+optimise = true
+
 [params.home.profile]
 enable = true
 # 标题：短句 + 留白，比长句高级

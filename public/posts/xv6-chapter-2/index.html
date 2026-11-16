@@ -95,7 +95,7 @@ The operating system will help you manage your programs.
 <main class="fi-container"><aside class="aside-collection animate__animated animate__fadeIn animate__faster" aria-label="合集"></aside><article class="page single">
     <div class="header"><h1 class="single-title animate__animated animate__flipInX"><span>Xv6 Chapter2</span>
       </h1><p class="single-subtitle animate__animated animate__fadeIn">Operating system organziation</p></div><div class="post-meta">
-      <div class="post-meta-line"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' alt="yu419" height="16" width="16">&nbsp;yu419</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/xv6/" class="post-collection" title="合集 - Xv6"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Xv6</a></span></div>
+      <div class="post-meta-line"><span class="post-author"><a href="/authors/yu419/" title="作者" rel="author" class="author"><img class="avatar" src='/images/avatar.jpg' srcset="/images/avatar_hu_5680c922ed33d300.webp 16w, /images/avatar_hu_3fec0ae5e32c8e7.webp 24w, /images/avatar_hu_27c9b5f0ac78c7e1.webp 32w" alt="yu419" height="16" width="16">&nbsp;yu419</a></span><span class="post-included-in">&nbsp;收录于 <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="post-category" title="分类 - 学习"><i class="fa-regular fa-folder" aria-hidden="true"></i> 学习</a> 和 <a href="/collections/xv6/" class="post-collection" title="合集 - Xv6"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Xv6</a></span></div>
       <div class="post-meta-line"><span title="发布于 2026-11-12 15:00:13"><i class="fa-solid fa-calendar-days me-1" aria-hidden="true"></i><time datetime="2026-11-12">2026-11-12</time></span>&nbsp;<span title="715 字"><i class="fa-solid fa-pencil me-1" aria-hidden="true"></i>715 字</span>&nbsp;<span><i class="fa-regular fa-clock me-1" aria-hidden="true"></i>预计阅读 2 分钟</span>&nbsp;</div>
     </div><div class="details toc" id="toc-static" data-kept="false">
         <div class="details-summary toc-title">
@@ -168,14 +168,14 @@ Different processes need to interact,such as pipelines.</li>
 <p>managing the file-system</p>
 </li>
 </ol>
-<p><img loading="lazy" src='/posts/image-2.png' alt="alt text"></p>
+<p><img loading="lazy" src='/posts/image-2.png' alt="alt text" decoding="async"></p>
 <h2 class="heading-element" id="process-overview"><span>Process overview</span>
   <a href="#process-overview" class="heading-mark"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a>
 </h2><p>Process is regarded as an instance of program, which provides kits with program.</p>
 <p>Xv6 use page tables(which are implemented by handware) to give each process its own address space.The RISC-V page table translate a <em>virtual address</em> to <em>physical address</em>.</p>
 <p>Xv6 maintains a seperate page tabe for each process that defines that process&rsquo;s address space.
 The layout of virutal address space is like following:</p>
-<p><img loading="lazy" src='/posts/image-3.png' alt="alt text"></p>
+<p><img loading="lazy" src='/posts/image-3.png' alt="alt text" decoding="async"></p>
 <p>Instructions -&gt; global variables -&gt; stack -&gt; heap
 When looking up virtual addresses in page tables,the handware uses only the low 39 bits;and xv6 uses only 38 of those 39 bits.</p>
 <p>Thus,the maximum address is 0x3fffffffff,which is <code>MAXVA</code>(maximum virtual address).</p>

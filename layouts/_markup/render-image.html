@@ -1,0 +1,18 @@
+{{- $optim := slice
+  (dict "Process" "resize 640x webp q75" "descriptor" "640w")
+  (dict "Process" "resize 960x webp q75" "descriptor" "960w")
+  (dict "Process" "resize 1280x webp q75" "descriptor" "1280w")
+-}}
+{{- $lightgallery := .Page.Param "lightgallery" -}}
+{{- if .Title -}}
+  {{- $linked := ne $lightgallery false -}}
+  <figure>
+    {{- dict "Page" .Page "Src" .Destination "Alt" .PlainText "Title" .Title "Caption" .Text "Linked" $linked "Loading" "lazy" "Decoding" "async" "Resources" .Page.Resources "OptimConfig" $optim | partial "plugin/image.html" -}}
+    <figcaption class="image-caption">
+      {{- .Title | safeHTML -}}
+    </figcaption>
+  </figure>
+{{- else -}}
+  {{- $linked := (eq $lightgallery "force") | or ($lightgallery | and (ne .Title "")) -}}
+  {{- dict "Page" .Page "Src" .Destination "Alt" .PlainText "Title" .Title "Linked" $linked "Loading" "lazy" "Decoding" "async" "Resources" .Page.Resources "OptimConfig" $optim | partial "plugin/image.html" -}}
+{{- end -}}
